@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    homepage, signup_view, sigin_view, logout_view, profile, users,
+    homepage, signup_view, login_view, logout_view, profile, users,
     UsersCreateView, UsersDetailView, UsersUpdateView, UsersDeleteView,
     MyPasswordResetView, MyPasswordResetDoneView,
     MyPasswordResetConfirmView, MyPasswordResetCompleteView
@@ -9,7 +9,7 @@ from .views import (
 urlpatterns = [
     path("", homepage, name="homepage"),                       # List all users
     path("signup/", signup_view, name="signup"),              # User registration
-    path("signin/", sigin_view, name="signin"),                # User login
+    path("login/", login_view, name="login"),                # User login
     path("logout/", logout_view, name="logout"),                # User logout
     path("profile/", profile, name="profile"),                  # User profile view/update
     path("accounts/", users, name="accounts"),                  # List all users

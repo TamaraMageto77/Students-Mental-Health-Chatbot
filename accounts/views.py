@@ -12,7 +12,7 @@ from django.views.generic import CreateView, DetailView, UpdateView, DeleteView,
 
 
 def homepage(request):
-    return render(request, 'index.html')
+    return render(request, 'accounts/index.html')
 
 def signup_view(request):
     """
@@ -31,7 +31,7 @@ def signup_view(request):
     return render(request, 'accounts/register.html', {"next_url": next_url})
 
 
-def sigin_view(request):
+def login_view(request):
     """
     Handles user login.
     Validates the form data and logs the user in if valid.
