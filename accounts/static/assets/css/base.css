@@ -1,0 +1,130 @@
+/* Base Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #ffffff; /* White background */
+    color: #333; /* Dark text */
+}
+
+/* Header Section */
+.header {
+    background-color: #000000; /* Primary color */
+    transition: all .5s;
+    z-index: 997;
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.1);
+}
+
+.header .logo {
+    line-height: 1;
+}
+
+.header .logo img {
+    max-height: 36px; /* Reduced logo size */
+    margin-right: 8px;
+}
+
+.navmenu {
+    padding: 0;
+}
+
+.navmenu ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+.navmenu a {
+    color: #fff; /* White text for nav links */
+    text-decoration: none;
+    padding: 8px 12px; /* Reduced padding */
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+    font-size: 14px; /* Reduced font size */
+}
+
+.navmenu a.active,
+.navmenu a:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    border-radius: 5px;
+}
+
+/* Dropdown Menu */
+.navmenu .dropdown {
+    position: relative; /* Position relative for absolute dropdown */
+}
+
+.navmenu .dropdown-menu {
+    display: none; /* Hide dropdowns by default */
+    position: absolute;
+    background-color: #ffffff; /* White background for dropdown */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 10px 0; /* Padding around dropdown items */
+    z-index: 1000; /* Ensure dropdown appears above other elements */
+}
+
+.navmenu .dropdown:hover .dropdown-menu {
+    display: block; /* Show dropdown on hover */
+}
+
+.navmenu .dropdown-menu li {
+    padding: 8px 12px; /* Padding for dropdown items */
+}
+
+.navmenu .dropdown-menu li a {
+    color: #333; /* Dark text for dropdown links */
+    display: block; /* Block display for full clickable area */
+    transition: background-color 0.3s ease;
+}
+
+.navmenu .dropdown-menu li a:hover {
+    background-color: #f1f1f1; /* Light gray on hover */
+    color: #007bff; /* Change text color on hover */
+}
+
+/* Mobile Navigation */
+.mobile-nav-toggle {
+    display: none; /* Hidden by default */
+    font-size: 24px;
+    color: #fff;
+}
+
+/* CTA Button */
+.cta-btn {
+    background-color: #28a745; /* Success color */
+    color: #fff;
+    padding: 8px 15px; /* Reduced padding */
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-size: 14px; /* Reduced font size */
+}
+
+.cta-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navmenu {
+        flex-direction: column;
+        display: none; /* Hidden by default */
+        width: 100%;
+    }
+
+    .navmenu.active {
+        display: flex; /* Show menu when active */
+    }
+
+    .mobile-nav-toggle {
+        display: block; /* Show mobile toggle */
+    }
+}
