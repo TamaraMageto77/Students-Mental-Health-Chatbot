@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    homepage, about, signup_view, login_view, logout_view, profile, users,
+    homepage, about,landing, chat, signup_view, login_view, logout_view, profile, users,
     UsersCreateView, UsersDetailView, UsersUpdateView, UsersDeleteView,
     MyPasswordResetView, MyPasswordResetDoneView,
     MyPasswordResetConfirmView, MyPasswordResetCompleteView
@@ -8,7 +8,8 @@ from .views import (
 
 urlpatterns = [
     path("", homepage, name="homepage"),
-    path("about/", about, name="about"), 
+    path("about/", about, name="about"),
+    path("chatSpace/", chat, name="chat"),  
     path("signup/", signup_view, name="signup"),# User registration
     path("login/", login_view, name="login"),# User login
     path("logout/", logout_view, name="logout"),# User logout
