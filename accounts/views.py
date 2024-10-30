@@ -14,6 +14,9 @@ from django.views.generic import CreateView, DetailView, UpdateView, DeleteView,
 def homepage(request):
     return render(request, 'index.html')
 
+def about(request):
+    return render(request, 'about.html')
+
 def signup_view(request):
     """
     Handles user registration.
