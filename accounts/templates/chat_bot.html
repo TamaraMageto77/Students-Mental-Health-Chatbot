@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface</title>
+    <style>
+        /* Reset and basic styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Main container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f1f1f1;
+        }
+
+        /* Header styling */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        /* Logo styling */
+        .header .site-logo img {
+            height: 40px;
+        }
+
+        /* Profile styling */
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+        }
+
+        .profile img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #fff;
+        }
+
+        .profile-info h3 {
+            font-size: 1em;
+            margin-bottom: 3px;
+        }
+
+        /* Sidebar and chat area */
+        .content {
+            display: flex;
+            height: 100%;
+            background-color: #f1f1f1;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Chat history */
+        .chat-history {
+            margin-top: 20px;
+        }
+
+        .sidebar h2 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        
+        .chat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #444;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 10px;
+        }
+
+        .chat-item img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .chat-item:hover {
+            background-color: #555;
+        }
+
+        /* Main chat area styling */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+            overflow-y: auto;
+        }
+
+        /* Chat messages area */
+        .messages {
+            flex-grow: 1;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            max-width: 75%;
+        }
+
+        .message.bot {
+            background-color: #f1f1f1;
+            align-self: flex-start;
+            flex-direction: row;
+        }
+
+        .message.user {
+            background-color: #d1e7dd;
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Input area styling */
+        .input-area {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .input-area input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .input-area button {
+            padding: 10px 15px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .input-area button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header with logo on left and profile on right -->
+        <header class="header">
+            <a href="/" class="site-logo">
+                <img id="logo_header" alt="Logo" src="{% static 'assets/img/logo/logo.png' %}">
+            </a>
+            <div class="profile">
+                <img src="https://via.placeholder.com/35" alt="User Profile">
+                <div class="profile-info">
+                    <h3>John Doe</h3>
+                    <p>Online</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar and main chat area -->
+        <div class="content">
+            <div class="sidebar">
+                <!-- Chat History Section -->
+                <h2>Chat History</h2>
+                <div class="chat-history">
+                    <div class="chat-item">
+                        <img src="https://via.placeholder.com/35" alt="Chat 1">
+                        <span>Chat 1</span>
+                    </div>
+                    <div class="chat-item">
+                        <img src="https://via.placeholder.com/35" alt="Chat 2">
+                        <span>Chat 2</span>
+                    </div>
+                    <div class="chat-item">
+                        <img src="https://via.placeholder.com/35" alt="Chat 3">
+                        <span>Chat 3</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main chat area -->
+            <div class="chat-area">
+                <!-- Messages display area -->
+                <div class="messages">
+                    <div class="message bot">
+                        <img src="https://via.placeholder.com/35" alt="Bot">
+                        <div>Hello! How can I help you today?</div>
+                    </div>
+                    <div class="message user">
+                        <img src="https://via.placeholder.com/35" alt="User">
+                        <div>I need some information on your services.</div>
+                    </div>
+                </div>
+
+                <!-- Input area -->
+                <div class="input-area">
+                    <input type="text" placeholder="Type a message...">
+                    <button>Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
