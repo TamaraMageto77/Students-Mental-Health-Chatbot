@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required
 from accounts.models import Account
 
 def homepage(request):
-    return HttpResponse("Welcome to the Admin Dashboard!")
-
+    return render(request, 'admin/admin_dashboard.html')
+    
 def accounts(request):
     return HttpResponse("Welcome to the Admin Accounts Dashboard!")
 
