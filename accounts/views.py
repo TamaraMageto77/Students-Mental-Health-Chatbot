@@ -74,7 +74,7 @@ def profile(request):
             messages.error(request, 'Please correct the error below.')
     else:
         form = UpdateProfileForm(instance=request.user)
-    return render(request, 'accounts/profile.html', {'form': form})
+    return render(request, 'profile.html', {'form': form})
 
 
 @login_required
@@ -83,39 +83,39 @@ def users(request):
     Displays a list of all users, excluding the currently logged-in user.
     """
     users_list = Account.objects.exclude(id=request.user.id)
-    return render(request, 'accounts/users.html', {'users': users_list})
+    return render(request, 'users.html', {'users': users_list})
 
 
 # User CRUD views
 class UsersCreateView(LoginRequiredMixin, CreateView):
     model = Account
     fields = ['email', 'fullname', 'account_type', 'profile_image']  # Customize fields
-    template_name = 'accounts/new_user.html'
+    template_name = 'new_user.html'
     success_url = reverse_lazy('users')
 
 
 class UsersUpdateView(LoginRequiredMixin, UpdateView):
     model = Account
     fields = ['email', 'fullname', 'account_type', 'profile_image']
-    template_name = 'accounts/new_user.html'
+    template_name = 'new_user.html'
     success_url = reverse_lazy('users')
 
 
 class UsersDetailView(LoginRequiredMixin, DetailView):
     model = Account
-    template_name = 'accounts/user_detail.html'
+    template_name = 'user_detail.html'
 
 
 class UsersDeleteView(LoginRequiredMixin, DeleteView):
     model = Account
-    template_name = 'accounts/user_delete.html'
+    template_name = 'user_delete.html'
     success_url = reverse_lazy('users')
 
 
 # Custom password reset views
 class MyPasswordResetView(PasswordResetView):
-    template_name = 'accounts/my_password_reset_form.html'
-    email_template_name = 'accounts/my_password_reset_email.html'
+    template_name = 'my_password_reset_form.html'
+    email_template_name = 'my_password_reset_email.html'
     success_url = reverse_lazy('password_reset_done')
 
     def form_valid(self, form):
@@ -127,15 +127,15 @@ class MyPasswordResetView(PasswordResetView):
 
 
 class MyPasswordResetDoneView(PasswordResetDoneView):
-    template_name = 'accounts/my_password_reset_done.html'
+    template_name = 'my_password_reset_done.html'
 
 
 class MyPasswordResetConfirmView(PasswordResetConfirmView):
-    template_name = 'accounts/my_password_reset_confirm.html'
+    template_name = 'my_password_reset_confirm.html'
     form_class = CustomSetPasswordForm
     success_url = reverse_lazy('password_reset_complete')
     post_reset_login = True
 
 
 class MyPasswordResetCompleteView(PasswordResetCompleteView):
-    template_name = 'accounts/my_password_reset_complete.html'
+    template_name = 'my_password_reset_complete.html'

@@ -3,29 +3,27 @@
 {% block content %}
 <div class="auth-container">
     <h2>Sign Up</h2>
-    <form action="{% url 'signup' %}" method="post">
+    <form id="register-form" action="{% url 'signup' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
-            <label for="username">Username:</label>
             <i class="fas fa-user input-icon"></i>
-            <input type="text" id="username" name="username" required>
+            <input type="text" id="regusername" name="username" placeholder="username" autocomplete="off" required>
         </div>
         <div class="form-group">
-            <label for="email">Email:</label>
             <i class="fas fa-envelope input-icon"></i>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="regemail" placeholder="Email" autocomplete="off" required>
         </div>
         <div class="form-group">
-            <label for="password1">Password:</label>
             <i class="fas fa-lock input-icon"></i>
-            <input type="password" id="password1" name="password1" required>
+            <input type="password" id="regpassword" name="password" placeholder="Enter Password" autocomplete="off" required>
         </div>
         <div class="form-group">
-            <label for="password2">Confirm Password:</label>
             <i class="fas fa-lock input-icon"></i>
-            <input type="password" id="password2" name="password2" required>
+            <input type="password" id="regpassword2" name="password2" placeholder="Confirm Password" autocomplete="off" required>
         </div>
-        <button type="submit" class="btn">Sign Up</button>
+        <input type="hidden" name="next" value="{{ next }}">
+
+        <button class="btn">Sign Up</button>
         <p>Already have an account? <a href="{% url 'login' %}">Log in</a></p>
     </form>
 </div>
