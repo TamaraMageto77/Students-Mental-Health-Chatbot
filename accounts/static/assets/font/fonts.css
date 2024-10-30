@@ -1,0 +1,105 @@
+/* greek-ext */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 900;
+  src: url(Archivo-Black.ttf);
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: italic;
+  font-weight: 900;
+  src: url(Archivo-BlackItalic.ttf);
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 700;
+  src: url(Archivo-Bold.ttf);
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: italic;
+  font-weight: 800;
+  src: url(Archivo-ExtraBold.ttf);
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: italic;
+  font-weight: 800;
+  src: url(Archivo-ExtraBoldItalic.ttf);
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 200;
+  src: url(Archivo-ExtraLight.ttf);
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: italic;
+  font-weight: 200;
+  src: url(Archivo-ExtraLightItalic.ttf);
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: italic;
+  font-weight: 400;
+  src: url(Archivo-Italic.ttf);
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 300;
+  src: url(Archivo-Light.ttf);
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: italic;
+  font-weight: 300;
+  src: url(Archivo-LightItalic.ttf);
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 500;
+  src: url(Archivo-Medium.ttf);
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: italic;
+  font-weight: 500;
+  src: url(Archivo-MediumItalic.ttf);
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 400;
+  src: url(Archivo-Regular.ttf);
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 600;
+  src: url(Archivo-SemiBold.ttf);
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: italic;
+  font-weight: 600;
+  src: url(Archivo-SemiBoldItalic.ttf);
+}
