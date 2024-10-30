@@ -28,81 +28,71 @@ function clearForm() {
 		element.remove();
 	});
 }
+
+
+function getCookie(name) {
+	let cookieValue = null;
+	if (document.cookie && document.cookie !== '') {
+		const cookies = document.cookie.split(';');
+		for (let i = 0; i < cookies.length; i++) {
+			const cookie = cookies[i].trim();
+			if (cookie.substring(0, name.length + 1) === (name + '=')) {
+				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				break;
+			}
+		}
+	}
+	return cookieValue;
+}
+
+const csrftoken = getCookie('csrftoken');
+
 function submitForm(currId, formData, actionUrl, fMethod) {
 	$.ajax({
 		type: fMethod,
 		url: actionUrl,
 		data: formData,
+		headers: {
+			'X-CSRFToken': csrftoken
+		},
 		success: function (response) {
-			if (response.status == "error") {
-				// display error messages
-
-				for (var key in response.errors) {
+			if (response.status === "error") {
+				// Display error messages
+				for (let key in response.errors) {
 					if (currId === "login-form") {
 						if (key === "__all__") {
-							createToast(
-								"Error",
-								response.errors[key],
-								response.status
-							);
+							createToast("Error", response.errors[key], response.status);
 						} else {
-							var input = $("#log" + key);
+							let input = $("#log" + key);
 							input.addClass("is-invalid");
 							input.after(
-								"<div class='invalid-feedback'>" +
-								response.errors[key] +
-								"</div>"
+								"<div class='invalid-feedback'>" + response.errors[key] + "</div>"
 							);
 						}
 					} else if (currId === "register-form") {
 						if (key === "__all__") {
-							createToast(
-								"Error",
-								response.errors[key],
-								response.status
-							);
+							createToast("Error", response.errors[key], response.status);
 						} else {
-							var input = $("#reg" + key);
+							let input = $("#reg" + key);
 							input.addClass("is-invalid");
 							input.after(
-								"<div class='invalid-feedback'>" +
-								response.errors[key] +
-								"</div>"
+								"<div class='invalid-feedback'>" + response.errors[key] + "</div>"
 							);
 						}
 					}
 				}
-			} else if (response.status == "success") {
+			} else if (response.status === "success") {
 				if (currId === "login-form") {
-					createToast(
-						"Success",
-						"You were logged in successfully, redirecting",
-						response.status,
-						redirectToPreviousPage
-					);
+					createToast("Success", "You were logged in successfully, redirecting", response.status, redirectToPreviousPage);
 				} else {
-					createToast(
-						"Success",
-						"Account has been added successfully",
-						response.status,
-						redirectToPreviousPage
-					);
+					createToast("Success", "Account has been added successfully", response.status, redirectToPreviousPage);
 				}
 			} else {
-				createToast(
-					"Error",
-					"Something went wrong, please try again",
-					"warning"
-				);
-				// redirect user to the page they came from or to the specified success url
+				createToast("Error", "Something went wrong, please try again", "warning");
 			}
 		},
 		error: function (error) {
-			createToast(
-				"Error",
-				"Something went wrong, please try again",
-				"warning"
-			);
+			createToast("Error", "Something went wrong, please try again", "warning");
 		},
 	});
 }

@@ -12,7 +12,7 @@ urlpatterns = [
     path("login/", login_view, name="login"),                # User login
     path("logout/", logout_view, name="logout"),                # User logout
     path("profile/", profile, name="profile"),                  # User profile view/update
-    path("accounts/", users, name="accounts"),                  # List all users
+    # path("accounts/", users, name="accounts"),                  # List all users
 
     # User CRUD operations
     path("accounts/new/", UsersCreateView.as_view(), name="new_user"),         # Create new user

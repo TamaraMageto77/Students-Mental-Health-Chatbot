@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
-from accounts.models import Account  # Custom user model with roles
+from accounts.models import Account, UserType  # Custom user model with roles
 from .forms import RegisterForm, LoginForm, CustomSetPasswordForm, UpdateProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -45,6 +45,12 @@ def login_view(request):
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user, backend='accounts.backends.MyUserBackend')
+                if user.account_type == UserType.ADMINISTRATOR:
+                    next_url = reverse_lazy('admin_dashboard')
+                elif user.account_type == UserType.COUNSELLOR:
+                    next_url = reverse_lazy('counsellor_dashboard')
+                elif user.account_type == UserType.STUDENT:
+                    next_url = reverse_lazy('student_dashboard')
                 return JsonResponse({'status': 'success', "next_url": next_url})
             else:
                 form.add_error(None, "Invalid email or password")
