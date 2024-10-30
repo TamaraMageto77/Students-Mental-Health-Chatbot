@@ -99,7 +99,7 @@ body {
 
 /* CTA Button */
 .cta-btn {
-    background-color: #28a745; /* Success color */
+    background-color: #283fa7; /* Success color */
     color: #fff;
     padding: 8px 15px; /* Reduced padding */
     border-radius: 5px;
@@ -109,7 +109,7 @@ body {
 }
 
 .cta-btn:hover {
-    background-color: #218838; /* Darker green on hover */
+    background-color: #007bff; /* Darker green on hover */
 }
 
 /* Responsive Design */

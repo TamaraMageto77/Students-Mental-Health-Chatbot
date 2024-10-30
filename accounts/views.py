@@ -12,7 +12,7 @@ from django.views.generic import CreateView, DetailView, UpdateView, DeleteView,
 
 
 def homepage(request):
-    return render(request, 'accounts/index.html')
+    return render(request, 'index.html')
 
 def signup_view(request):
     """
@@ -28,7 +28,7 @@ def signup_view(request):
             login(request, user, backend='accounts.backends.MyUserBackend')
             return JsonResponse({'status': 'success', "next_url": next_url})
         return JsonResponse({'status': 'error', 'errors': form.errors})
-    return render(request, 'accounts/register.html', {"next_url": next_url})
+    return render(request, 'register.html', {"next_url": next_url})
 
 
 def login_view(request):
@@ -49,7 +49,7 @@ def login_view(request):
             else:
                 form.add_error(None, "Invalid email or password")
         return JsonResponse({'status': 'error', 'errors': form.errors})
-    return render(request, 'accounts/login.html', {"next_url": next_url})
+    return render(request, 'login.html', {"next_url": next_url})
 
 
 def logout_view(request):
