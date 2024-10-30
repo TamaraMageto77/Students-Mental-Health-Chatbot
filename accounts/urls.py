@@ -1,17 +1,18 @@
 from django.urls import path
 from .views import (
-    homepage, signup_view, login_view, logout_view, profile, users,
+    homepage, about, signup_view, login_view, logout_view, profile, users,
     UsersCreateView, UsersDetailView, UsersUpdateView, UsersDeleteView,
     MyPasswordResetView, MyPasswordResetDoneView,
     MyPasswordResetConfirmView, MyPasswordResetCompleteView
 )
 
 urlpatterns = [
-    path("", homepage, name="homepage"),                       # List all users
-    path("signup/", signup_view, name="signup"),              # User registration
-    path("login/", login_view, name="login"),                # User login
-    path("logout/", logout_view, name="logout"),                # User logout
-    path("profile/", profile, name="profile"),                  # User profile view/update
+    path("", homepage, name="homepage"),
+    path("about/", about, name="about"), 
+    path("signup/", signup_view, name="signup"),# User registration
+    path("login/", login_view, name="login"),# User login
+    path("logout/", logout_view, name="logout"),# User logout
+    path("profile/", profile, name="profile"),# User profile view/update
     # path("accounts/", users, name="accounts"),                  # List all users
 
     # User CRUD operations
