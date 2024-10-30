@@ -11,17 +11,17 @@ class UserType:
     ]
 
 class AccountManager(BaseUserManager):
-    def create_user(self, email, fullname, account_type, password=None):
+    def create_user(self, email, full_name, account_type, password=None):
         if not email:
             raise ValueError("Users must have an email address")
         email = self.normalize_email(email)
-        user = self.model(email=email, fullname=fullname, account_type=account_type)
+        user = self.model(email=email, full_name=full_name, account_type=account_type)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, fullname, password=None):
-        user = self.create_user(email=email, fullname=fullname, account_type=UserType.ADMINISTRATOR, password=password)
+    def create_superuser(self, email, full_name, password=None):
+        user = self.create_user(email=email, full_name=full_name, account_type=UserType.ADMINISTRATOR, password=password)
         user.is_superuser = True
         user.is_staff = True
         user.save(using=self._db)
@@ -34,6 +34,7 @@ class Account(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_counsellor = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
     groups = models.ManyToManyField(Group, blank=True)
     user_permissions = models.ManyToManyField(Permission, blank=True)
 

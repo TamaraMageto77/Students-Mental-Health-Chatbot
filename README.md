@@ -52,11 +52,17 @@ The **Students-Mental-Health-Chatbot** is a supportive application designed to h
 6. **Run the development server**
     ```bash
     python manage.py runserver
+
+7. **Access the application**:
+- Visit [http://127.0.0.1:8000](http://127.0.0.1:8000) to interact with the chatbot.
+- Visit [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin) to access the admin interface.
+
+---
     ```
 
 ## Usage
 
-1. Open your web browser and go to `http://127.0.0.1:8000/`.
+1. Open your web browser and go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 2. Log in with your credentials.
 3. Navigate through the dashboard to manage 
 

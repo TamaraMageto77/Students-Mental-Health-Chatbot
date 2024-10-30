@@ -4,7 +4,7 @@ from .models import Account
 class AccountsBackend(BaseBackend):
     backend = 'accountsbackend'
     
-    def authenticate(self, request, email = None, password = None **kwargs):
+    def authenticate(self, request, email = None, password = None):
         try:
             user = Account.objects.get(email = email)
         except Account.DoesNotExist:

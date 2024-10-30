@@ -25,7 +25,7 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = Account
-        fields = ('email', 'full_name', 'account_type')
+        fields = ('email', 'full_name')
 
     def clean_password2(self):
         password = self.cleaned_data.get("password")
