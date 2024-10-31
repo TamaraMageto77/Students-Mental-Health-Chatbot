@@ -105,6 +105,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'accounts.Account'
 
+LOGIN_URL = 'login'
+
 AUTHENTICATION_BACKENDS = [
     'accounts.backends.AccountsBackend',
     'django.contrib.auth.backends.ModelBackend',

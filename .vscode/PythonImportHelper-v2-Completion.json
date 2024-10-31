@@ -209,14 +209,6 @@
         "documentation": {}
     },
     {
-        "label": "logout",
-        "importPath": "django.contrib.auth",
-        "description": "django.contrib.auth",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth",
-        "documentation": {}
-    },
-    {
         "label": "SetPasswordForm",
         "importPath": "django.contrib.auth.forms",
         "description": "django.contrib.auth.forms",
@@ -401,14 +393,6 @@
         "documentation": {}
     },
     {
-        "label": "redirect",
-        "importPath": "django.shortcuts",
-        "description": "django.shortcuts",
-        "isExtraImport": true,
-        "detail": "django.shortcuts",
-        "documentation": {}
-    },
-    {
         "label": "render",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
@@ -438,6 +422,14 @@
         "description": "django.http",
         "isExtraImport": true,
         "detail": "django.http",
+        "documentation": {}
+    },
+    {
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
         "documentation": {}
     },
     {
@@ -684,7 +676,7 @@
         "kind": 6,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "class UsersCreateView(LoginRequiredMixin, CreateView):\n    model = Account\n    fields = ['email', 'fullname', 'account_type', 'profile_image']  # Customize fields\n    template_name = 'new_user.html'\n    success_url = reverse_lazy('users')\nclass UsersUpdateView(LoginRequiredMixin, UpdateView):\n    model = Account\n    fields = ['email', 'fullname', 'account_type', 'profile_image']\n    template_name = 'new_user.html'\n    success_url = reverse_lazy('users')",
+        "peekOfCode": "class UsersCreateView(LoginRequiredMixin, CreateView):\n    model = Account\n    fields = ['email', 'fullname', 'account_type',\n              'profile_image']  # Customize fields\n    template_name = 'new_user.html'\n    success_url = reverse_lazy('users')\nclass UsersUpdateView(LoginRequiredMixin, UpdateView):\n    model = Account\n    fields = ['email', 'fullname', 'account_type', 'profile_image']\n    template_name = 'new_user.html'",
         "detail": "accounts.views",
         "documentation": {}
     },
@@ -783,7 +775,7 @@
         "kind": 2,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "def chat(request):\n    return render(request, 'chat_bot.html')\ndef signup_view(request):\n    \"\"\"\n    Handles user registration.\n    On GET request, it renders the registration template.\n    On POST request, it validates the form data, creates a new user, and logs them in.\n    \"\"\"\n    next_url = request.GET.get('next', None)\n    if request.method == 'POST':",
+        "peekOfCode": "def chat(request):\n    return render(request, 'chat_bot.html')\ndef signup_view(request):\n    \"\"\"\n    Handles user registration.\n    On GET request, it renders the registration template.\n    On POST request, it validates the form data, creates a new user, and logs them in.\n    \"\"\"\n    if request.method == 'POST':\n        form = RegisterForm(request.POST)",
         "detail": "accounts.views",
         "documentation": {}
     },
@@ -792,7 +784,7 @@
         "kind": 2,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "def signup_view(request):\n    \"\"\"\n    Handles user registration.\n    On GET request, it renders the registration template.\n    On POST request, it validates the form data, creates a new user, and logs them in.\n    \"\"\"\n    next_url = request.GET.get('next', None)\n    if request.method == 'POST':\n        form = RegisterForm(request.POST)\n        if form.is_valid():",
+        "peekOfCode": "def signup_view(request):\n    \"\"\"\n    Handles user registration.\n    On GET request, it renders the registration template.\n    On POST request, it validates the form data, creates a new user, and logs them in.\n    \"\"\"\n    if request.method == 'POST':\n        form = RegisterForm(request.POST)\n        if form.is_valid():\n            user = form.save(commit=True)",
         "detail": "accounts.views",
         "documentation": {}
     },
@@ -801,7 +793,7 @@
         "kind": 2,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "def login_view(request):\n    \"\"\"\n    Handles user login.\n    Validates the form data and logs the user in if valid.\n    \"\"\"\n    next_url = request.GET.get('next', '/')\n    if request.method == 'POST':\n        form = LoginForm(request.POST)\n        if form.is_valid():\n            email = form.cleaned_data['email']",
+        "peekOfCode": "def login_view(request):\n    \"\"\"\n    Handles user login.\n    Validates the form data and logs the user in if valid.\n    \"\"\"\n    if request.method == 'POST':\n        form = LoginForm(request.POST)\n        if form.is_valid():\n            email = form.cleaned_data['email']\n            password = form.cleaned_data['password']",
         "detail": "accounts.views",
         "documentation": {}
     },
@@ -810,7 +802,7 @@
         "kind": 2,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "def logout_view(request):\n    if request.user.is_authenticated:\n        logout(request)\n    return redirect('home')\n@login_required\ndef profile(request):\n    \"\"\"\n    Handles profile viewing and updating.\n    Allows users to view and edit their profile.\n    \"\"\"",
+        "peekOfCode": "def logout_view(request):\n    if request.user.is_authenticated:\n        logout(request)\n    return redirect('homepage')\n@login_required\ndef profile(request):\n    \"\"\"\n    Handles profile viewing and updating.\n    Allows users to view and edit their profile.\n    \"\"\"",
         "detail": "accounts.views",
         "documentation": {}
     },
@@ -819,7 +811,7 @@
         "kind": 2,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "def profile(request):\n    \"\"\"\n    Handles profile viewing and updating.\n    Allows users to view and edit their profile.\n    \"\"\"\n    if request.method == 'POST':\n        form = UpdateProfileForm(request.POST, request.FILES, instance=request.user)\n        if form.is_valid():\n            form.save()\n            messages.success(request, 'Your profile was successfully updated!')",
+        "peekOfCode": "def profile(request):\n    \"\"\"\n    Handles profile viewing and updating.\n    Allows users to view and edit their profile.\n    \"\"\"\n    if request.method == 'POST':\n        form = UpdateProfileForm(\n            request.POST, request.FILES, instance=request.user)\n        if form.is_valid():\n            form.save()",
         "detail": "accounts.views",
         "documentation": {}
     },
@@ -828,7 +820,7 @@
         "kind": 2,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "def users(request):\n    \"\"\"\n    Displays a list of all users, excluding the currently logged-in user.\n    \"\"\"\n    users_list = Account.objects.exclude(id=request.user.id)\n    return render(request, 'users.html', {'users': users_list})\n# User CRUD views\nclass UsersCreateView(LoginRequiredMixin, CreateView):\n    model = Account\n    fields = ['email', 'fullname', 'account_type', 'profile_image']  # Customize fields",
+        "peekOfCode": "def users(request):\n    \"\"\"\n    Displays a list of all users, excluding the currently logged-in user.\n    \"\"\"\n    users_list = Account.objects.exclude(id=request.user.id)\n    return render(request, 'users.html', {'users': users_list})\n# User CRUD views\nclass UsersCreateView(LoginRequiredMixin, CreateView):\n    model = Account\n    fields = ['email', 'fullname', 'account_type',",
         "detail": "accounts.views",
         "documentation": {}
     },
@@ -972,7 +964,16 @@
         "kind": 5,
         "importPath": "core.settings",
         "description": "core.settings",
-        "peekOfCode": "AUTH_USER_MODEL = 'accounts.Account'\nAUTHENTICATION_BACKENDS = [\n    'accounts.backends.AccountsBackend',\n    'django.contrib.auth.backends.ModelBackend',\n]\n# Internationalization\n# https://docs.djangoproject.com/en/3.2/topics/i18n/\nLANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'UTC'\nUSE_I18N = True",
+        "peekOfCode": "AUTH_USER_MODEL = 'accounts.Account'\nLOGIN_URL = 'login'\nAUTHENTICATION_BACKENDS = [\n    'accounts.backends.AccountsBackend',\n    'django.contrib.auth.backends.ModelBackend',\n]\n# Internationalization\n# https://docs.djangoproject.com/en/3.2/topics/i18n/\nLANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'UTC'",
+        "detail": "core.settings",
+        "documentation": {}
+    },
+    {
+        "label": "LOGIN_URL",
+        "kind": 5,
+        "importPath": "core.settings",
+        "description": "core.settings",
+        "peekOfCode": "LOGIN_URL = 'login'\nAUTHENTICATION_BACKENDS = [\n    'accounts.backends.AccountsBackend',\n    'django.contrib.auth.backends.ModelBackend',\n]\n# Internationalization\n# https://docs.djangoproject.com/en/3.2/topics/i18n/\nLANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'UTC'\nUSE_I18N = True",
         "detail": "core.settings",
         "documentation": {}
     },

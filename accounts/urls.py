@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    homepage, about,landing, chat, signup_view, login_view, logout_view, profile, users,
+    homepage, about, chat, signup_view, login_view, logout_view, profile,
     UsersCreateView, UsersDetailView, UsersUpdateView, UsersDeleteView,
     MyPasswordResetView, MyPasswordResetDoneView,
     MyPasswordResetConfirmView, MyPasswordResetCompleteView
