@@ -8,7 +8,7 @@ def dashboard(request):
     return render(request, 'admin/admin_dashboard.html')
 
 def alerts(request):
-    return HttpResponse("Welcome to the Alerts Dashboard!")
+    return render(request,  'admin/alerts.html')
 
 def reports(request):
     return HttpResponse("Welcome to the Reports Dashboard!")
