@@ -38,7 +38,10 @@ def signup_view(request):
         if form.is_valid():
             user = form.save(commit=True)
             login(request, user, backend='accounts.backends.AccountsBackend')
-            redirect_url = reverse_lazy('profile')
+            if user.is_staff or user.is_counsellor:
+                redirect_url = reverse_lazy('dashboard')
+            else:
+                redirect_url = reverse_lazy
             return redirect(redirect_url)
     return render(request, 'register.html')
 
