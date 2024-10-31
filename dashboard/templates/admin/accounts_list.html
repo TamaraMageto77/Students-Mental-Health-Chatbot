@@ -115,7 +115,7 @@
                 </div>
               </td>
               <td class="text-end">{{ account.role }}</td>
-              <td class="text-end">{{ account.created_at }}</td>
+              <td class="text-end">{{ account.created_at|timesince }} ago </td>
               <td class="text-end">
                 <a href="{% url 'account_detail' account.id %}" class="btn btn-primary btn-sm">View</a>
               </td>
