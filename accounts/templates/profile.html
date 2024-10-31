@@ -163,7 +163,7 @@
                 <div class="profile-icon" tabindex="0">
                     <i class="fas fa-user"></i>
                 </div>
-                <h2 class="profile-name">Kshiti Ghelani</h2>
+                <h2 class="profile-name">{{ user.full_name }}</h2>
                 <div class="profile-role">Web Developer and Designer</div>
             </div>
 
@@ -171,11 +171,11 @@
             <div class="profile-details">
                 <div class="detail-row" tabindex="0">
                     <div class="detail-label">Email</div>
-                    <div class="detail-value">kshitighelani@gmail.com</div>
+                    <div class="detail-value">{{ user.email }}</div>
                 </div>
                 <div class="detail-row" tabindex="0">
                     <div class="detail-label">Role</div>
-                    <div class="detail-value">Senior Developer</div>
+                    <div class="detail-value">{{ user.role }}</div>
                 </div>
                 <div class="detail-row" tabindex="0">
                     <div class="detail-label">Department</div>
