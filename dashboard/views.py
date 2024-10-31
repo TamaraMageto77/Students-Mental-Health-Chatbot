@@ -6,9 +6,6 @@ from accounts.models import Account
 
 def dashboard(request):
     return render(request, 'admin/admin_dashboard.html')
-    
-def accounts(request):
-    return HttpResponse("Welcome to the Admin Accounts Dashboard!")
 
 def alerts(request):
     return HttpResponse("Welcome to the Alerts Dashboard!")
@@ -24,3 +21,43 @@ def users(request):
     """
     users_list = Account.objects.exclude(id=request.user.id)
     return JsonResponse(users_list)
+
+@login_required
+def accounts_list(request):
+    """
+    Displays a list of all accounts.
+    """
+    context = {}
+    context['accounts'] = Account.objects.all()
+    context['admins'] = Account.objects.filter(account_type=1).count()
+    context['counsellors'] = Account.objects.filter(account_type=2).count()
+    context['students'] = Account.objects.filter(account_type=3).count()
+    return render(request, 'admin/accounts_list.html', context)
+
+@login_required
+def account_detail(request, id):
+    """
+    Displays the details of a specific account.
+    """
+    try:
+        account = Account.objects.get(id=id)
+    except Account.DoesNotExist:
+        return HttpResponse("Account not found.", status=404)
+    
+    context = {'account': account}
+    return render(request, 'admin/account_detail.html', context)
+
+@login_required
+def account_upgrade(request, id):
+    """
+    Updates the details of a specific account.
+    """
+    try:
+        account = Account.objects.get(id=id)
+        account.account_type = 2
+        account.save()
+    except Account.DoesNotExist:
+        return HttpResponse("Account not found.", status=404)
+    
+    context = {'account': account}
+    return render(request, 'admin/account_detail.html', context)

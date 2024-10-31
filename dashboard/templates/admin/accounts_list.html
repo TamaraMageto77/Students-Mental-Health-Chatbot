@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+  <div class="page-header">
+    <h4 class="page-title">Accounts</h4>
+    <ul class="breadcrumbs">
+      <li class="nav-home">
+        <a href="{% url 'dashboard' %}"><i class="icon-home"></i></a>
+      </li>
+      <li class="separator">
+        <i class="icon-arrow-right"></i>
+      </li>
+      <li class="nav-item">
+        <span>Accounts</span>
+      </li>
+    </ul>
+  </div>
+{% endblock %}
+
+{% block content %}
+<div>
+  <div class="row">
+    <!-- Daily Check-Ins -->
+    <div class="col-sm-6 col-md-4">
+      <div class="card card-stats card-round">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-icon">
+              <div class="icon-big text-center icon-primary bubble-shadow-small">
+                <i class="fas fa-calendar-check"></i>
+              </div>
+            </div>
+            <div class="col col-stats ms-3 ms-sm-0">
+              <div class="numbers">
+                <p class="card-category">Admins</p>
+                <h4 class="card-title">{{ admins}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Therapy Sessions -->
+    <div class="col-sm-6 col-md-4">
+      <div class="card card-stats card-round">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-icon">
+              <div class="icon-big text-center icon-info bubble-shadow-small">
+                <i class="fas fa-user-md"></i>
+              </div>
+            </div>
+            <div class="col col-stats ms-3 ms-sm-0">
+              <div class="numbers">
+                <p class="card-category">Counsellors</p>
+                <h4 class="card-title">{{ counsellors }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Guided Meditations -->
+    <div class="col-sm-6 col-md-4">
+      <div class="card card-stats card-round">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-icon">
+              <div class="icon-big text-center icon-success bubble-shadow-small">
+                <i class="fas fa-brain"></i>
+              </div>
+            </div>
+            <div class="col col-stats ms-3 ms-sm-0">
+              <div class="numbers">
+                <p class="card-category">Students</p>
+                <h4 class="card-title">{{ students }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Recent Activity Section -->
+  <div class="card card-round">
+    <div class="card-header">
+      <div class="card-head-row card-tools-still-right">
+        <div class="card-title">User Accounts</div>
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table align-items-center mb-0">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">User</th>
+              <th scope="col" class="text-end">Role</th>
+              <th scope="col" class="text-end">Joined</th>
+              <th scope="col" class="text-end">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for account in accounts %}
+            <tr>
+              <td>
+                <div class="d-flex gap-2 align-items-center">
+                  <div class="d-flex flex-column">
+                    <span class="text-primary">{{ account.full_name }}</span>
+                    <small>{{ account.email }}</small>
+                  </div>
+                </div>
+              </td>
+              <td class="text-end">{{ account.role }}</td>
+              <td class="text-end">{{ account.created_at }}</td>
+              <td class="text-end">
+                <a href="{% url 'account_detail' account.id %}" class="btn btn-primary btn-sm">View</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+  <div class="page-header">
+    <h4 class="page-title">Account Detail</h4>
+    <ul class="breadcrumbs">
+      <li class="nav-home">
+        <a href="{% url 'dashboard' %}"><i class="icon-home"></i></a>
+      </li>
+      <li class="separator">
+        <i class="icon-arrow-right"></i>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'accounts' %}">Accounts</a>
+      </li>
+      <li class="separator">
+        <i class="icon-arrow-right"></i>
+      </li>
+      <li class="nav-item">
+        <span>Account Detail</span>
+      </li>
+    </ul>
+  </div>
+{% endblock %}
+
+{% block content %}
+<div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card card-profile">
+        
+        <div class="card-body">
+          <div class="user-profile text-center">
+            <div class="name">{{ account.full_name }}</div>
+            <div class="job">{{ account.role }}</div>
+            <div class="desc">{{ account.email }}</div>
+            <div class="view-profile">
+              <a href="{% url 'account_detail' account.id %}" class="btn btn-secondary btn-sm">Edit</a>
+              <a href="{% url 'account_detail' account.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if account.account_type == 3 %}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Upgrade to Counsellor</h4>
+        </div>
+        <div class="card-body">
+          <form method="post" action="{% url 'upgrade_to_counsellor' account.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Upgrade</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
