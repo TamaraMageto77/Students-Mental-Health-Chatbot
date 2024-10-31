@@ -1,0 +1,121 @@
+{% extends 'home_base.html' %}
+
+{% block content %}
+<style>
+  .about-section {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 1.5rem;
+    color: #ffffff;
+  }
+
+  .about-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .about-title {
+    font-size: 2.5rem;
+    color: #ffffff;
+    margin-bottom: 1rem;
+  }
+
+  .about-subtitle {
+    color: #a0aec0;
+    font-size: 1.25rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .feature-card {
+    background-color: #141517;
+    padding: 2rem;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .feature-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #6366f1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .feature-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: #9acd32;
+  }
+
+  .feature-description {
+    color: #a0aec0;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .about-title {
+      font-size: 2rem;
+    }
+    
+    .about-subtitle {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<section class="about-section">
+  <div class="about-header">
+    <h1 class="about-title">About Us</h1>
+    <p class="about-subtitle">
+      We're dedicated to providing innovative solutions that help businesses grow and succeed in the digital age.
+    </p>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-rocket" style="color: #1a1b1e;"></i>
+      </div>
+      <h3 class="feature-title">Our Mission</h3>
+      <p class="feature-description">
+        To empower businesses with cutting-edge technology solutions that drive growth and innovation.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-users" style="color: #1a1b1e;"></i>
+      </div>
+      <h3 class="feature-title">Our Team</h3>
+      <p class="feature-description">
+        A diverse group of experts passionate about creating exceptional experiences for our clients.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-star" style="color: #1a1b1e;"></i>
+      </div>
+      <h3 class="feature-title">Our Values</h3>
+      <p class="feature-description">
+        Innovation, integrity, and excellence are at the core of everything we do.
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}
