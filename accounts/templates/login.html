@@ -1,6 +1,10 @@
 {% extends "accounts_base_form.html" %}
 
 {% block content %}
+<a href="/" class="back-to-home">
+    <i class="fas fa-arrow-left"></i>
+    Back to Home
+</a>
 <div class="auth-container">
     <h2>Log In</h2>
     <form id="login-form" action="{% url 'login' %}" method="post">
