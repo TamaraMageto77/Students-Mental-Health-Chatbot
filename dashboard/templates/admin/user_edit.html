@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+<div class="page-header">
+    <h4 class="page-title">Edit</h4>
+    <ul class="breadcrumbs">
+        <li class="nav-home">
+            <a href="{% url 'dashboard' %}"><i class="icon-home"></i></a>
+        </li>
+        <li class="separator">
+            <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'accounts' %}" class="text-primary">Accounts</a>
+        </li>
+        <li class="separator">
+            <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'account_detail' account.id %}" class="text-primary">Account Details</a>
+        </li>
+        <li class="separator">
+            <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+            <span>Edit</span>
+        </li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm delete-card">
+                <div class="card-header">
+                    <h4 class="card-title">Edit User</h4>
+                </div>
+                <div class="card-body">
+                    <p>Are you sure you want to edit this user?</p>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Edit</button>
+                        <a href="{% url 'accounts' %}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.delete-card {
+    transition: all 0.3s ease;
+}
+
+.delete-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.delete-card:focus-within {
+    border: 2px solid #dc3545; /* Bootstrap danger color */
+}
+
+.card-header {
+    background-color: #f8f9fa; /* Light background for card header */
+}
+
+.card-title {
+    margin-bottom: 0;
+}
+
+.btn {
+    transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+.btn-secondary:hover {
+    background-color: #6c757d; /* Darker gray on hover */
+}
+</style>
+{% endblock %}
