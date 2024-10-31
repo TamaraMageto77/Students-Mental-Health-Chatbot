@@ -23,7 +23,7 @@
   <div class="row">
     <!-- Daily Check-Ins -->
     <div class="col-sm-6 col-md-3">
-      <div class="card card-stats card-round">
+      <div class="card card-stats card-round hover-effect">
         <div class="card-body">
           <div class="row align-items-center">
             <div class="col-icon">
@@ -44,7 +44,7 @@
     
     <!-- Therapy Sessions -->
     <div class="col-sm-6 col-md-3">
-      <div class="card card-stats card-round">
+      <div class="card card-stats card-round hover-effect">
         <div class="card-body">
           <div class="row align-items-center">
             <div class="col-icon">
@@ -65,7 +65,7 @@
     
     <!-- Guided Meditations -->
     <div class="col-sm-6 col-md-3">
-      <div class="card card-stats card-round">
+      <div class="card card-stats card-round hover-effect">
         <div class="card-body">
           <div class="row align-items-center">
             <div class="col-icon">
@@ -86,7 +86,7 @@
     
     <!-- Self-Help Tools Accessed -->
     <div class="col-sm-6 col-md-3">
-      <div class="card card-stats card-round">
+      <div class="card card-stats card-round hover-effect">
         <div class="card-body">
           <div class="row align-items-center">
             <div class="col-icon">
@@ -109,11 +109,11 @@
   <!-- Mental Health Statistics Section -->
   <div class="card card-round">
     <div class="card-header">
-      <div class="card-title">F1 score, recall and Precision</div>
+      <div class="card-title">F1 Score, Recall and Precision</div>
     </div>
     <div class="card-body">
-      <div class="chart-container" style="min-height: 375px">
-        <img src="{% static 'assets/img/perf_metrics.png' %}" alt="F1 Score and Precision Graph">
+      <div class="chart-container" style="min-height: 375px; overflow: hidden;">
+        <img src="{% static 'assets/img/perf_metrics.png' %}" alt="F1 Score and Precision Graph" class="chart-image">
       </div>
       <div id="myChartLegend"></div>
     </div>
@@ -139,7 +139,7 @@
           </thead>
           <tbody>
             {% for activity in recent_activities %}
-            <tr>
+            <tr class="hover-row">
               <td>
                 <div class="d-flex gap-2 align-items-center">
                   <div>
@@ -164,4 +164,57 @@
     </div>
   </div>
 </div>
+
+<style>
+  /* Card Hover Effect */
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Row Hover Effect */
+  .hover-row:hover {
+    background-color: #f7f7f7;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Chart Image Animation */
+  .chart-image {
+    transition: transform 0.5s ease;
+  }
+  .chart-image:hover {
+    transform: scale(1.05);
+  }
+
+  /* Card Body Transition */
+  .card-body {
+    transition: background-color 0.3s ease;
+  }
+
+  /* Card Category Text Style */
+  .card-category {
+    font-weight: 500;
+    color: #6c757d;
+  }
+
+  /* Badge Styles */
+  .badge-success {
+    background-color: #28a745;
+  }
+  .badge-warning {
+    background-color: #ffc107;
+  }
+  .badge-danger {
+    background-color: #dc3545;
+  }
+  .badge-secondary {
+    background-color: #6c757d;
+  }
+  .badge-info {
+    background-color: #17a2b8;
+  }
+</style>
 {% endblock %}
