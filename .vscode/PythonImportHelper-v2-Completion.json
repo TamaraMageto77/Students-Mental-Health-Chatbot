@@ -56,6 +56,22 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -573,6 +589,15 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "accounts.migrations.0002_account_created_at",
+        "description": "accounts.migrations.0002_account_created_at",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('accounts', '0001_initial'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='account',\n            name='created_at',\n            field=models.DateTimeField(auto_now_add=True, null=True),\n        ),",
+        "detail": "accounts.migrations.0002_account_created_at",
+        "documentation": {}
+    },
+    {
         "label": "AccountAdmin",
         "kind": 6,
         "importPath": "accounts.admin",
@@ -667,7 +692,7 @@
         "kind": 5,
         "importPath": "accounts.urls",
         "description": "accounts.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"\", homepage, name=\"homepage\"),\n    path(\"about/\", about, name=\"about\"),\n    path(\"chatSpace/\", chat, name=\"chat\"),  \n    path(\"signup/\", signup_view, name=\"signup\"),# User registration\n    path(\"login/\", login_view, name=\"login\"),# User login\n    path(\"logout/\", logout_view, name=\"logout\"),# User logout\n    path(\"profile/\", profile, name=\"profile\"),# User profile view/update\n    path(\"accounts/new/\", UsersCreateView.as_view(), name=\"new_user\"),         # Create new user\n    path(\"accounts/<int:pk>/\", UsersDetailView.as_view(), name=\"user_detail\"), # User detail view",
+        "peekOfCode": "urlpatterns = [\n    path(\"\", homepage, name=\"homepage\"),\n    path(\"about/\", about, name=\"about\"),\n    path(\"signup/\", signup_view, name=\"signup\"),# User registration\n    path(\"login/\", login_view, name=\"login\"),# User login\n    path(\"logout/\", logout_view, name=\"logout\"),# User logout\n    path(\"profile/\", profile, name=\"profile\"),# User profile view/update\n    # Password reset views\n    path(\"password_reset/\", MyPasswordResetView.as_view(), name=\"password_reset\"),                          # Password reset\n    path(\"password_reset/done/\", MyPasswordResetDoneView.as_view(), name=\"password_reset_done\"),            # Password reset done",
         "detail": "accounts.urls",
         "documentation": {}
     },
@@ -1117,7 +1142,7 @@
         "kind": 5,
         "importPath": "dashboard.urls",
         "description": "dashboard.urls",
-        "peekOfCode": "urlpatterns = [\n    path('', dashboard, name='dashboard'),\n    path('accounts/', dashboard, name='admin_accounts'),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('', dashboard, name='dashboard'),\n    path('accounts/', accounts_list, name='accounts'),\n    path('accounts/<int:id>/', account_detail, name='account_detail'),\n    path('accounts/<int:id>/upgrade', account_upgrade, name='upgrade_to_counsellor'),\n]",
         "detail": "dashboard.urls",
         "documentation": {}
     },
@@ -1126,16 +1151,7 @@
         "kind": 2,
         "importPath": "dashboard.views",
         "description": "dashboard.views",
-        "peekOfCode": "def dashboard(request):\n    return render(request, 'admin/admin_dashboard.html')\ndef accounts(request):\n    return HttpResponse(\"Welcome to the Admin Accounts Dashboard!\")\ndef alerts(request):\n    return HttpResponse(\"Welcome to the Alerts Dashboard!\")\ndef reports(request):\n    return HttpResponse(\"Welcome to the Reports Dashboard!\")\n@login_required\ndef users(request):",
-        "detail": "dashboard.views",
-        "documentation": {}
-    },
-    {
-        "label": "accounts",
-        "kind": 2,
-        "importPath": "dashboard.views",
-        "description": "dashboard.views",
-        "peekOfCode": "def accounts(request):\n    return HttpResponse(\"Welcome to the Admin Accounts Dashboard!\")\ndef alerts(request):\n    return HttpResponse(\"Welcome to the Alerts Dashboard!\")\ndef reports(request):\n    return HttpResponse(\"Welcome to the Reports Dashboard!\")\n@login_required\ndef users(request):\n    \"\"\"\n    Displays a list of all users, excluding the currently logged-in user.",
+        "peekOfCode": "def dashboard(request):\n    return render(request, 'admin/admin_dashboard.html')\ndef alerts(request):\n    return HttpResponse(\"Welcome to the Alerts Dashboard!\")\ndef reports(request):\n    return HttpResponse(\"Welcome to the Reports Dashboard!\")\n@login_required\ndef users(request):\n    \"\"\"\n    Displays a list of all users, excluding the currently logged-in user.",
         "detail": "dashboard.views",
         "documentation": {}
     },
@@ -1153,7 +1169,7 @@
         "kind": 2,
         "importPath": "dashboard.views",
         "description": "dashboard.views",
-        "peekOfCode": "def reports(request):\n    return HttpResponse(\"Welcome to the Reports Dashboard!\")\n@login_required\ndef users(request):\n    \"\"\"\n    Displays a list of all users, excluding the currently logged-in user.\n    \"\"\"\n    users_list = Account.objects.exclude(id=request.user.id)\n    return JsonResponse(users_list)",
+        "peekOfCode": "def reports(request):\n    return HttpResponse(\"Welcome to the Reports Dashboard!\")\n@login_required\ndef users(request):\n    \"\"\"\n    Displays a list of all users, excluding the currently logged-in user.\n    \"\"\"\n    users_list = Account.objects.exclude(id=request.user.id)\n    return JsonResponse(users_list)\n@login_required",
         "detail": "dashboard.views",
         "documentation": {}
     },
@@ -1162,7 +1178,34 @@
         "kind": 2,
         "importPath": "dashboard.views",
         "description": "dashboard.views",
-        "peekOfCode": "def users(request):\n    \"\"\"\n    Displays a list of all users, excluding the currently logged-in user.\n    \"\"\"\n    users_list = Account.objects.exclude(id=request.user.id)\n    return JsonResponse(users_list)",
+        "peekOfCode": "def users(request):\n    \"\"\"\n    Displays a list of all users, excluding the currently logged-in user.\n    \"\"\"\n    users_list = Account.objects.exclude(id=request.user.id)\n    return JsonResponse(users_list)\n@login_required\ndef accounts_list(request):\n    \"\"\"\n    Displays a list of all accounts.",
+        "detail": "dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "accounts_list",
+        "kind": 2,
+        "importPath": "dashboard.views",
+        "description": "dashboard.views",
+        "peekOfCode": "def accounts_list(request):\n    \"\"\"\n    Displays a list of all accounts.\n    \"\"\"\n    context = {}\n    context['accounts'] = Account.objects.all()\n    context['admins'] = Account.objects.filter(account_type=1).count()\n    context['counsellors'] = Account.objects.filter(account_type=2).count()\n    context['students'] = Account.objects.filter(account_type=3).count()\n    return render(request, 'admin/accounts_list.html', context)",
+        "detail": "dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "account_detail",
+        "kind": 2,
+        "importPath": "dashboard.views",
+        "description": "dashboard.views",
+        "peekOfCode": "def account_detail(request, id):\n    \"\"\"\n    Displays the details of a specific account.\n    \"\"\"\n    try:\n        account = Account.objects.get(id=id)\n    except Account.DoesNotExist:\n        return HttpResponse(\"Account not found.\", status=404)\n    context = {'account': account}\n    return render(request, 'admin/account_detail.html', context)",
+        "detail": "dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "account_upgrade",
+        "kind": 2,
+        "importPath": "dashboard.views",
+        "description": "dashboard.views",
+        "peekOfCode": "def account_upgrade(request, id):\n    \"\"\"\n    Updates the details of a specific account.\n    \"\"\"\n    try:\n        account = Account.objects.get(id=id)\n        account.account_type = 2\n        account.save()\n    except Account.DoesNotExist:\n        return HttpResponse(\"Account not found.\", status=404)",
         "detail": "dashboard.views",
         "documentation": {}
     },
