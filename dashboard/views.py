@@ -47,6 +47,30 @@ def account_detail(request, id):
     context = {'account': account}
     return render(request, 'admin/account_detail.html', context)
 
+def account_delete(request, id):
+    """
+    Displays the details of a specific account.
+    """
+    try:
+        account = Account.objects.get(id=id)
+    except Account.DoesNotExist:
+        return HttpResponse("Account not found.", status=404)
+    
+    context = {'account': account}
+    return render(request, 'admin/user_delete.html', context)
+
+def account_edit(request, id):
+    """
+    Displays the details of a specific account.
+    """
+    try:
+        account = Account.objects.get(id=id)
+    except Account.DoesNotExist:
+        return HttpResponse("Account not found.", status=404)
+    
+    context = {'account': account}
+    return render(request, 'admin/user_edit.html', context)
+
 @login_required
 def account_upgrade(request, id):
     """
