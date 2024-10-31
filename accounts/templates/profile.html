@@ -152,7 +152,19 @@
         <!-- Breadcrumb Navigation -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{% url 'chats' %}">Chats</a></li>
+                <li class="breadcrumb-item"><a 
+                    {% if user.is_staff or user.is_counsellor %}
+                        href="{% url 'dashboard' %}"
+                    {% else %}
+                        href="{% url 'chats' %}"
+                    {% endif %}
+                 >
+                    {% if user.is_staff or user.is_counsellor %}
+                        Dashboard
+                    {% else %}
+                        Chats
+                    {% endif %}
+                 </a></li>
                 <li class="breadcrumb-item active" aria-current="page">Profile</li>
             </ol>
         </nav>
