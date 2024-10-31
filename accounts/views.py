@@ -29,14 +29,20 @@ def signup_view(request):
     On GET request, it renders the registration template.
     On POST request, it validates the form data, creates a new user, and logs them in.
     """
-    next_url = request.GET.get('next', '/')
+    next_url = request.GET.get('next', None)
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save(commit=True)
             login(request, user, backend='accounts.backends.MyUserBackend')
-            return JsonResponse({'status': 'success', "next_url": next_url})
-        return JsonResponse({'status': 'error', 'errors': form.errors})
+            redirect_url = reverse_lazy('profile')
+            if user.account_type == UserType.ADMINISTRATOR:
+                redirect_url = reverse_lazy('admin_dashboard')
+            elif user.account_type == UserType.COUNSELLOR:
+                redirect_url = reverse_lazy('counsellor_dashboard')
+            elif user.account_type == UserType.STUDENT:
+                redirect_url = reverse_lazy('student_dashboard')
+            return redirect(next_url or redirect_url)
     return render(request, 'register.html', {"next_url": next_url})
 
 
@@ -60,7 +66,8 @@ def login_view(request):
                     next_url = reverse_lazy('counsellor_dashboard')
                 elif user.account_type == UserType.STUDENT:
                     next_url = reverse_lazy('student_dashboard')
-                return JsonResponse({'status': 'success', "next_url": next_url})
+                    redirect_url = reverse_lazy('profile')
+                return redirect(next_url or redirect_url)
             else:
                 form.add_error(None, "Invalid email or password")
         return JsonResponse({'status': 'error', 'errors': form.errors})

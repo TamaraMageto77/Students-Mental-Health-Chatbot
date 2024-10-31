@@ -39,9 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-    'student',
-    'counsellor',
-    'admin.apps.AdminConfig',
+    'chats',
+    'dashboard',
 ]
 
 MIDDLEWARE = [
@@ -109,7 +108,6 @@ AUTH_USER_MODEL = 'accounts.Account'
 AUTHENTICATION_BACKENDS = [
     'accounts.backends.AccountsBackend',
     'django.contrib.auth.backends.ModelBackend',
-
 ]
 
 
@@ -135,7 +133,9 @@ MEDIA_URL = 'media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'accounts', "static", "student"),
+    os.path.join(BASE_DIR, 'accounts'),
+    os.path.join(BASE_DIR, "chats"),
+    os.path.join(BASE_DIR, "dashboard"),
 ]
 
 
