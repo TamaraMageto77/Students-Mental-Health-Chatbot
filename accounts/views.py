@@ -19,8 +19,8 @@ def about(request):
     return render(request, 'about.html')
 
 
-def landing(request):
-    return render(request, 'get_started.html')
+def contact(request):
+    return render(request, 'contact.html')
 
 
 def chat(request):

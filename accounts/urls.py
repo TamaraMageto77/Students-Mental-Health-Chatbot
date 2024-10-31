@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    homepage, about, chat, signup_view, login_view, logout_view, profile,
+    homepage, about, chat, signup_view, login_view, logout_view, profile, contact,
     UsersCreateView, UsersDetailView, UsersUpdateView, UsersDeleteView,
     MyPasswordResetView, MyPasswordResetDoneView,
     MyPasswordResetConfirmView, MyPasswordResetCompleteView
@@ -9,6 +9,7 @@ from .views import (
 urlpatterns = [
     path("", homepage, name="homepage"),
     path("about/", about, name="about"),
+    path("contact/", contact, name="contact"),
     path("signup/", signup_view, name="signup"),# User registration
     path("login/", login_view, name="login"),# User login
     path("logout/", logout_view, name="logout"),# User logout
