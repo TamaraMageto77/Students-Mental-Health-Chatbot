@@ -6,13 +6,13 @@
     <h4 class="page-title">Account Detail</h4>
     <ul class="breadcrumbs">
       <li class="nav-home">
-        <a href="{% url 'dashboard' %}"><i class="icon-home"></i></a>
+        <a href="{% url 'dashboard' %}" class="text-primary"><i class="icon-home"></i></a>
       </li>
       <li class="separator">
         <i class="icon-arrow-right"></i>
       </li>
       <li class="nav-item">
-        <a href="{% url 'accounts' %}">Accounts</a>
+        <a href="{% url 'accounts' %}" class="text-primary">Accounts</a>
       </li>
       <li class="separator">
         <i class="icon-arrow-right"></i>
@@ -25,19 +25,38 @@
 {% endblock %}
 
 {% block content %}
-<div>
+<div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
-      <div class="card card-profile">
-        
-        <div class="card-body">
-          <div class="user-profile text-center">
-            <div class="name">{{ account.full_name }}</div>
-            <div class="job">{{ account.role }}</div>
-            <div class="desc">{{ account.email }}</div>
-            <div class="view-profile">
-              <a href="{% url 'account_detail' account.id %}" class="btn btn-secondary btn-sm">Edit</a>
-              <a href="{% url 'account_detail' account.id %}" class="btn btn-danger btn-sm">Delete</a>
+      <div class="card card-profile shadow-sm">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center">
+            <!-- Default Profile Icon -->
+            <div class="profile-icon me-4">
+              <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+                <i class="fas fa-user fa-3x text-secondary"></i>
+              </div>
+            </div>
+            
+            <!-- User Information -->
+            <div class="user-profile flex-grow-1">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h3 class="mb-1 fw-bold">{{ account.full_name }}</h3>
+                  <div class="text-muted mb-2">
+                    <span class="badge bg-primary me-2">{{ account.role }}</span>
+                    <span><i class="fas fa-envelope me-2"></i>{{ account.email }}</span>
+                  </div>
+                </div>
+                <div class="action-buttons">
+                  <a href="{% url 'account_detail' account.id %}" class="btn btn-outline-secondary btn-sm me-2">
+                    <i class="fas fa-edit me-1"></i>Edit
+                  </a>
+                  <a href="{% url 'account_detail' account.id %}" class="btn btn-outline-danger btn-sm">
+                    <i class="fas fa-trash-alt me-1"></i>Delete
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -46,16 +65,18 @@
   </div>
 
   {% if account.account_type == 3 %}
-  <div class="row">
+  <div class="row mt-4">
     <div class="col-md-12">
-      <div class="card">
-        <div class="card-header">
-          <h4 class="card-title">Upgrade to Counsellor</h4>
+      <div class="card shadow-sm">
+        <div class="card-header bg-light">
+          <h5 class="card-title mb-0">Upgrade to Counsellor</h5>
         </div>
         <div class="card-body">
           <form method="post" action="{% url 'upgrade_to_counsellor' account.id %}">
             {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Upgrade</button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-arrow-circle-up me-2"></i>Upgrade Account
+            </button>
           </form>
         </div>
       </div>
@@ -63,4 +84,49 @@
   </div>
   {% endif %}
 </div>
+
+<style>
+.card-profile {
+  transition: all 0.3s ease;
+}
+
+.card-profile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+.profile-icon .rounded-circle {
+  transition: all 0.3s ease;
+  border: 2px solid transparent; /* Default border */
+}
+
+.profile-icon .rounded-circle:hover {
+  background-color: #f8f9fa !important;
+  border: 2px solid #5c6bc0; /* Highlight border on hover */
+}
+
+.profile-icon .rounded-circle:focus {
+  background-color: #e2e6ea; /* Light background on focus */
+  border: 2px solid #5c6bc0; /* Highlight border on focus */
+}
+
+.action-buttons .btn {
+  transition: all 0.2s ease;
+}
+
+.action-buttons .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+}
+
+.action-buttons .btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(92, 107, 192, 0.5); /* Focus outline effect */
+}
+
+.badge {
+  font-weight: 500;
+  padding: 0.5em 1em;
+}
+</style>
 {% endblock %}
