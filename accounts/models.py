@@ -37,6 +37,7 @@ class Account(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     groups = models.ManyToManyField(Group, blank=True)
     user_permissions = models.ManyToManyField(Permission, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True,null=True)
 
     objects = AccountManager()
 
@@ -48,6 +49,10 @@ class Account(AbstractBaseUser):
         Return True if the user has any permissions in the given app label.
         """
         return True
+    
+    @property
+    def role(self):
+        return UserType.CHOICES[self.account_type - 1][1]
 
     def has_perm(self, perm, obj=None):
         """
