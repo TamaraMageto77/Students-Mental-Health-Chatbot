@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+  <div class="page-header">
+    <h4 class="page-title">Dashboard</h4>
+    <ul class="breadcrumbs">
+      <li class="nav-home">
+        <a href="{% url 'dashboard' %}"><i class="icon-home"></i></a>
+      </li>
+      <li class="separator">
+        <i class="icon-arrow-right"></i>
+      </li>
+      <li class="nav-item">
+        <span>Dashboard</span>
+      </li>
+    </ul>
+  </div>
+{% endblock %}
+
+{% block content %}
+<div>
+  <div class="row">
+    <!-- Daily Check-Ins -->
+    <div class="col-sm-6 col-md-3">
+      <div class="card card-stats card-round">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-icon">
+              <div class="icon-big text-center icon-primary bubble-shadow-small">
+                <i class="fas fa-calendar-check"></i>
+              </div>
+            </div>
+            <div class="col col-stats ms-3 ms-sm-0">
+              <div class="numbers">
+                <p class="card-category">Daily Check-Ins</p>
+                <h4 class="card-title">{{ daily_checkins }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Therapy Sessions -->
+    <div class="col-sm-6 col-md-3">
+      <div class="card card-stats card-round">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-icon">
+              <div class="icon-big text-center icon-info bubble-shadow-small">
+                <i class="fas fa-user-md"></i>
+              </div>
+            </div>
+            <div class="col col-stats ms-3 ms-sm-0">
+              <div class="numbers">
+                <p class="card-category">Therapy Sessions</p>
+                <h4 class="card-title">{{ therapy_sessions }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Guided Meditations -->
+    <div class="col-sm-6 col-md-3">
+      <div class="card card-stats card-round">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-icon">
+              <div class="icon-big text-center icon-success bubble-shadow-small">
+                <i class="fas fa-brain"></i>
+              </div>
+            </div>
+            <div class="col col-stats ms-3 ms-sm-0">
+              <div class="numbers">
+                <p class="card-category">Guided Meditations</p>
+                <h4 class="card-title">{{ guided_meditations }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Self-Help Tools Accessed -->
+    <div class="col-sm-6 col-md-3">
+      <div class="card card-stats card-round">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-icon">
+              <div class="icon-big text-center icon-secondary bubble-shadow-small">
+                <i class="fas fa-toolbox"></i>
+              </div>
+            </div>
+            <div class="col col-stats ms-3 ms-sm-0">
+              <div class="numbers">
+                <p class="card-category">Self-Help Tools Accessed</p>
+                <h4 class="card-title">{{ self_help_tools }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mental Health Statistics Section -->
+  <div class="card card-round">
+    <div class="card-header">
+      <div class="card-title">Mental Health Statistics</div>
+    </div>
+    <div class="card-body">
+      <div class="chart-container" style="min-height: 375px">
+        <canvas id="mentalHealthChart"></canvas>
+      </div>
+      <div id="myChartLegend"></div>
+    </div>
+  </div>
+  
+  <!-- Recent Activity Section -->
+  <div class="card card-round">
+    <div class="card-header">
+      <div class="card-head-row card-tools-still-right">
+        <div class="card-title">Recent Activity</div>
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table align-items-center mb-0">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">User</th>
+              <th scope="col" class="text-end">Activity</th>
+              <th scope="col" class="text-end">Date</th>
+              <th scope="col" class="text-end">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for activity in recent_activities %}
+            <tr>
+              <td>
+                <div class="d-flex gap-2 align-items-center">
+                  <div>
+                    <img src="{{ activity.user.image.url }}" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%;" />
+                  </div>
+                  <div class="d-flex flex-column">
+                    <span class="text-primary">{{ activity.user.get_full_name }}</span>
+                    <small>{{ activity.user.email }}</small>
+                  </div>
+                </div>
+              </td>
+              <td class="text-end">{{ activity.description }}</td>
+              <td class="text-end">{{ activity.date }}</td>
+              <td class="text-end">
+                <span class="badge badge-{{ activity.status }}">{{ activity.status }}</span>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,83 @@
+
+/* General Card Styling */
+.card {
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+/* Profile Section */
+.text-center img {
+    border: 4px solid #ddd;
+    transition: border-color 0.3s ease;
+}
+.text-center img:hover {
+    border-color: #007bff;
+}
+
+.text-center h5 {
+    font-size: 1.25rem;
+    transition: color 0.3s ease;
+}
+.text-center h5:hover {
+    color: #007bff;
+}
+.text-black-50 {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+/* Button Styling */
+.form-button-action .btn {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.form-button-action .btn:last-child {
+    margin-right: 0; 
+}
+
+.form-button-action .btn:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-success:hover {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-danger:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-primary:hover {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+/* Badge Styling */
+.badge {
+    padding: 0.5em 0.75em;
+    border-radius: 5px;
+    font-size: 0.875rem;
+}
+/* Border between sections */
+.border-right {
+    border-right: 1px solid #ddd;
+}
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .border-right {
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 20px;
+    }
+    .card-body {
+        padding: 20px;
+    }
+}
+

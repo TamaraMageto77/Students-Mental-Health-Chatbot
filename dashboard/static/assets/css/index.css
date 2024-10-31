@@ -1,0 +1,263 @@
+:root {
+    --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --heading-font: "Raleway", sans-serif;
+    --nav-font: "Poppins", sans-serif;
+}
+
+/* Updated color scheme */
+:root {
+    --background-color: #f2f2f2; /* Light gray background */
+    --default-color: #333333; /* Darker gray for text */
+    --heading-color: #2c3e50; /* Muted blue for headings */
+    --accent-color: #3498db; /* Bright blue accent for interactive elements */
+    --surface-color: #ffffff; /* White for card backgrounds or boxed sections */
+    --contrast-color: #ffffff; /* White for text on colored buttons */
+}
+
+:root {
+    --nav-color: #2c3e50; /* Muted blue for navigation links */
+    --nav-hover-color: #1abc9c; /* Teal hover effect on nav links */
+    --nav-mobile-background-color: rgb(3, 103, 110); /* Darker blue for mobile menu */
+    --nav-dropdown-background-color: #bdc3c7; /* Light gray dropdown background */
+    --nav-dropdown-color: #2c3e50; /* Muted blue for dropdown links */
+    --nav-dropdown-hover-color: #1abc9c; /* Teal hover effect for dropdown links */
+}
+
+/* Light background section */
+.light-background {
+    --background-color: #f8f8f8;
+    --surface-color: #ffffff;
+}
+
+/* Dark background section */
+.dark-background {
+    --background-color: #2c3e50;
+    --default-color: #ecf0f1;
+    --heading-color: #ffffff;
+    --surface-color: #34495e;
+    --contrast-color: #ffffff;
+}
+  .index-page {
+    color: var(--default-color);
+    background-color: var(--background-color);
+    font-family: var(--default-font);
+  }
+  a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: 0.3s;
+  }
+  
+  a:hover {
+    color: color-mix(in srgb, var(--accent-color), transparent 25%);
+    text-decoration: none;
+  }
+  h1,
+h2,h3,h4,h5,h6 {
+  color: var(--heading-color);
+  font-family: var(--heading-font);
+}
+.mobile-nav-toggle {
+    color: var(--nav-color);
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 32px;
+    line-height: 0;
+    cursor: pointer;
+    display: block !important;
+    z-index: 998;
+    transition: 0.3s;
+  }
+  .mobile-nav-toggle:hover {
+    color: var(--nav-hover-color);
+  }
+  
+  .navmenu {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: -300px;
+    z-index: 997;
+    transition: 0.3s;
+    width: 300px;
+    overflow: hidden;
+  }
+  .navmenu ul {
+    display: block;
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+    overflow-y: auto;
+    transition: 0.3s;
+    z-index: 998;
+  }
+  .navmenu a,
+.navmenu a:focus {
+  color: var(--nav-dropdown-color);
+  padding: 10px 20px;
+  font-family: var(--nav-font);
+  font-size: 17px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  white-space: nowrap;
+  transition: 0.3s;
+}
+
+.navmenu a i,
+.navmenu a:focus i {
+  font-size: 12px;
+  line-height: 0;
+  margin-left: 5px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: 0.3s;
+  background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
+}
+
+.navmenu a i:hover,
+.navmenu a:focus i:hover {
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+}
+
+.navmenu a:hover,
+.navmenu .active,
+.navmenu .active:focus {
+  color: var(--nav-dropdown-hover-color);
+}
+
+.navmenu .active i,
+.navmenu .active:focus i {
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  transform: rotate(180deg);
+}
+
+.navmenu .dropdown ul {
+  position: static;
+  display: none;
+  z-index: 99;
+  padding: 10px 0;
+  margin: 10px 20px;
+  box-shadow: none;
+  transition: all 0.5s ease-in-out;
+}
+
+.navmenu .dropdown>.dropdown-active {
+  display: block;
+  background-color: var(--nav-dropdown-background-color);
+  border: 1px solid color-mix(in srgb, var(--nav-dropdown-color), transparent 90%);
+}
+
+.mobile-nav-active {
+  overflow: hidden;
+}
+
+.mobile-nav-active .mobile-nav-toggle {
+  right: 310px;
+  font-size: 36px;
+}
+
+.mobile-nav-active .navmenu {
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: var(--nav-mobile-background-color);
+  transition: 0.3s;
+}
+section,
+.section {
+  color: var(--default-color);
+  background-color: var(--background-color);
+  padding: 60px 0;
+  scroll-margin-top: 78px;
+  overflow: clip;
+}
+.section-title {
+    text-align: center;
+    padding-bottom: 60px;
+    position: relative;
+  }
+  
+  .section-title h2 {
+    font-size: 32px;
+    font-weight: 300;
+    margin-bottom: 15px;
+  }
+  
+  .section-title p {
+    margin-bottom: 0;
+  }
+  .hero {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    padding: 80px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .hero img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+  
+  .hero .container {
+    position: relative;
+    z-index: 3;
+  }
+  
+  .hero h2 {
+    margin: 0;
+    font-size: 48px;
+    font-weight: 300;
+  }
+  
+  .hero p {
+    margin: 10px 0 0 0;
+    font-size: 24px;
+    color: var(--heading-color);
+  }
+  
+  .hero .btn-get-started {
+    color: var(--contrast-color);
+    background: var(--accent-color);
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 10px 40px;
+    margin: 30px 0 0 0;
+    border-radius: 50px;
+    transition: 0.3s;
+  }
+  
+  .hero .btn-get-started:hover {
+    background: color-mix(in srgb, var(--accent-color) 90%, white 15%);
+  }
+  
+  @media (max-width: 768px) {
+    .hero h2 {
+      font-size: 32px;
+    }
+  
+    .hero p {
+      font-size: 18px;
+    }
+  }
+  

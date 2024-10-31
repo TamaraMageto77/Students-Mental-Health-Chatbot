@@ -1,0 +1,86 @@
+{% load static %}
+<nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+  <div class="container-fluid">
+    <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
+      <h4 class="ms-2" style="text-transform: uppercase; letter-spacing: 5px;">Synergy Mental Health App</h4>
+    </nav>
+
+    <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+      <li class="nav-item topbar-icon dropdown hidden-caret">
+        <a class="nav-link" href="" id="notifDropdown" role="button">
+          <i class="fa fa-bell"></i>
+          <span class="notification" style="display: none;"></span>
+        </a>
+      </li>
+
+      <li class="nav-item topbar-user dropdown hidden-caret">
+        <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
+          <div class="avatar-sm">
+            {% if user.image %}
+              <img src="{{ user.image.url }}" alt="..." class="avatar-img rounded-circle" />
+            {% else %}
+              <img src="{% static 'assets/img/profile.png' %}" alt="..." class="avatar-img rounded-circle" />
+            {% endif %}
+          </div>
+          <span class="profile-username">
+            <span class="fw-bold">{{ user.email }}</span>
+            <br />
+            {% if user.is_staff %}
+              <span class="fw-bold text-info" style="font-variant: small-caps;">Hr</span>
+            {% elif user.is_manager %}
+              <span class="fw-bold text-success" style="font-variant: small-caps;">Manager</span>
+            {% else %}
+              <span class="fw-bold text-primary" style="font-variant: small-caps;">Employee</span>
+            {% endif %}
+          </span>
+        </a>
+        <ul class="dropdown-menu dropdown-user animated fadeIn">
+          <div class="dropdown-user-scroll scrollbar-outer">
+            <li>
+              <a class="dropdown-item" href="{% url 'profile' %}">My Profile</a>
+              <a class="dropdown-item" href="">Notifications</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+            </li>
+          </div>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+{% comment %}websocket connection{% endcomment %}
+{% if user.is_authenticated %}
+  <script>
+    const wsUri = 'ws://localhost:8000/notifications/{{user.id}}'
+    const websocket = new WebSocket(wsUri)
+    
+    websocket.onopen = function (event) {
+      console.log('Connected to websocket server')
+    }
+    
+    websocket.onmessage = function (event) {
+      const data = JSON.parse(event.data)
+      const unreadCount = data.unread_count
+      console.log('Unread notifications count:', unreadCount)
+    
+      // Update the UI with the unread notification count
+      const notifDropdown = document.getElementById('notifDropdown')
+      const notificationCount = notifDropdown.querySelector('.notification')
+      if (unreadCount > 0) {
+        notificationCount.innerText = unreadCount
+        notificationCount.style.display = 'inline'
+      } else {
+        notificationCount.style.display = 'none'
+      }
+    }
+    
+    websocket.onerror = function (event) {
+      console.log('WebSocket error:', event)
+    }
+    
+    websocket.onclose = function (event) {
+      console.log('Connection closed')
+    }
+  </script>
+{% endif %}
