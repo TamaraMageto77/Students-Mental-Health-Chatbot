@@ -8,6 +8,182 @@
         "documentation": {}
     },
     {
+        "label": "BaseCommand",
+        "importPath": "django.core.management.base",
+        "description": "django.core.management.base",
+        "isExtraImport": true,
+        "detail": "django.core.management.base",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "django.utils",
+        "description": "django.utils",
+        "isExtraImport": true,
+        "detail": "django.utils",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "apps",
+        "importPath": "django.apps",
+        "description": "django.apps",
+        "isExtraImport": true,
+        "detail": "django.apps",
+        "documentation": {}
+    },
+    {
+        "label": "AppConfig",
+        "importPath": "django.apps",
+        "description": "django.apps",
+        "isExtraImport": true,
+        "detail": "django.apps",
+        "documentation": {}
+    },
+    {
+        "label": "AppConfig",
+        "importPath": "django.apps",
+        "description": "django.apps",
+        "isExtraImport": true,
+        "detail": "django.apps",
+        "documentation": {}
+    },
+    {
+        "label": "AppConfig",
+        "importPath": "django.apps",
+        "description": "django.apps",
+        "isExtraImport": true,
+        "detail": "django.apps",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "Account",
         "importPath": "accounts.models",
         "description": "accounts.models",
@@ -37,110 +213,6 @@
         "description": "accounts.models",
         "isExtraImport": true,
         "detail": "accounts.models",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
         "documentation": {}
     },
     {
@@ -184,35 +256,19 @@
         "documentation": {}
     },
     {
+        "label": "messages",
+        "importPath": "django.contrib",
+        "description": "django.contrib",
+        "isExtraImport": true,
+        "detail": "django.contrib",
+        "documentation": {}
+    },
+    {
         "label": "UserAdmin",
         "importPath": "django.contrib.auth.admin",
         "description": "django.contrib.auth.admin",
         "isExtraImport": true,
         "detail": "django.contrib.auth.admin",
-        "documentation": {}
-    },
-    {
-        "label": "AppConfig",
-        "importPath": "django.apps",
-        "description": "django.apps",
-        "isExtraImport": true,
-        "detail": "django.apps",
-        "documentation": {}
-    },
-    {
-        "label": "AppConfig",
-        "importPath": "django.apps",
-        "description": "django.apps",
-        "isExtraImport": true,
-        "detail": "django.apps",
-        "documentation": {}
-    },
-    {
-        "label": "AppConfig",
-        "importPath": "django.apps",
-        "description": "django.apps",
-        "isExtraImport": true,
-        "detail": "django.apps",
         "documentation": {}
     },
     {
@@ -513,6 +569,14 @@
         "documentation": {}
     },
     {
+        "label": "redirect",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
         "label": "JsonResponse",
         "importPath": "django.http",
         "description": "django.http",
@@ -739,6 +803,15 @@
         "importPath": "sys",
         "description": "sys",
         "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "Command",
+        "kind": 6,
+        "importPath": "accounts.management.commands.shift_timezone",
+        "description": "accounts.management.commands.shift_timezone",
+        "peekOfCode": "class Command(BaseCommand):\n    help = 'Convert all DateTimeField values from UTC to GMT+3'\n    def handle(self, *args, **options):\n        time_shift = timedelta(hours=3)\n        # Iterate through all models and their DateTimeFields\n        for model in apps.get_models():\n            for field in model._meta.fields:\n                if isinstance(field, models.DateTimeField):\n                    # Fetch all rows with DateTimeField data\n                    for instance in model.objects.all():",
+        "detail": "accounts.management.commands.shift_timezone",
         "documentation": {}
     },
     {
@@ -1048,6 +1121,15 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "chats.migrations.0004_alter_message_options",
+        "description": "chats.migrations.0004_alter_message_options",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('chats', '0003_alter_chat_options_alter_message_options_and_more'),\n    ]\n    operations = [\n        migrations.AlterModelOptions(\n            name='message',\n            options={'ordering': ['timestamp'], 'verbose_name': 'Message', 'verbose_name_plural': 'Messages'},\n        ),\n    ]",
+        "detail": "chats.migrations.0004_alter_message_options",
+        "documentation": {}
+    },
+    {
         "label": "ChatsConfig",
         "kind": 6,
         "importPath": "chats.apps",
@@ -1115,7 +1197,7 @@
         "kind": 2,
         "importPath": "chats.utils",
         "description": "chats.utils",
-        "peekOfCode": "def mental_health_chatbot(chat):\n    # Prepare the messages list with the system message\n    messages = [\n        ChatMessage(\n            role=\"system\",\n            content=\"You are a mental health assistant. You are helping a user with their mental health.\"\n        )\n    ]\n    # Append previous messages to the messages list\n    for message in chat.messages.all():",
+        "peekOfCode": "def mental_health_chatbot(chat):\n    # Prepare the messages list with the system message\n    messages = [\n        ChatMessage(\n            role=\"system\",\n            content=\"\"\"\n            For mental health inquiries from students: You are a supportive therapist. Provide concise but complete responses that:\n            1. Acknowledge the person's feelings\n            2. Validate their experience\n            3. Offer clear, practical support or next steps",
         "detail": "chats.utils",
         "documentation": {}
     },
@@ -1124,7 +1206,7 @@
         "kind": 5,
         "importPath": "chats.utils",
         "description": "chats.utils",
-        "peekOfCode": "os.environ[\"AI21_API_KEY\"] = \"UDkAKH55JEDTqUUhT4huRGNgjDMasWhv\"\nclient = AI21Client()\ndef mental_health_chatbot(chat):\n    # Prepare the messages list with the system message\n    messages = [\n        ChatMessage(\n            role=\"system\",\n            content=\"You are a mental health assistant. You are helping a user with their mental health.\"\n        )\n    ]",
+        "peekOfCode": "os.environ[\"AI21_API_KEY\"] = \"UDkAKH55JEDTqUUhT4huRGNgjDMasWhv\"\nclient = AI21Client()\ndef mental_health_chatbot(chat):\n    # Prepare the messages list with the system message\n    messages = [\n        ChatMessage(\n            role=\"system\",\n            content=\"\"\"\n            For mental health inquiries from students: You are a supportive therapist. Provide concise but complete responses that:\n            1. Acknowledge the person's feelings",
         "detail": "chats.utils",
         "documentation": {}
     },
@@ -1133,7 +1215,7 @@
         "kind": 5,
         "importPath": "chats.utils",
         "description": "chats.utils",
-        "peekOfCode": "client = AI21Client()\ndef mental_health_chatbot(chat):\n    # Prepare the messages list with the system message\n    messages = [\n        ChatMessage(\n            role=\"system\",\n            content=\"You are a mental health assistant. You are helping a user with their mental health.\"\n        )\n    ]\n    # Append previous messages to the messages list",
+        "peekOfCode": "client = AI21Client()\ndef mental_health_chatbot(chat):\n    # Prepare the messages list with the system message\n    messages = [\n        ChatMessage(\n            role=\"system\",\n            content=\"\"\"\n            For mental health inquiries from students: You are a supportive therapist. Provide concise but complete responses that:\n            1. Acknowledge the person's feelings\n            2. Validate their experience",
         "detail": "chats.utils",
         "documentation": {}
     },
@@ -1322,7 +1404,7 @@
         "kind": 5,
         "importPath": "core.settings",
         "description": "core.settings",
-        "peekOfCode": "AUTH_USER_MODEL = 'accounts.Account'\nLOGIN_URL = 'login'\nAUTHENTICATION_BACKENDS = [\n    'accounts.backends.AccountsBackend',\n    'django.contrib.auth.backends.ModelBackend',\n]\n# Internationalization\n# https://docs.djangoproject.com/en/3.2/topics/i18n/\nLANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'UTC'",
+        "peekOfCode": "AUTH_USER_MODEL = 'accounts.Account'\nLOGIN_URL = 'login'\nAUTHENTICATION_BACKENDS = [\n    'accounts.backends.AccountsBackend',\n    'django.contrib.auth.backends.ModelBackend',\n]\n# Internationalization\n# https://docs.djangoproject.com/en/3.2/topics/i18n/\nLANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'Africa/Nairobi'",
         "detail": "core.settings",
         "documentation": {}
     },
@@ -1331,7 +1413,7 @@
         "kind": 5,
         "importPath": "core.settings",
         "description": "core.settings",
-        "peekOfCode": "LOGIN_URL = 'login'\nAUTHENTICATION_BACKENDS = [\n    'accounts.backends.AccountsBackend',\n    'django.contrib.auth.backends.ModelBackend',\n]\n# Internationalization\n# https://docs.djangoproject.com/en/3.2/topics/i18n/\nLANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'UTC'\nUSE_I18N = True",
+        "peekOfCode": "LOGIN_URL = 'login'\nAUTHENTICATION_BACKENDS = [\n    'accounts.backends.AccountsBackend',\n    'django.contrib.auth.backends.ModelBackend',\n]\n# Internationalization\n# https://docs.djangoproject.com/en/3.2/topics/i18n/\nLANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'Africa/Nairobi'\nUSE_I18N = True",
         "detail": "core.settings",
         "documentation": {}
     },
@@ -1340,7 +1422,7 @@
         "kind": 5,
         "importPath": "core.settings",
         "description": "core.settings",
-        "peekOfCode": "AUTHENTICATION_BACKENDS = [\n    'accounts.backends.AccountsBackend',\n    'django.contrib.auth.backends.ModelBackend',\n]\n# Internationalization\n# https://docs.djangoproject.com/en/3.2/topics/i18n/\nLANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_L10N = True",
+        "peekOfCode": "AUTHENTICATION_BACKENDS = [\n    'accounts.backends.AccountsBackend',\n    'django.contrib.auth.backends.ModelBackend',\n]\n# Internationalization\n# https://docs.djangoproject.com/en/3.2/topics/i18n/\nLANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'Africa/Nairobi'\nUSE_I18N = True\nUSE_L10N = True",
         "detail": "core.settings",
         "documentation": {}
     },
@@ -1349,7 +1431,7 @@
         "kind": 5,
         "importPath": "core.settings",
         "description": "core.settings",
-        "peekOfCode": "LANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_L10N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/3.2/howto/static-files/\nSTATIC_URL = 'static/'\nMEDIA_URL = 'media/'\nSTATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')",
+        "peekOfCode": "LANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'Africa/Nairobi'\nUSE_I18N = True\nUSE_L10N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/3.2/howto/static-files/\nSTATIC_URL = 'static/'\nMEDIA_URL = 'media/'\nSTATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')",
         "detail": "core.settings",
         "documentation": {}
     },
@@ -1358,7 +1440,7 @@
         "kind": 5,
         "importPath": "core.settings",
         "description": "core.settings",
-        "peekOfCode": "TIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_L10N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/3.2/howto/static-files/\nSTATIC_URL = 'static/'\nMEDIA_URL = 'media/'\nSTATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')",
+        "peekOfCode": "TIME_ZONE = 'Africa/Nairobi'\nUSE_I18N = True\nUSE_L10N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/3.2/howto/static-files/\nSTATIC_URL = 'static/'\nMEDIA_URL = 'media/'\nSTATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')",
         "detail": "core.settings",
         "documentation": {}
     },
@@ -1475,7 +1557,7 @@
         "kind": 5,
         "importPath": "dashboard.urls",
         "description": "dashboard.urls",
-        "peekOfCode": "urlpatterns = [\n    path('', dashboard, name='dashboard'),\n    path('accounts/', accounts_list, name='accounts'),\n    path('alert/', alerts, name='alert'),\n    path('accounts/<int:id>/', account_detail, name='account_detail'),\n    path('accounts/<int:id>/delete', account_delete, name='account_delete'),\n    path('accounts/<int:id>/edit', account_edit, name='account_edit'),\n    path('accounts/<int:id>/upgrade', account_upgrade, name='upgrade_to_counsellor'),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('', dashboard, name='dashboard'),\n    path('accounts/', accounts_list, name='accounts'),\n    path('alert/', alerts, name='alert'),\n    path('accounts/<int:id>/', account_detail, name='account_detail'),\n    path('accounts/<int:id>/delete', account_delete, name='account_delete'),\n    path('accounts/create', account_create, name='account_create'),\n    path('accounts/<int:id>/edit', account_edit, name='account_edit'),\n    path('accounts/<int:id>/upgrade', account_upgrade, name='upgrade_to_counsellor'),\n]",
         "detail": "dashboard.urls",
         "documentation": {}
     },
@@ -1538,7 +1620,7 @@
         "kind": 2,
         "importPath": "dashboard.views",
         "description": "dashboard.views",
-        "peekOfCode": "def account_delete(request, id):\n    \"\"\"\n    Displays the details of a specific account.\n    \"\"\"\n    try:\n        account = Account.objects.get(id=id)\n    except Account.DoesNotExist:\n        return HttpResponse(\"Account not found.\", status=404)\n    context = {'account': account}\n    return render(request, 'admin/user_delete.html', context)",
+        "peekOfCode": "def account_delete(request, id):\n    \"\"\"\n    Deletes a specific account and redirects to the accounts list.\n    \"\"\"\n    try:\n        account = Account.objects.get(id=id)\n    except Account.DoesNotExist:\n        return HttpResponse(\"Account not found.\", status=404)\n    if request.method == 'POST':\n        account.delete()",
         "detail": "dashboard.views",
         "documentation": {}
     },
@@ -1547,7 +1629,16 @@
         "kind": 2,
         "importPath": "dashboard.views",
         "description": "dashboard.views",
-        "peekOfCode": "def account_edit(request, id):\n    \"\"\"\n    Displays the details of a specific account.\n    \"\"\"\n    try:\n        account = Account.objects.get(id=id)\n    except Account.DoesNotExist:\n        return HttpResponse(\"Account not found.\", status=404)\n    context = {'account': account}\n    return render(request, 'admin/user_edit.html', context)",
+        "peekOfCode": "def account_edit(request, id):\n    \"\"\"\n    Displays and updates the details of a specific account.\n    \"\"\"\n    try:\n        account = Account.objects.get(id=id)\n    except Account.DoesNotExist:\n        return HttpResponse(\"Account not found.\", status=404)\n    if request.method == 'POST':\n        full_name = request.POST.get('full_name')",
+        "detail": "dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "account_create",
+        "kind": 2,
+        "importPath": "dashboard.views",
+        "description": "dashboard.views",
+        "peekOfCode": "def account_create(request):\n    \"\"\"\n    Creates a new account.\n    \"\"\"\n    if request.method == 'POST':\n        full_name = request.POST.get('full_name')\n        email = request.POST.get('email')\n        password = request.POST.get('password')\n        account = Account(full_name=full_name, email=email)\n        account.set_password(password)",
         "detail": "dashboard.views",
         "documentation": {}
     },
