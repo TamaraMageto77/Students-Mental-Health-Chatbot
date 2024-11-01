@@ -41,8 +41,8 @@
                     <p>Are you sure you want to edit this user?</p>
                     <form method="post" action="">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">Edit</button>
-                        <a href="{% url 'accounts' %}" class="btn btn-secondary">Cancel</a>
+                        <a href="{% url 'account_edit_user' account.id %}" class="btn btn-secondary">Edit</a>
+                        <a href="{% url 'accounts' %}" class="btn btn-danger">Cancel</a>
                     </form>
                 </div>
             </div>
@@ -61,7 +61,7 @@
 }
 
 .delete-card:focus-within {
-    border: 2px solid #dc3545; /* Bootstrap danger color */
+    border: 2px solid #6366f1;
 }
 
 .card-header {
@@ -81,7 +81,7 @@
 }
 
 .btn-secondary:hover {
-    background-color: #6c757d; /* Darker gray on hover */
+    background-color: #6366f1; /* Darker gray on hover */
 }
 </style>
 {% endblock %}
