@@ -80,6 +80,54 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -193,6 +241,14 @@
         "documentation": {}
     },
     {
+        "label": "forms",
+        "importPath": "django",
+        "description": "django",
+        "isExtraImport": true,
+        "detail": "django",
+        "documentation": {}
+    },
+    {
         "label": "password_validation",
         "importPath": "django.contrib.auth",
         "description": "django.contrib.auth",
@@ -218,6 +274,14 @@
     },
     {
         "label": "logout",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "get_user_model",
         "importPath": "django.contrib.auth",
         "description": "django.contrib.auth",
         "isExtraImport": true,
@@ -313,7 +377,23 @@
         "documentation": {}
     },
     {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
         "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "reverse",
         "importPath": "django.urls",
         "description": "django.urls",
         "isExtraImport": true,
@@ -409,11 +489,35 @@
         "documentation": {}
     },
     {
+        "label": "get_object_or_404",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
         "label": "render",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
         "isExtraImport": true,
         "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "JsonResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
         "documentation": {}
     },
     {
@@ -513,6 +617,57 @@
         "documentation": {}
     },
     {
+        "label": "django.db.models.deletion",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "django.db.models.deletion",
+        "description": "django.db.models.deletion",
+        "detail": "django.db.models.deletion",
+        "documentation": {}
+    },
+    {
+        "label": "uuid",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uuid",
+        "description": "uuid",
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -535,14 +690,6 @@
         "description": "pathlib",
         "isExtraImport": true,
         "detail": "pathlib",
-        "documentation": {}
-    },
-    {
-        "label": "settings",
-        "importPath": "django.conf",
-        "description": "django.conf",
-        "isExtraImport": true,
-        "detail": "django.conf",
         "documentation": {}
     },
     {
@@ -692,7 +839,7 @@
         "kind": 5,
         "importPath": "accounts.urls",
         "description": "accounts.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"\", homepage, name=\"homepage\"),\n    path(\"about/\", about, name=\"about\"),\n    path(\"signup/\", signup_view, name=\"signup\"),# User registration\n    path(\"login/\", login_view, name=\"login\"),# User login\n    path(\"logout/\", logout_view, name=\"logout\"),# User logout\n    path(\"profile/\", profile, name=\"profile\"),# User profile view/update\n    # Password reset views\n    path(\"password_reset/\", MyPasswordResetView.as_view(), name=\"password_reset\"),                          # Password reset\n    path(\"password_reset/done/\", MyPasswordResetDoneView.as_view(), name=\"password_reset_done\"),            # Password reset done",
+        "peekOfCode": "urlpatterns = [\n    path(\"\", homepage, name=\"homepage\"),\n    path(\"about/\", about, name=\"about\"),\n    path(\"contact/\", contact, name=\"contact\"),\n    path(\"signup/\", signup_view, name=\"signup\"),# User registration\n    path(\"login/\", login_view, name=\"login\"),# User login\n    path(\"logout/\", logout_view, name=\"logout\"),# User logout\n    path(\"profile/\", profile, name=\"profile\"),# User profile view/update\n    # Password reset views\n    path(\"password_reset/\", MyPasswordResetView.as_view(), name=\"password_reset\"),                          # Password reset",
         "detail": "accounts.urls",
         "documentation": {}
     },
@@ -773,7 +920,7 @@
         "kind": 2,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "def homepage(request):\n    return render(request, 'index.html')\ndef about(request):\n    return render(request, 'about.html')\ndef landing(request):\n    return render(request, 'get_started.html')\ndef chat(request):\n    return render(request, 'chat_bot.html')\ndef signup_view(request):\n    \"\"\"",
+        "peekOfCode": "def homepage(request):\n    return render(request, 'index.html')\ndef about(request):\n    return render(request, 'about.html')\ndef contact(request):\n    return render(request, 'contact.html')\ndef chat(request):\n    return render(request, 'chat_bot.html')\ndef signup_view(request):\n    \"\"\"",
         "detail": "accounts.views",
         "documentation": {}
     },
@@ -782,16 +929,16 @@
         "kind": 2,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "def about(request):\n    return render(request, 'about.html')\ndef landing(request):\n    return render(request, 'get_started.html')\ndef chat(request):\n    return render(request, 'chat_bot.html')\ndef signup_view(request):\n    \"\"\"\n    Handles user registration.\n    On GET request, it renders the registration template.",
+        "peekOfCode": "def about(request):\n    return render(request, 'about.html')\ndef contact(request):\n    return render(request, 'contact.html')\ndef chat(request):\n    return render(request, 'chat_bot.html')\ndef signup_view(request):\n    \"\"\"\n    Handles user registration.\n    On GET request, it renders the registration template.",
         "detail": "accounts.views",
         "documentation": {}
     },
     {
-        "label": "landing",
+        "label": "contact",
         "kind": 2,
         "importPath": "accounts.views",
         "description": "accounts.views",
-        "peekOfCode": "def landing(request):\n    return render(request, 'get_started.html')\ndef chat(request):\n    return render(request, 'chat_bot.html')\ndef signup_view(request):\n    \"\"\"\n    Handles user registration.\n    On GET request, it renders the registration template.\n    On POST request, it validates the form data, creates a new user, and logs them in.\n    \"\"\"",
+        "peekOfCode": "def contact(request):\n    return render(request, 'contact.html')\ndef chat(request):\n    return render(request, 'chat_bot.html')\ndef signup_view(request):\n    \"\"\"\n    Handles user registration.\n    On GET request, it renders the registration template.\n    On POST request, it validates the form data, creates a new user, and logs them in.\n    \"\"\"",
         "detail": "accounts.views",
         "documentation": {}
     },
@@ -850,6 +997,33 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "chats.migrations.0001_initial",
+        "description": "chats.migrations.0001_initial",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Chat',\n            fields=[\n                ('id', models.UUIDField(default=uuid.uuid4, primary_key=True, serialize=False)),",
+        "detail": "chats.migrations.0001_initial",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "chats.migrations.0002_alter_chat_user",
+        "description": "chats.migrations.0002_alter_chat_user",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('chats', '0001_initial'),\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='chat',\n            name='user',\n            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='chats', to=settings.AUTH_USER_MODEL),",
+        "detail": "chats.migrations.0002_alter_chat_user",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "chats.migrations.0003_alter_chat_options_alter_message_options_and_more",
+        "description": "chats.migrations.0003_alter_chat_options_alter_message_options_and_more",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('chats', '0002_alter_chat_user'),\n    ]\n    operations = [\n        migrations.AlterModelOptions(\n            name='chat',\n            options={'ordering': ['-timestamp'], 'verbose_name': 'Chat', 'verbose_name_plural': 'Chats'},\n        ),\n        migrations.AlterModelOptions(",
+        "detail": "chats.migrations.0003_alter_chat_options_alter_message_options_and_more",
+        "documentation": {}
+    },
+    {
         "label": "ChatsConfig",
         "kind": 6,
         "importPath": "chats.apps",
@@ -859,20 +1033,128 @@
         "documentation": {}
     },
     {
+        "label": "ChatForm",
+        "kind": 6,
+        "importPath": "chats.forms",
+        "description": "chats.forms",
+        "peekOfCode": "class ChatForm(forms.ModelForm):\n    class Meta:\n        model = Chat\n        fields = []\nclass MessageForm(forms.ModelForm):\n    class Meta:\n        model = Message\n        fields = ['content', 'type']",
+        "detail": "chats.forms",
+        "documentation": {}
+    },
+    {
+        "label": "MessageForm",
+        "kind": 6,
+        "importPath": "chats.forms",
+        "description": "chats.forms",
+        "peekOfCode": "class MessageForm(forms.ModelForm):\n    class Meta:\n        model = Message\n        fields = ['content', 'type']",
+        "detail": "chats.forms",
+        "documentation": {}
+    },
+    {
+        "label": "Chat",
+        "kind": 6,
+        "importPath": "chats.models",
+        "description": "chats.models",
+        "peekOfCode": "class Chat(models.Model):\n    \"\"\"Model definition for Chat.\"\"\"\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)\n    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chats')\n    timestamp = models.DateTimeField(auto_now_add=True)\n    class Meta:\n        \"\"\"Meta definition for Chat.\"\"\"\n        verbose_name = 'Chat'\n        verbose_name_plural = 'Chats'\n        ordering = ['-timestamp']  # Order by latest first",
+        "detail": "chats.models",
+        "documentation": {}
+    },
+    {
+        "label": "Message",
+        "kind": 6,
+        "importPath": "chats.models",
+        "description": "chats.models",
+        "peekOfCode": "class Message(models.Model):\n    \"\"\"Model definition for Message.\"\"\"\n    MESSAGE_TYPE_CHOICES = [\n        ('request', 'Request'),\n        ('response', 'Response'),\n    ]\n    chat = models.ForeignKey(Chat, related_name='messages', on_delete=models.CASCADE)\n    content = models.TextField()\n    type = models.CharField(max_length=10, choices=MESSAGE_TYPE_CHOICES,default='request')\n    timestamp = models.DateTimeField(auto_now_add=True)",
+        "detail": "chats.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 5,
+        "importPath": "chats.models",
+        "description": "chats.models",
+        "peekOfCode": "User = get_user_model()\n# Create your models here.\nclass Chat(models.Model):\n    \"\"\"Model definition for Chat.\"\"\"\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)\n    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chats')\n    timestamp = models.DateTimeField(auto_now_add=True)\n    class Meta:\n        \"\"\"Meta definition for Chat.\"\"\"\n        verbose_name = 'Chat'",
+        "detail": "chats.models",
+        "documentation": {}
+    },
+    {
         "label": "urlpatterns",
         "kind": 5,
         "importPath": "chats.urls",
         "description": "chats.urls",
-        "peekOfCode": "urlpatterns = [\n    path('', homepage_view, name='chats'),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('', chat_list_view, name='chats'),\n    path('detail/<str:chat_id>/', chat_detail_view, name='chat_detail'),\n    path('create/', chat_create_view, name='chat_create'),\n    path('<str:chat_id>/update/', chat_update_view, name='chat_update'),\n    path('<str:chat_id>/delete/', chat_delete_view, name='chat_delete'),\n    path('<str:chat_id>/messages/create/', message_create_view, name='message_create'),\n    path('<str:chat_id>/messages/<int:message_id>/update/', message_update_view, name='message_update'),\n    path('<str:chat_id>/messages/<int:message_id>/delete/', message_delete_view, name='message_delete'),\n]",
         "detail": "chats.urls",
         "documentation": {}
     },
     {
-        "label": "homepage_view",
+        "label": "chat_list_view",
         "kind": 2,
         "importPath": "chats.views",
         "description": "chats.views",
-        "peekOfCode": "def homepage_view(request):\n    return render(request, 'homepage.html')",
+        "peekOfCode": "def chat_list_view(request):\n    user_latest_chat = Chat.objects.filter(user=request.user).latest('timestamp')\n    if user_latest_chat:\n        return redirect('chat_detail', chat_id=str(user_latest_chat.id))\n    return render(request, 'homepage.html')\n@login_required\ndef chat_detail_view(request, chat_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    messages = chat.messages.all()\n    return render(request, 'chat_detail.html', {'chat': chat, 'messages': messages})",
+        "detail": "chats.views",
+        "documentation": {}
+    },
+    {
+        "label": "chat_detail_view",
+        "kind": 2,
+        "importPath": "chats.views",
+        "description": "chats.views",
+        "peekOfCode": "def chat_detail_view(request, chat_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    messages = chat.messages.all()\n    return render(request, 'chat_detail.html', {'chat': chat, 'messages': messages})\n@login_required\ndef chat_create_view(request):\n    # create new chat for user and redirect to its detail view\n    chat = Chat.objects.create(user=request.user)\n    return redirect('chat_detail', chat_id=str(chat.id))\n@login_required",
+        "detail": "chats.views",
+        "documentation": {}
+    },
+    {
+        "label": "chat_create_view",
+        "kind": 2,
+        "importPath": "chats.views",
+        "description": "chats.views",
+        "peekOfCode": "def chat_create_view(request):\n    # create new chat for user and redirect to its detail view\n    chat = Chat.objects.create(user=request.user)\n    return redirect('chat_detail', chat_id=str(chat.id))\n@login_required\ndef chat_update_view(request, chat_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    if request.method == 'POST':\n        form = ChatForm(request.POST, instance=chat)\n        if form.is_valid():",
+        "detail": "chats.views",
+        "documentation": {}
+    },
+    {
+        "label": "chat_update_view",
+        "kind": 2,
+        "importPath": "chats.views",
+        "description": "chats.views",
+        "peekOfCode": "def chat_update_view(request, chat_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    if request.method == 'POST':\n        form = ChatForm(request.POST, instance=chat)\n        if form.is_valid():\n            form.save()\n            return redirect('chat_detail', chat_id=chat.id)\n    else:\n        form = ChatForm(instance=chat)\n    return render(request, 'chat_form.html', {'form': form})",
+        "detail": "chats.views",
+        "documentation": {}
+    },
+    {
+        "label": "chat_delete_view",
+        "kind": 2,
+        "importPath": "chats.views",
+        "description": "chats.views",
+        "peekOfCode": "def chat_delete_view(request, chat_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    if request.method == 'POST':\n        chat.delete()\n        return redirect('chat_list')\n    return render(request, 'chat_confirm_delete.html', {'chat': chat})\n@login_required\ndef message_create_view(request, chat_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    if request.method == 'POST':",
+        "detail": "chats.views",
+        "documentation": {}
+    },
+    {
+        "label": "message_create_view",
+        "kind": 2,
+        "importPath": "chats.views",
+        "description": "chats.views",
+        "peekOfCode": "def message_create_view(request, chat_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    if request.method == 'POST':\n        data = json.loads(request.body)  # Read JSON data from the request\n        message_content = data.get('message')\n        # Save the message to the database\n        message = Message.objects.create(chat=chat, content=message_content)  # Ensure you save the message with a timestamp\n        return JsonResponse({\n            'status': 'success',\n            'message': message.content,  # Return the message content",
+        "detail": "chats.views",
+        "documentation": {}
+    },
+    {
+        "label": "message_update_view",
+        "kind": 2,
+        "importPath": "chats.views",
+        "description": "chats.views",
+        "peekOfCode": "def message_update_view(request, chat_id, message_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    message = get_object_or_404(Message, id=message_id, chat=chat)\n    if request.method == 'POST':\n        form = MessageForm(request.POST, instance=message)\n        if form.is_valid():\n            form.save()\n            return redirect('chat_detail', chat_id=chat.id)\n    else:\n        form = MessageForm(instance=message)",
+        "detail": "chats.views",
+        "documentation": {}
+    },
+    {
+        "label": "message_delete_view",
+        "kind": 2,
+        "importPath": "chats.views",
+        "description": "chats.views",
+        "peekOfCode": "def message_delete_view(request, chat_id, message_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    message = get_object_or_404(Message, id=message_id, chat=chat)\n    if request.method == 'POST':\n        message.delete()\n        return redirect('chat_detail', chat_id=chat.id)\n    return render(request, 'message_confirm_delete.html', {'message': message})",
         "detail": "chats.views",
         "documentation": {}
     },
@@ -1142,7 +1424,7 @@
         "kind": 5,
         "importPath": "dashboard.urls",
         "description": "dashboard.urls",
-        "peekOfCode": "urlpatterns = [\n    path('', dashboard, name='dashboard'),\n    path('accounts/', accounts_list, name='accounts'),\n    path('accounts/<int:id>/', account_detail, name='account_detail'),\n    path('accounts/<int:id>/upgrade', account_upgrade, name='upgrade_to_counsellor'),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('', dashboard, name='dashboard'),\n    path('accounts/', accounts_list, name='accounts'),\n    path('alert/', alerts, name='alert'),\n    path('accounts/<int:id>/', account_detail, name='account_detail'),\n    path('accounts/<int:id>/delete', account_delete, name='account_delete'),\n    path('accounts/<int:id>/edit', account_edit, name='account_edit'),\n    path('accounts/<int:id>/upgrade', account_upgrade, name='upgrade_to_counsellor'),\n]",
         "detail": "dashboard.urls",
         "documentation": {}
     },
@@ -1151,7 +1433,7 @@
         "kind": 2,
         "importPath": "dashboard.views",
         "description": "dashboard.views",
-        "peekOfCode": "def dashboard(request):\n    return render(request, 'admin/admin_dashboard.html')\ndef alerts(request):\n    return HttpResponse(\"Welcome to the Alerts Dashboard!\")\ndef reports(request):\n    return HttpResponse(\"Welcome to the Reports Dashboard!\")\n@login_required\ndef users(request):\n    \"\"\"\n    Displays a list of all users, excluding the currently logged-in user.",
+        "peekOfCode": "def dashboard(request):\n    return render(request, 'admin/admin_dashboard.html')\ndef alerts(request):\n    return render(request,  'admin/alerts.html')\ndef reports(request):\n    return HttpResponse(\"Welcome to the Reports Dashboard!\")\n@login_required\ndef users(request):\n    \"\"\"\n    Displays a list of all users, excluding the currently logged-in user.",
         "detail": "dashboard.views",
         "documentation": {}
     },
@@ -1160,7 +1442,7 @@
         "kind": 2,
         "importPath": "dashboard.views",
         "description": "dashboard.views",
-        "peekOfCode": "def alerts(request):\n    return HttpResponse(\"Welcome to the Alerts Dashboard!\")\ndef reports(request):\n    return HttpResponse(\"Welcome to the Reports Dashboard!\")\n@login_required\ndef users(request):\n    \"\"\"\n    Displays a list of all users, excluding the currently logged-in user.\n    \"\"\"\n    users_list = Account.objects.exclude(id=request.user.id)",
+        "peekOfCode": "def alerts(request):\n    return render(request,  'admin/alerts.html')\ndef reports(request):\n    return HttpResponse(\"Welcome to the Reports Dashboard!\")\n@login_required\ndef users(request):\n    \"\"\"\n    Displays a list of all users, excluding the currently logged-in user.\n    \"\"\"\n    users_list = Account.objects.exclude(id=request.user.id)",
         "detail": "dashboard.views",
         "documentation": {}
     },
@@ -1201,11 +1483,29 @@
         "documentation": {}
     },
     {
+        "label": "account_delete",
+        "kind": 2,
+        "importPath": "dashboard.views",
+        "description": "dashboard.views",
+        "peekOfCode": "def account_delete(request, id):\n    \"\"\"\n    Displays the details of a specific account.\n    \"\"\"\n    try:\n        account = Account.objects.get(id=id)\n    except Account.DoesNotExist:\n        return HttpResponse(\"Account not found.\", status=404)\n    context = {'account': account}\n    return render(request, 'admin/user_delete.html', context)",
+        "detail": "dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "account_edit",
+        "kind": 2,
+        "importPath": "dashboard.views",
+        "description": "dashboard.views",
+        "peekOfCode": "def account_edit(request, id):\n    \"\"\"\n    Displays the details of a specific account.\n    \"\"\"\n    try:\n        account = Account.objects.get(id=id)\n    except Account.DoesNotExist:\n        return HttpResponse(\"Account not found.\", status=404)\n    context = {'account': account}\n    return render(request, 'admin/user_edit.html', context)",
+        "detail": "dashboard.views",
+        "documentation": {}
+    },
+    {
         "label": "account_upgrade",
         "kind": 2,
         "importPath": "dashboard.views",
         "description": "dashboard.views",
-        "peekOfCode": "def account_upgrade(request, id):\n    \"\"\"\n    Updates the details of a specific account.\n    \"\"\"\n    try:\n        account = Account.objects.get(id=id)\n        account.account_type = 2\n        account.save()\n    except Account.DoesNotExist:\n        return HttpResponse(\"Account not found.\", status=404)",
+        "peekOfCode": "def account_upgrade(request, id):\n    \"\"\"\n    Updates the details of a specific account.\n    \"\"\"\n    try:\n        account = Account.objects.get(id=id)\n        account.account_type = 2\n        account.is_counsellor = True\n        account.save()\n    except Account.DoesNotExist:",
         "detail": "dashboard.views",
         "documentation": {}
     },

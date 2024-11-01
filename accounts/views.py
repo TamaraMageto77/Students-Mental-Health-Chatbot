@@ -39,7 +39,7 @@ def signup_view(request):
             user = form.save(commit=True)
             login(request, user, backend='accounts.backends.AccountsBackend')
             if user.is_staff or user.is_counsellor:
-                redirect_url = reverse_lazy('dashboard')
+                redirect_url = reverse_lazy('homepage')
             else:
                 redirect_url = reverse_lazy
             return redirect(redirect_url)
@@ -59,11 +59,7 @@ def login_view(request):
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user, backend='accounts.backends.AccountsBackend')
-                if user.is_staff or user.is_counsellor:
-                    redirect_url = reverse_lazy('dashboard')
-                else:
-                    redirect_url = reverse_lazy('chats')
-                return redirect(redirect_url)
+                return redirect("homepage")
             else:
                 form.add_error(None, "Invalid email or password")
         return render(request, 'login.html', {"form":form})

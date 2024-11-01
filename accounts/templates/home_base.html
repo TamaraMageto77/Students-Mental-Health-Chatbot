@@ -1,177 +1,201 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Home{% endblock %}</title>
-  <link rel="icon" href="{% static 'assets/img/synergy.svg' %}" type="image/x-icon" />
-  
-  <style>
-    /* General reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
+        Home
+      {% endblock %}
+    </title>
+    <link rel="icon" href="{% static 'assets/img/synergy.svg' %}" type="image/x-icon" />
 
-    body {
-      background-color: #1a1b1e;
-      min-height: 100vh;
-      color: #f5f5f5;
-      font-family: system-ui, -apple-system, sans-serif;
-    }
-
-    a {
-      text-decoration: none;
-    }
-
-    /* Header styling */
-    .header {
-      width: 100%;
-      background-color: #141517;
-      padding: 1rem 0;
-      position: sticky;
-      top: 0;
-      z-index: 997;
-      transition: all 0.5s;
-      box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Container */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    /* Logo */
-    .logo {
-      display: flex;
-      align-items: center;
-      margin-right: auto;
-    }
-
-    .logo img {
-      max-height: 40px;
-    }
-
-    /* Navigation menu */
-    .navmenu ul {
-      list-style-type: none;
-      display: flex;
-      gap: 1.5rem;
-      margin-left: auto;
-    }
-
-    .navmenu ul li a {
-      color: #fff;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-
-    .navmenu ul li a:hover,
-    .navmenu ul li a.active {
-      color: #9acd36;
-    }
-
-    /* CTA Button */
-    .cta-btn {
-      color: #f5f5f5;
-      background-color: #6366f1;
-      font-size: 14px;
-      padding: 8px 20px;
-      margin-left: 20px;
-      border-radius: 4px;
-      transition: background-color 0.3s;
-    }
-
-    .cta-btn:hover {
-      background-color: #9acd32;
-      color: #141517;
-    }
-
-    /* Mobile navigation toggle */
-    .mobile-nav-toggle {
-      display: none;
-      font-size: 1.5rem;
-      color: #fff;
-      cursor: pointer;
-      margin-left: 20px;
-    }
-
-    /* Main content container */
-    .main-content {
-      width: 100%;
-      min-height: calc(100vh - 72px);
-    }
-
-    /* Responsive styles */
-    @media (max-width: 992px) {
-      .navmenu ul {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        right: 0;
+    <style>
+      /* General reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
         background-color: #1a1b1e;
+        min-height: 100vh;
+        color: #f5f5f5;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+      
+      a {
+        text-decoration: none;
+      }
+      
+      /* Header styling */
+      .header {
         width: 100%;
+        background-color: #141517;
         padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 997;
+        transition: all 0.5s;
+        box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1);
       }
-
-      .navmenu ul li {
-        margin: 0.5rem 0;
-        text-align: center;
+      
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
       }
-
+      
+      /* Logo */
+      .logo {
+        display: flex;
+        align-items: center;
+        margin-right: auto;
+      }
+      
+      .logo img {
+        max-height: 40px;
+      }
+      
+      /* Navigation menu */
+      .navmenu ul {
+        list-style-type: none;
+        display: flex;
+        gap: 1.5rem;
+        margin-left: auto;
+      }
+      
+      .navmenu ul li a {
+        color: #fff;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+      
+      .navmenu ul li a:hover,
+      .navmenu ul li a.active {
+        color: #9acd36;
+      }
+      
+      /* CTA Button */
+      .cta-btn {
+        color: #f5f5f5;
+        background-color: #6366f1;
+        font-size: 14px;
+        padding: 8px 20px;
+        margin-left: 20px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+      
+      .cta-btn:hover {
+        background-color: #9acd32;
+        color: #141517;
+      }
+      
+      /* Mobile navigation toggle */
       .mobile-nav-toggle {
-        display: block;
+        display: none;
+        font-size: 1.5rem;
+        color: #fff;
+        cursor: pointer;
+        margin-left: 20px;
       }
-    }
+      
+      /* Main content container */
+      .main-content {
+        width: 100%;
+        min-height: calc(100vh - 72px);
+      }
+      
+      /* Responsive styles */
+      @media (max-width: 992px) {
+        .navmenu ul {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          right: 0;
+          background-color: #1a1b1e;
+          width: 100%;
+          padding: 1rem 0;
+        }
+      
+        .navmenu ul li {
+          margin: 0.5rem 0;
+          text-align: center;
+        }
+      
+        .mobile-nav-toggle {
+          display: block;
+        }
+      }
+      
+      /* Show nav menu when mobile toggle is active */
+      .navmenu.active ul {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="header" class="header sticky-top">
+      <div class="container">
+        <!-- Logo aligned to the top-left -->
+        <a href="/" class="logo"><img src="{% static 'assets/img/synergy.svg' %}" alt="Logo" /></a>
+        <!-- Navigation menu -->
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li>
+              <a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a>
+            </li>
+            <li>
+              <a href="{% url 'about' %}" class="{% if request.path == '/about/' %}active{% endif %}">About</a>
+            </li>
+            <li>
+              <a href="{% url 'contact' %}" class="{% if request.path == '/contact/' %}active{% endif %}">Contact</a>
+            </li>
+            {% if user.is_authenticated %}
+              <li>
+                <a href="{% url 'chats' %}" class="{% if request.path == '/chats/' %}active{% endif %}">Chats</a>
+              </li>
+            {% endif %}
+            {% if user.is_staff or is_counsellor %}
+              <li>
+                <a href="{% url 'dashboard' %}" class="{% if request.path == '/chats/' %}active{% endif %}">Dashboard</a>
+              </li>
+            {% endif %}
+          </ul>
+          <!-- Mobile toggle button -->
+          <i class="mobile-nav-toggle bi bi-list"></i>
+        </nav>
 
-    /* Show nav menu when mobile toggle is active */
-    .navmenu.active ul {
-      display: flex;
-    }
-  </style>
-</head>
-<body>
-  <header id="header" class="header sticky-top">
-    <div class="container">
-      <!-- Logo aligned to the top-left -->
-      <a href="/" class="logo">
-        <img src="{% static 'assets/img/synergy.svg' %}" alt="Logo">
-      </a>
+        <!-- CTA button for login -->
 
-      <!-- Navigation menu -->
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
-          <li><a href="{% url 'about' %}" class="{% if request.path == '/about/' %}active{% endif %}">About</a></li>
-          <li><a href="{% url 'contact' %}" class="{% if request.path == '/contact/' %}active{% endif %}">Contact</a></li>
-        </ul>
-        <!-- Mobile toggle button -->
-        <i class="mobile-nav-toggle bi bi-list"></i>
-      </nav>
+        {% if user.is_authenticated %}
+          <a class="cta-btn" href="{% url 'logout' %}">Logout</a>
+        {% else %}
+          <a class="cta-btn" href="{% url 'login' %}">Login</a>
+        {% endif %}
+      </div>
+    </header>
 
-      <!-- CTA button for login -->
-      <a class="cta-btn" href="{% url 'login' %}">Login</a>
+    <!-- Content block for child templates -->
+    <div class="main-content">
+      {% block content %}
+
+      {% endblock %}
     </div>
-  </header>
 
-  <!-- Content block for child templates -->
-  <div class="main-content">
-    {% block content %}{% endblock %}
-  </div>
-
-  <script>
-    // Toggle mobile nav menu
-    document.querySelector('.mobile-nav-toggle').addEventListener('click', () => {
-      document.getElementById('navmenu').classList.toggle('active');
-    });
-  </script>
-</body>
+    <script>
+      // Toggle mobile nav menu
+      document.querySelector('.mobile-nav-toggle').addEventListener('click', () => {
+        document.getElementById('navmenu').classList.toggle('active')
+      })
+    </script>
+  </body>
 </html>
