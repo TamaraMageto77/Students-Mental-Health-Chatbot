@@ -40,6 +40,7 @@ def signup_view(request):
             login(request, user, backend='accounts.backends.AccountsBackend')
             redirect_url = reverse_lazy('homepage')
             return redirect(redirect_url)
+        return render(request, 'register.html',{'form': form})
     return render(request, 'register.html')
 
 
