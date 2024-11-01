@@ -49,3 +49,4 @@ typing_extensions==4.12.2
 urllib3==2.2.3
 zope.interface==7.1.0
 ai21==2.15.1
+django-extensions-3.2.3
