@@ -1,194 +1,305 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+    <title>Edit Profile</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* Body & Container */
         body {
-            background: #141517;
+            background: #121212;
+            color: #E0E0E0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin: 0;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            color: #f8f9fa;
+            padding: 1.5rem;
         }
 
         .profile-container {
-            background: #1a1b1e;
-            border-radius: 15px;
+            background: #1E1E1E;
+            border-radius: 10px;
             padding: 2rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            max-width: 700px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            max-width: 1100px;
             width: 100%;
-            margin: 20px;
         }
 
-        /* Breadcrumb Styling */
+        /* Breadcrumb */
         .breadcrumb {
             background: transparent;
             padding: 0;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
             font-size: 0.9rem;
+            color: #a1a1a1;
         }
 
         .breadcrumb-item a {
-            color: #5c6bc0;
+            color: #6366f1;
             text-decoration: none;
             font-weight: 500;
         }
 
-        .breadcrumb-item a:hover {
-            color: #3949ab;
-        }
-
         .breadcrumb-item.active {
-            color: #6b7280;
+            color: #B0BEC5;
         }
 
-        /* Profile Layout */
+        /* Profile Sidebar */
         .profile-content {
             display: flex;
-            align-items: center;
+            gap: 2rem;
         }
 
-        .profile-left {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-right: 1.5rem;
+        .profile-sidebar {
+            flex-basis: 240px;
             text-align: center;
+            margin-top: 1rem;
         }
 
-        .profile-icon {
-            width: 120px;
-            height: 120px;
-            margin-bottom: 1rem;
+        .avatar-wrapper {
+            position: relative;
+            width: 180px;
+            margin: 0 auto;
+        }
+
+        .profile-avatar {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, #5C6BC0, #8E99F3);
             border-radius: 50%;
-            background: linear-gradient(135deg, #5c6bc0, #8e99f3);
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 70px;
+            color: #ffffff;
             box-shadow: 0 5px 15px rgba(92, 107, 192, 0.5);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(92, 107, 192, 0.6);
+        }
+
+        .avatar-upload {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: #66BB6A;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
             cursor: pointer;
-            flex-shrink: 0;
+            transition: all 0.3s ease;
         }
 
-        .profile-icon:hover, .profile-icon:focus {
-            transform: scale(1.08);
-            box-shadow: 0 10px 30px rgba(92, 107, 192, 0.5);
-            outline: none;
-        }
-
-        .profile-icon i {
-            font-size: 48px;
-            color: #ffffff;
-            transition: transform 0.3s ease;
-        }
-
-        .profile-icon:hover i, .profile-icon:focus i {
+        .avatar-upload:hover {
+            background: #9acd32;
             transform: scale(1.1);
         }
 
         .profile-name {
-            font-size: 15px;
-            font-weight: bold;
-            color: #f5f5f5;
-            margin-top: 0.2rem;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #E0E0E0;
+            margin-top: 1rem;
         }
 
         .profile-role {
-            font-size: 17px;
-            color: #5c6bc0;
+            font-size: 1rem;
+            color: #6366f1;
+            margin-bottom: 2rem;
             font-weight: 500;
-            margin-bottom: 1.5rem;
         }
 
-        /* Profile Details */
-        .profile-details {
-            background: #38393d;
+        /* Profile Form */
+        .profile-form {
+            flex-grow: 1;
+            background: #2C2C2C;
             border-radius: 10px;
-            padding: 1.5rem;
-            flex-grow: 1;
+            padding: 2rem;
         }
 
-        .detail-row {
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-control {
+            background: #212121;
+            border: 1px solid #4d5158;
+            color: #E0E0E0;
+            padding: 0.9rem 1rem;
+            padding-left: 2.8rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            line-height: 1;
+            min-height: 3rem;
+            transition: all 0.3s ease;
+            appearance: none;
+        }
+        .form-control option {
+        background: #2C2C2C;
+        color: #E0E0E0;
+        }
+
+        .form-control:focus {
+            border-color: #6366f1;
+            background: #212121;
+            color: #E0E0E0;
+        }
+
+        .field-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6366f1;
+            font-size: 1.1rem;
+        }
+
+        .form-row {
             display: flex;
-            margin-bottom: 1rem;
-            align-items: center;
-            padding: 0.6rem;
-            border-radius: 6px;
-            transition: background-color 0.2s ease, box-shadow 0.2s ease;
-            cursor: pointer;
+            gap: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
-        .detail-row:hover, .detail-row:focus {
-            background-color: #4d5158;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            outline: none;
+        .form-col {
+            flex: 1;
         }
 
-        .detail-label {
+        .btn-save {
+            background: #6366f1;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            border: none;
             font-weight: 600;
-            color: #f5f5f5;
-            width: 120px;
-            flex-shrink: 0;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
         }
 
-        .detail-value {
-            color: #5f97ff;
-            flex-grow: 1;
+        .btn-save:hover {
+            background: #9acd32;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(67, 160, 71, 0.3);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .profile-content {
+                flex-direction: column;
+            }
+
+            .profile-sidebar {
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 1.5rem;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="profile-container">
-        <!-- Breadcrumb Navigation -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a 
-                    {% if user.is_staff or user.is_counsellor %}
-                        href="{% url 'dashboard' %}"
-                    {% else %}
-                        href="{% url 'chats' %}"
-                    {% endif %}
-                 >
-                    {% if user.is_staff or user.is_counsellor %}
-                        Dashboard
-                    {% else %}
-                        Chats
-                    {% endif %}
-                 </a></li>
-                <li class="breadcrumb-item active" aria-current="page">Profile</li>
+                <li class="breadcrumb-item">
+                    <a href="#">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">Edit Profile</li>
             </ol>
         </nav>
 
         <div class="profile-content">
-            <!-- Profile Icon and Info -->
-            <div class="profile-left">
-                <div class="profile-icon" tabindex="0">
-                    <i class="fas fa-user"></i>
+            <!-- Profile Sidebar -->
+            <div class="profile-sidebar">
+                <div class="avatar-wrapper">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="avatar-upload" title="Upload new photo">
+                        <i class="fas fa-camera"></i>
+                    </div>
                 </div>
                 <h2 class="profile-name">{{ user.full_name }}</h2>
+                <div class="profile-role">{{ user.role }}</div>
             </div>
 
-            <!-- Profile Details on the Right -->
-            <div class="profile-details">
-                <div class="detail-row" tabindex="0">
-                    <div class="detail-label">Email</div>
-                    <div class="detail-value">{{ user.email }}</div>
+            <!-- Profile Form -->
+            <form class="profile-form" method="POST">
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <i class="fas fa-envelope field-icon"></i>
+                            <input type="email" class="form-control" name="email" value="{{ user.email }}" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <i class="fas fa-id-card field-icon"></i>
+                            <input type="text" class="form-control" name="student_id" value="{{ user.student_id }}" placeholder="Student ID">
+                        </div>
+                    </div>
                 </div>
-                <div class="detail-row" tabindex="0">
-                    <div class="detail-label">Role</div>
-                    <div class="detail-value">{{ user.role }}</div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <i class="fas fa-graduation-cap field-icon"></i>
+                            <input type="text" class="form-control" name="year_of_study" value="{{ user.year_of_study }}" placeholder="Year of Study">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <i class="fas fa-book field-icon"></i>
+                            <input type="text" class="form-control" name="course" value="{{ user.course }}" placeholder="Course">
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <i class="fas fa-phone field-icon"></i>
+                            <input type="tel" class="form-control" name="mobile_number" value="{{ user.mobile_number }}" placeholder="Mobile Number">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <i class="fas fa-calendar field-icon"></i>
+                            <input type="date" class="form-control" name="date_of_birth" value="{{ user.date_of_birth }}" placeholder="Date of Birth">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <i class="fas fa-heart field-icon"></i>
+                            <select class="form-control" name="marital_status">
+                                <option value="Single" {% if user.marital_status == 'Single' %}selected{% endif %}>Single</option>
+                                <option value="Married" {% if user.marital_status == 'Married' %}selected{% endif %}>Married</option>
+                                <option value="Other" {% if user.marital_status == 'Other' %}selected{% endif %}>Other</option>
+                            </select>
+                        </div>                        
+                    </div>
+                </div>
+                <button type="submit" class="btn-save">Save Changes</button>
+            </form>
         </div>
     </div>
 </body>
