@@ -79,6 +79,7 @@ def account_upgrade(request, id):
     try:
         account = Account.objects.get(id=id)
         account.account_type = 2
+        account.is_counsellor = True
         account.save()
     except Account.DoesNotExist:
         return HttpResponse("Account not found.", status=404)
