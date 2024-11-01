@@ -11,10 +11,13 @@ import json
 
 @login_required
 def chat_list_view(request):
-    user_latest_chat = Chat.objects.filter(
-        user=request.user).latest('timestamp')
-    if user_latest_chat:
-        return redirect('chat_detail', chat_id=str(user_latest_chat.id))
+    try:
+        user_latest_chat = Chat.objects.filter(
+            user=request.user).latest('timestamp')
+        if user_latest_chat:
+            return redirect('chat_detail', chat_id=str(user_latest_chat.id))
+    except Chat.DoesNotExist:
+        pass
     return render(request, 'homepage.html')
 
 
@@ -48,10 +51,8 @@ def chat_update_view(request, chat_id):
 @login_required
 def chat_delete_view(request, chat_id):
     chat = get_object_or_404(Chat, id=chat_id, user=request.user)
-    if request.method == 'POST':
-        chat.delete()
-        return redirect('chat_list')
-    return render(request, 'chat_confirm_delete.html', {'chat': chat})
+    chat.delete()
+    return redirect('chats')
 
 
 @login_required

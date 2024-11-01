@@ -1142,7 +1142,7 @@
         "kind": 2,
         "importPath": "chats.views",
         "description": "chats.views",
-        "peekOfCode": "def chat_list_view(request):\n    user_latest_chat = Chat.objects.filter(\n        user=request.user).latest('timestamp')\n    if user_latest_chat:\n        return redirect('chat_detail', chat_id=str(user_latest_chat.id))\n    return render(request, 'homepage.html')\n@login_required\ndef chat_detail_view(request, chat_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    messages = chat.messages.all()",
+        "peekOfCode": "def chat_list_view(request):\n    try:\n        user_latest_chat = Chat.objects.filter(\n            user=request.user).latest('timestamp')\n        if user_latest_chat:\n            return redirect('chat_detail', chat_id=str(user_latest_chat.id))\n    except Chat.DoesNotExist:\n        pass\n    return render(request, 'homepage.html')\n@login_required",
         "detail": "chats.views",
         "documentation": {}
     },
@@ -1178,7 +1178,7 @@
         "kind": 2,
         "importPath": "chats.views",
         "description": "chats.views",
-        "peekOfCode": "def chat_delete_view(request, chat_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    if request.method == 'POST':\n        chat.delete()\n        return redirect('chat_list')\n    return render(request, 'chat_confirm_delete.html', {'chat': chat})\n@login_required\ndef message_create_view(request, chat_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    if request.method == 'POST':",
+        "peekOfCode": "def chat_delete_view(request, chat_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    chat.delete()\n    return redirect('chats')\n@login_required\ndef message_create_view(request, chat_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    if request.method == 'POST':\n        data = json.loads(request.body)  # Read JSON data from the request\n        message_content = data.get('message')",
         "detail": "chats.views",
         "documentation": {}
     },

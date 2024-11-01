@@ -2,6 +2,16 @@
 
 {% block content %}
   <div class="main-content">
+    <div class="input-container">
+      <div class="d-flex justify-content-between">
+        <div class="chat-title">
+          <h5>{{ chat.title|default:chat.id }}</h5>
+        </div>
+        <div class="chat-actions">
+          <a href="{% url 'chat_delete' chat_id=chat.id %}" class="btn btn-danger">Delete</a>
+        </div>
+      </div>
+    </div>
     <div class="chat-container" id="chat-container">
       {% if messages %}
         {% for message in messages %}
@@ -79,6 +89,11 @@
       // Append user's message immediately
       var sentMessageElement = createMessageElement(message, '', 'sent');
       chatContainer.appendChild(sentMessageElement);
+
+      // Create and append a generating message element
+      var generatingMessageElement = createMessageElement("Generating...", '', 'received');
+      chatContainer.appendChild(generatingMessageElement);
+      
       messageInput.value = ''; // Clear input after sending
 
       // Scroll to the bottom of the chat container
@@ -98,9 +113,9 @@
             var messageTimeDiv = sentMessageElement.querySelector('.message-time');
             messageTimeDiv.textContent = response.time; // Update with response time
 
-            // Append chatbot's response
-            var receivedMessageElement = createMessageElement(response.message, response.time, 'received');
-            chatContainer.appendChild(receivedMessageElement);
+            // Replace the generating message with the actual response
+            generatingMessageElement.querySelector('.message-content').textContent = response.message;
+            generatingMessageElement.querySelector('.message-time').textContent = response.time; // Add response time
 
             // Scroll to the bottom of the chat container
             chatContainer.scrollTop = chatContainer.scrollHeight;
