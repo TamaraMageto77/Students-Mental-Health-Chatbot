@@ -144,6 +144,9 @@
     window.onload = function() {
       var chatContainer = document.getElementById('chat-container');
       chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      // Focus on the message input field
+      document.getElementById('message-input').focus();
     };
   </script>
 {% endblock %}
