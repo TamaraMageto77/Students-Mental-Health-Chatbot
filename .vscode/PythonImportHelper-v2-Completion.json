@@ -659,21 +659,45 @@
         "documentation": {}
     },
     {
-        "label": "json",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "json",
-        "description": "json",
-        "detail": "json",
-        "documentation": {}
-    },
-    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "os",
         "description": "os",
         "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "AI21Client",
+        "importPath": "ai21",
+        "description": "ai21",
+        "isExtraImport": true,
+        "detail": "ai21",
+        "documentation": {}
+    },
+    {
+        "label": "ChatMessage",
+        "importPath": "ai21.models.chat",
+        "description": "ai21.models.chat",
+        "isExtraImport": true,
+        "detail": "ai21.models.chat",
+        "documentation": {}
+    },
+    {
+        "label": "mental_health_chatbot",
+        "importPath": "chats.utils",
+        "description": "chats.utils",
+        "isExtraImport": true,
+        "detail": "chats.utils",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
         "documentation": {}
     },
     {
@@ -1087,11 +1111,38 @@
         "documentation": {}
     },
     {
+        "label": "mental_health_chatbot",
+        "kind": 2,
+        "importPath": "chats.utils",
+        "description": "chats.utils",
+        "peekOfCode": "def mental_health_chatbot(chat):\n    # Prepare the messages list with the system message\n    messages = [\n        ChatMessage(\n            role=\"system\",\n            content=\"You are a mental health assistant. You are helping a user with their mental health.\"\n        )\n    ]\n    # Append previous messages to the messages list\n    for message in chat.messages.all():",
+        "detail": "chats.utils",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"AI21_API_KEY\"]",
+        "kind": 5,
+        "importPath": "chats.utils",
+        "description": "chats.utils",
+        "peekOfCode": "os.environ[\"AI21_API_KEY\"] = \"UDkAKH55JEDTqUUhT4huRGNgjDMasWhv\"\nclient = AI21Client()\ndef mental_health_chatbot(chat):\n    # Prepare the messages list with the system message\n    messages = [\n        ChatMessage(\n            role=\"system\",\n            content=\"You are a mental health assistant. You are helping a user with their mental health.\"\n        )\n    ]",
+        "detail": "chats.utils",
+        "documentation": {}
+    },
+    {
+        "label": "client",
+        "kind": 5,
+        "importPath": "chats.utils",
+        "description": "chats.utils",
+        "peekOfCode": "client = AI21Client()\ndef mental_health_chatbot(chat):\n    # Prepare the messages list with the system message\n    messages = [\n        ChatMessage(\n            role=\"system\",\n            content=\"You are a mental health assistant. You are helping a user with their mental health.\"\n        )\n    ]\n    # Append previous messages to the messages list",
+        "detail": "chats.utils",
+        "documentation": {}
+    },
+    {
         "label": "chat_list_view",
         "kind": 2,
         "importPath": "chats.views",
         "description": "chats.views",
-        "peekOfCode": "def chat_list_view(request):\n    user_latest_chat = Chat.objects.filter(user=request.user).latest('timestamp')\n    if user_latest_chat:\n        return redirect('chat_detail', chat_id=str(user_latest_chat.id))\n    return render(request, 'homepage.html')\n@login_required\ndef chat_detail_view(request, chat_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    messages = chat.messages.all()\n    return render(request, 'chat_detail.html', {'chat': chat, 'messages': messages})",
+        "peekOfCode": "def chat_list_view(request):\n    user_latest_chat = Chat.objects.filter(\n        user=request.user).latest('timestamp')\n    if user_latest_chat:\n        return redirect('chat_detail', chat_id=str(user_latest_chat.id))\n    return render(request, 'homepage.html')\n@login_required\ndef chat_detail_view(request, chat_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    messages = chat.messages.all()",
         "detail": "chats.views",
         "documentation": {}
     },
@@ -1136,7 +1187,7 @@
         "kind": 2,
         "importPath": "chats.views",
         "description": "chats.views",
-        "peekOfCode": "def message_create_view(request, chat_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    if request.method == 'POST':\n        data = json.loads(request.body)  # Read JSON data from the request\n        message_content = data.get('message')\n        # Save the message to the database\n        message = Message.objects.create(chat=chat, content=message_content)  # Ensure you save the message with a timestamp\n        return JsonResponse({\n            'status': 'success',\n            'message': message.content,  # Return the message content",
+        "peekOfCode": "def message_create_view(request, chat_id):\n    chat = get_object_or_404(Chat, id=chat_id, user=request.user)\n    if request.method == 'POST':\n        data = json.loads(request.body)  # Read JSON data from the request\n        message_content = data.get('message')\n        # Save the message to the database\n        # Ensure you save the message with a timestamp\n        Message.objects.create(\n            chat=chat, content=message_content)\n        # Get the response from the chatbot",
         "detail": "chats.views",
         "documentation": {}
     },

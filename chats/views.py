@@ -65,7 +65,7 @@ def message_create_view(request, chat_id):
         Message.objects.create(
             chat=chat, content=message_content)
         # Get the response from the chatbot
-        response = mental_health_chatbot(message_content)
+        response = mental_health_chatbot(chat)
         # Save the response to the database
         response_message = Message.objects.create(
             chat=chat, content=response, type='response')

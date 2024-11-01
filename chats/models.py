@@ -41,7 +41,7 @@ class Message(models.Model):
         """Meta definition for Message."""
         verbose_name = 'Message'
         verbose_name_plural = 'Messages'
-        ordering = ['-timestamp']  # Order by latest first
+        ordering = ['timestamp']  # Order by latest first
 
     def __str__(self):
         """Unicode representation of Message."""
