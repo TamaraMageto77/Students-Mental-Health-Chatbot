@@ -100,7 +100,7 @@ def account_create(request):
         full_name = request.POST.get('full_name')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        
+        print(full_name, email, password)
         account = Account(full_name=full_name, email=email)
         account.set_password(password)
         account.save()

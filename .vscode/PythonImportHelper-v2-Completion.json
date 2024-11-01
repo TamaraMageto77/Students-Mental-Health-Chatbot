@@ -1638,7 +1638,7 @@
         "kind": 2,
         "importPath": "dashboard.views",
         "description": "dashboard.views",
-        "peekOfCode": "def account_create(request):\n    \"\"\"\n    Creates a new account.\n    \"\"\"\n    if request.method == 'POST':\n        full_name = request.POST.get('full_name')\n        email = request.POST.get('email')\n        password = request.POST.get('password')\n        account = Account(full_name=full_name, email=email)\n        account.set_password(password)",
+        "peekOfCode": "def account_create(request):\n    \"\"\"\n    Creates a new account.\n    \"\"\"\n    if request.method == 'POST':\n        full_name = request.POST.get('full_name')\n        email = request.POST.get('email')\n        password = request.POST.get('password')\n        print(full_name, email, password)\n        account = Account(full_name=full_name, email=email)",
         "detail": "dashboard.views",
         "documentation": {}
     },

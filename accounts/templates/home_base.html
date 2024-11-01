@@ -164,7 +164,7 @@
                 <a href="{% url 'chats' %}" class="{% if request.path == '/chats/' %}active{% endif %}">Chats</a>
               </li>
             {% endif %}
-            {% if user.is_staff or is_counsellor %}
+            {% if user.is_staff or user.is_counsellor %}
               <li>
                 <a href="{% url 'dashboard' %}" class="{% if request.path == '/chats/' %}active{% endif %}">Dashboard</a>
               </li>
