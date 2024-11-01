@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+<div class="page-header">
+    <h4 class="page-title">Create</h4>
+    <ul class="breadcrumbs">
+        <li class="nav-home">
+            <a href="{% url 'dashboard' %}"><i class="icon-home"></i></a>
+        </li>
+        <li class="separator">
+            <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'accounts' %}" class="text-primary">Accounts</a>
+        </li>
+        <li class="separator">
+            <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+            <span>Create</span>
+        </li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<style>
+    .form-card {
+        transition: all 0.3s ease;
+        border: none;
+        border-radius: 15px;
+    }
+    
+    .form-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-header {
+        border-top-left-radius: 5px !important;
+        border-top-right-radius: 5px !important;
+    }
+    
+    .form-control {
+        height: 30px;
+        border-radius: 5px;
+        padding-left: 45px;
+        border: 2px solid #eee;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: #4e73df;
+        box-shadow: none;
+    }
+    
+    .input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #4e73df;
+        z-index: 10;
+    }
+    
+    .form-group {
+        position: relative;
+        margin-bottom: .5rem;
+    }
+    
+    .submit-btn {
+        height: 50px;
+        border-radius: 5px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+    }
+    
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(78, 115, 223, 0.3);
+        background-color: #6366f1;
+    }
+</style>
+
+<div class="container-fluid mt-3">
+    <div class="card shadow-sm form-card">
+        <div class="card-header bg-primary text-white py-4">
+            <h4 class="mb-0 text-center">Create User Account</h4>
+        </div>
+        <div class="card-body p-5">
+            <form method="post" action="{% url 'account_create' %}">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <i class="icon-user input-icon"></i>
+                    <input type="text" class="form-control" id="full_name" name="full_name" 
+                           placeholder="Username" required>
+                </div>
+                
+                <div class="form-group">
+                    <i class="icon-envelope input-icon"></i>
+                    <input type="email" class="form-control" id="email" name="email" 
+                           placeholder="Email Address" required>
+                </div>
+                
+                <div class="form-group">
+                    <i class="icon-lock input-icon"></i>
+                    <input type="password" class="form-control" id="password" name="password" 
+                           placeholder="Password" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary submit-btn mt-2">
+                    Create Account
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
