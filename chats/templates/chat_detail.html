@@ -90,9 +90,9 @@
       var sentMessageElement = createMessageElement(message, '', 'sent');
       chatContainer.appendChild(sentMessageElement);
 
-      // Create and append a generating message element
-      var generatingMessageElement = createMessageElement("Generating...", '', 'received');
-      chatContainer.appendChild(generatingMessageElement);
+      // Create and append a loading message element
+      var loadingMessageElement = createMessageElement('Generating...', '', 'received');
+      chatContainer.appendChild(loadingMessageElement);
       
       messageInput.value = ''; // Clear input after sending
 
@@ -109,13 +109,16 @@
           if (xhr.status === 200) {
             var response = JSON.parse(xhr.responseText);
 
+            // Remove the loading message
+            chatContainer.removeChild(loadingMessageElement);
+
             // Update the sent message with a timestamp (optional)
             var messageTimeDiv = sentMessageElement.querySelector('.message-time');
             messageTimeDiv.textContent = response.time; // Update with response time
 
-            // Replace the generating message with the actual response
-            generatingMessageElement.querySelector('.message-content').textContent = response.message;
-            generatingMessageElement.querySelector('.message-time').textContent = response.time; // Add response time
+            // Append chatbot's response
+            var receivedMessageElement = createMessageElement(response.message, response.time, 'received');
+            chatContainer.appendChild(receivedMessageElement);
 
             // Scroll to the bottom of the chat container
             chatContainer.scrollTop = chatContainer.scrollHeight;
