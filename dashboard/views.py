@@ -71,6 +71,18 @@ def account_edit(request, id):
     context = {'account': account}
     return render(request, 'admin/user_edit.html', context)
 
+def account_edit_user(request, id):
+    """
+    Displays the details of a specific account.
+    """
+    try:
+        account = Account.objects.get(id=id)
+    except Account.DoesNotExist:
+        return HttpResponse("Account not found.", status=404)
+    
+    context = {'account': account}
+    return render(request, 'admin/user_edit_form.html', context)
+
 @login_required
 def account_upgrade(request, id):
     """
