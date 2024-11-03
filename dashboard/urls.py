@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (account_create, account_delete, account_detail, account_edit, account_upgrade,
+from .views import (account_create, account_delete, account_detail, account_edit, account_upgrade, uchats, uchat_detail,
     accounts_list, alerts, dashboard)
 
 urlpatterns = [
@@ -11,4 +11,7 @@ urlpatterns = [
     path('accounts/create', account_create, name='account_create'),
     path('accounts/<int:id>/edit', account_edit, name='account_edit'),
     path('accounts/<int:id>/upgrade', account_upgrade, name='upgrade_to_counsellor'),
+    path('uchats/', uchats, name='uchats'),
+    path('uchats/<int:id>/', uchat_detail, name='uchat_detail'),
+    
 ]
