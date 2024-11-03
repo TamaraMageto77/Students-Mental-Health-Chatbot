@@ -16,6 +16,15 @@ def reports(request):
     return HttpResponse("Welcome to the Reports Dashboard!")
 
 
+def uchats(request):
+    return render(request,   'admin/uchat_sessions.html')
+
+def uchat_detail(request):
+    return render(request,   'admin/uchat.html')
+
+
+
+
 @login_required
 def users(request):
     """
