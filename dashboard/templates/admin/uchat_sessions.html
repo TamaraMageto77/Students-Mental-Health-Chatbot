@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+  <div class="page-header">
+    <h4 class="page-title">Student Chat Sessions</h4>
+    <ul class="breadcrumbs">
+      <li class="nav-home">
+        <a href="{% url 'dashboard' %}"><i class="icon-home"></i></a>
+      </li>
+      <li class="separator">
+        <i class="icon-arrow-right"></i>
+      </li>
+      <li class="nav-item">
+        <span>Student Sessions</span>
+      </li>
+    </ul>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="chat-sessions-container">
+    <div class="session-list">
+      <h5>Recent Student-Bot Chat Sessions</h5>
+      <table class="session-table">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Session Date</th>
+            <th>Session Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for session in chat_sessions %}
+          {% if session.user.role == 'student' %}
+          <tr>
+            <td>{{ session.user.username }}</td>
+            <td>{{ session.date|date:"F j, Y, g:i a" }}</td>
+            <td>{{ session.status }}</td>
+            <td>
+              <a href="{% url 'uchat_detail' uchat.id %}" class="view-btn">View</a>
+          </tr>
+          {% endif %}
+          {% empty %}
+          <tr>
+            <td colspan="4">No student chat sessions found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <style>
+    /* Page Header */
+    .page-header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+    }
+
+    .page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #4a4a4a;
+    }
+
+    .breadcrumbs {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    }
+
+    .breadcrumbs .nav-home a {
+    color: #3b5998;
+    text-decoration: none;
+    }
+
+    .breadcrumbs .separator,
+    .breadcrumbs .nav-item {
+    color: #555;
+    margin: 0 8px;
+    }
+
+    /* Chat Sessions Table */
+    .chat-sessions-container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: auto;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    }
+
+    .session-list h5 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #4a4a4a;
+    margin-bottom: 10px;
+    }
+
+    .session-table {
+    width: 100%;
+    border-collapse: collapse;
+    }
+
+    .session-table th,
+    .session-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eaeaea;
+    }
+
+    .session-table th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+    color: #555;
+    }
+
+    .session-table td {
+    color: #333;
+    }
+
+    .session-table .view-btn,
+    .session-table .comment-btn {
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    }
+
+    .view-btn {
+    background-color: #4a90e2;
+    color: #fff;
+    margin-right: 5px;
+    }
+
+    .comment-btn {
+    background-color: #50c878;
+    color: #fff;
+    }
+
+    .view-btn:hover {
+    background-color: #357abd;
+    }
+
+    .comment-btn:hover {
+    background-color: #3e9e61;
+    }
+
+    /* Adjust the layout on smaller screens */
+    @media (max-width: 768px) {
+    .session-table th,
+    .session-table td {
+        padding: 10px;
+    }
+
+    .session-list h5 {
+        font-size: 18px;
+    }
+    }
+
+  </style>
+{% endblock %}
