@@ -24,8 +24,8 @@ The **Students-Mental-Health-Chatbot** is a supportive application designed to h
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/hakkenlab/Django-MentalHealthApp.git
-    cd Django-MentalHealthApp
+    git clone https://github.com/TamaraMageto77/Student-Mental-Health-Chatbot.git
+    cd SynergyBot/Django-MentalHealthApp
     ```
 
 2. **Set up virtual environment**:
