@@ -2,12 +2,23 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 
+from django.db.models import Count
+
+
 from accounts.models import Account
+from chats.models import Chat, Message
 from django.shortcuts import redirect
 from django.contrib import messages
 
 def dashboard(request):
-    return render(request, 'admin/admin_dashboard.html')
+    if request.user.is_counsellor:
+        total_students = Account.objects.filter(account_type=3).count()
+        total_chat_sessions = Chat.objects.count()
+        total_bot_messages = Message.objects.filter(type='response').values('chat').annotate(response_count=Count('id'))
+
+        return render(request, 'admin/admin_dashboard.html', {'total_students': total_students,'total_chat_sessions': total_chat_sessions, 'total_bot_messages': total_bot_messages})
+    else:
+        return render(request, 'admin/admin_dashboard.html')
 
 def alerts(request):
     return render(request,  'admin/alerts.html')
@@ -17,9 +28,12 @@ def reports(request):
 
 
 def uchats(request):
+    total_chat_sessions = Chat.objects.count()
+    # student
     return render(request,   'admin/uchat_sessions.html')
 
 def uchat_detail(request):
+    
     return render(request,   'admin/uchat.html')
 
 
