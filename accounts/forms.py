@@ -6,6 +6,7 @@ from django.contrib.auth import password_validation
 from django.contrib.auth.forms import SetPasswordForm
 from django.utils.translation import gettext_lazy as _
 from .models import Account, MaritalStatus
+from django.core.exceptions import ValidationError
 
 
 class LoginForm(forms.Form):
@@ -76,19 +77,26 @@ class CustomSetPasswordForm(SetPasswordForm):
 
 class UpdateProfileForm(forms.ModelForm):
     """
-    A form for updating user profiles.
+    A form for updating user profiles with proper validation and field customization.
     """
-    # Custom validation for mobile number
+    # Custom field definitions with appropriate widgets and validation
+    full_name = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Full Name'
+        })
+    )
+    
     mobile_number = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': '0712345678',
+            'placeholder': '0712345678 or +254712345678',
             'type': 'tel'
         })
     )
 
-    # Custom date input
     date_of_birth = forms.DateField(
         required=False,
         widget=forms.DateInput(attrs={
@@ -97,24 +105,41 @@ class UpdateProfileForm(forms.ModelForm):
         })
     )
 
-    # Year of study as select field
     year_of_study = forms.ChoiceField(
-        choices=[(i, str(i)) for i in range(1, 7)],
+        choices=[(None, '----')] + [(i, str(i)) for i in range(1, 7)],
         required=False,
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={
+            'class': 'form-control'
+        })
     )
 
-    # Marital status as select field
     marital_status = forms.ChoiceField(
-        choices=MaritalStatus.CHOICES,
+        choices=[(None, '----')] + list(MaritalStatus.CHOICES),
         required=False,
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={
+            'class': 'form-control'
+        })
+    )
+
+    student_reg_no = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Student Registration Number'
+        })
+    )
+
+    course = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Course Name'
+        })
     )
 
     class Meta:
         model = Account
         fields = [
-            'email',
             'full_name',
             'student_reg_no',
             'course',
@@ -123,70 +148,76 @@ class UpdateProfileForm(forms.ModelForm):
             'marital_status',
             'date_of_birth'
         ]
-        widgets = {
-            'email': forms.EmailInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Email'
-            }),
-            'full_name': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Full Name'
-            }),
-            'student_reg_no': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Student ID'
-            }),
-            'course': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Course'
-            }),
-        }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # Make email read-only if it's an existing user
-        if self.instance and self.instance.pk:
-            self.fields['email'].widget.attrs['readonly'] = True
 
     def clean_mobile_number(self):
-        """Custom validation and formatting for mobile number."""
+        """
+        Validates and formats the mobile number according to the required patterns:
+        - +254712345678 (international format)
+        - 0712345678 (local format)
+        - 0112345678 (local format)
+        """
         mobile_number = self.cleaned_data.get('mobile_number')
-    
-        if mobile_number:
-            # Remove any spaces or non-numeric characters except '+'
-            mobile_number = ''.join(c for c in mobile_number if c.isdigit() or c == '+')
+        if not mobile_number:
+            return None
             
-            # Validate formats: +2547, 07, or 01
-            if mobile_number.startswith('+2547') and len(mobile_number) == 13:
-                # Valid format +2547xxxxxxxx
-                pass
-            elif mobile_number.startswith('07') and len(mobile_number) == 10:
-                # Convert to +2547xxxxxxxx
-                mobile_number = '+254' + mobile_number[1:]
-            elif mobile_number.startswith('01') and len(mobile_number) == 10:
-                # Convert to +2541xxxxxxxx
-                mobile_number = '+254' + mobile_number[1:]
-            else:
-                # Raise error for invalid formats
-                raise forms.ValidationError(
-                    "Please enter a valid mobile number in the format: '+254712345678', '0712345678', or '0112345678'."
-                )
+        # Remove any spaces or non-numeric characters except '+'
+        mobile_number = ''.join(c for c in mobile_number if c.isdigit() or c == '+')
         
+        # Format acceptable mobile number formats
+        if mobile_number.startswith('07') and len(mobile_number) == 10:
+            mobile_number = '+254' + mobile_number[1:]
+        elif mobile_number.startswith('01') and len(mobile_number) == 10:
+            mobile_number = '+254' + mobile_number[1:]
+        elif not mobile_number.startswith('+254') or len(mobile_number) != 13:
+            raise ValidationError(
+                "Please enter a valid mobile number in the format '+254712345678', '0712345678', or '0112345678'."
+            )
         return mobile_number
 
+    def clean_year_of_study(self):
+        """
+        Converts year_of_study to integer or None if not provided
+        """
+        year = self.cleaned_data.get('year_of_study')
+        if year:
+            try:
+                return int(year)
+            except (ValueError, TypeError):
+                raise ValidationError("Invalid year of study")
+        return None
 
+    def clean_student_reg_no(self):
+        """
+        Validates student registration number format and uniqueness
+        """
+        reg_no = self.cleaned_data.get('student_reg_no')
+        if reg_no:
+            # Check if reg_no exists for another user
+            existing = Account.objects.filter(student_reg_no=reg_no).exclude(pk=self.instance.pk if self.instance else None)
+            if existing.exists():
+                raise ValidationError("This registration number is already in use.")
+        return reg_no
 
-
-
-    def clean_email(self):
-        """Prevent email changes for existing users"""
-        email = self.cleaned_data.get('email')
-        if self.instance and self.instance.pk:
-            return self.instance.email
-        return email
+    def clean(self):
+        """
+        Cross-field validation if needed
+        """
+        cleaned_data = super().clean()
+        
+        # Example: If user is a student, require registration number
+        if self.instance.account_type == 1:  # Assuming 1 is student type
+            if not cleaned_data.get('student_reg_no'):
+                self.add_error('student_reg_no', 'Student registration number is required for students.')
+        
+        return cleaned_data
 
     def save(self, commit=True):
+        """
+        Custom save method to handle any special processing before saving
+        """
         user = super().save(commit=False)
+        
         if commit:
             user.save()
+        
         return user

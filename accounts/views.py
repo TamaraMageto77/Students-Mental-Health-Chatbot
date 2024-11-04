@@ -74,20 +74,28 @@ def logout_view(request):
 def profile(request):
     """
     Handles profile viewing and updating.
-    Allows users to view and edit their profile.
     """
     if request.method == 'POST':
         form = UpdateProfileForm(
-            request.POST, request.FILES, instance=request.user)
+            request.POST, 
+            instance=request.user
+        )
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Your profile was successfully updated!')
-            return redirect('profile')
+            try:
+                form.save()
+                messages.success(request, 'Your profile was successfully updated!')
+                return redirect('profile')
+            except Exception as e:
+                messages.error(request, f'Error updating profile: {str(e)}')
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, 'Please correct the errors below.')
     else:
         form = UpdateProfileForm(instance=request.user)
-    return render(request, 'profile.html', {'form': form})
+    
+    return render(request, 'profile.html', {
+        'form': form,
+        'user': request.user
+    })
 
 
 @login_required
