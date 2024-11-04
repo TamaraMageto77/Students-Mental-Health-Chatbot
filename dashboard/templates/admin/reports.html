@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+<div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="page-title fw-bold">Reports</h4>
+        <ul class="breadcrumbs list-inline mb-0">
+            <li class="nav-home list-inline-item">
+                <a href="{% url 'dashboard' %}" class="text-primary"><i class="icon-home"></i></a>
+            </li>
+            <li class="separator list-inline-item">
+                <i class="icon-arrow-right"></i>
+            </li>
+            <li class="nav-item list-inline-item">
+                <span class="text-muted">Reports</span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- Top Card Statistics Section -->
+<div class="row g-4 mb-4">
+    <div class="col-sm-6 col-md-4">
+        <div class="card card-stats card-round hover-effect shadow-sm">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-icon">
+                        <div class="icon-big text-center icon-primary bubble-shadow-small">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                            <p class="card-category text-muted mb-1">Total Users</p>
+                            <h4 class="card-title fw-bold mb-0">{{ total_users }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+        <div class="card card-stats card-round hover-effect shadow-sm">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-icon">
+                        <div class="icon-big text-center icon-info bubble-shadow-small">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                            <p class="card-category text-muted mb-1">Total Chatbot Sessions</p>
+                            <h4 class="card-title fw-bold mb-0">{{ total_chatbot_sessions }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+        <div class="card card-stats card-round hover-effect shadow-sm">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-icon">
+                        <div class="icon-big text-center icon-success bubble-shadow-small">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                            <p class="card-category text-muted mb-1">Total User Queries</p>
+                            <h4 class="card-title fw-bold mb-0">{{ total_user_queries }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Filter Form -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <form method="get" action="" class="row g-3">
+            <div class="col-md-3">
+                <label for="date" class="form-label">Specific Day:</label>
+                <input type="date" name="date" id="date" class="form-control form-control-sm" value="{{ request.GET.date }}">
+            </div>
+            <div class="col-md-3">
+                <label for="start_date" class="form-label">Start Date:</label>
+                <input type="date" name="start_date" id="start_date" class="form-control form-control-sm" value="{{ request.GET.start_date }}">
+            </div>
+            <div class="col-md-3">
+                <label for="end_date" class="form-label">End Date:</label>
+                <input type="date" name="end_date" id="end_date" class="form-control form-control-sm" value="{{ request.GET.end_date }}">
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary btn-sm me-2">Filter</button>
+                <a href="" class="btn btn-success btn-sm">Export All Users</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Display Filtered Report Data -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-white py-3">
+        <h5 class="card-title mb-0">User Activity Report</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Last Login</th>
+                        <th>Sessions on Specific Day</th>
+                        <th>Sessions in Date Range</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.last_login }}</td>
+                        <td>
+                            <span class="badge bg-primary">{{ user.day_sessions }}</span>
+                        </td>
+                        <td>
+                            <span class="badge bg-info">{{ user.range_sessions }}</span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-muted">
+                            <i class="fas fa-info-circle me-2"></i>No data available for the selected filters.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Detailed Reports Section -->
+<div class="card shadow-sm">
+    <div class="card-header bg-white py-3">
+        <h5 class="card-title mb-0">Detailed Reports</h5>
+    </div>
+    <div class="card-body">
+        <div class="row g-4">
+            <!-- User Activity Chart -->
+            <div class="col-md-6">
+                <div class="card border">
+                    <div class="card-body">
+                        <h6 class="card-title mb-3">User Activity Timeline</h6>
+                        <div class="chart-placeholder bg-light p-4 rounded text-center text-muted">
+                            Chart showing user activity over time would be displayed here
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Query Distribution -->
+            <div class="col-md-6">
+                <div class="card border">
+                    <div class="card-body">
+                        <h6 class="card-title mb-3">Query Distribution</h6>
+                        <div class="chart-placeholder bg-light p-4 rounded text-center text-muted">
+                            Pie chart showing query types distribution would be displayed here
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Popular Topics -->
+            <div class="col-md-6">
+                <div class="card border">
+                    <div class="card-body">
+                        <h6 class="card-title mb-3">Popular Topics</h6>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Account Settings
+                                <span class="badge bg-primary rounded-pill">214</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Technical Support
+                                <span class="badge bg-primary rounded-pill">186</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Product Information
+                                <span class="badge bg-primary rounded-pill">152</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Response Time Analysis -->
+            <div class="col-md-6">
+                <div class="card border">
+                    <div class="card-body">
+                        <h6 class="card-title mb-3">Response Time Analysis</h6>
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Time Period</th>
+                                        <th>Avg. Response Time</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Morning</td>
+                                        <td>2.3s</td>
+                                        <td><span class="badge bg-success">Excellent</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Afternoon</td>
+                                        <td>3.1s</td>
+                                        <td><span class="badge bg-success">Good</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Evening</td>
+                                        <td>2.8s</td>
+                                        <td><span class="badge bg-success">Good</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
