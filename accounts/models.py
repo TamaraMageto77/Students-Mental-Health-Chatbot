@@ -1,5 +1,8 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Group, Permission
 from django.db import models
+from django.core.validators import RegexValidator
+from django.utils import timezone
+
 class UserType:
     ADMINISTRATOR = 1
     COUNSELLOR = 2
@@ -9,45 +12,128 @@ class UserType:
         (COUNSELLOR, 'Counsellor'),
         (STUDENT, 'Student'),
     ]
+    
+class MaritalStatus:
+    SINGLE = 'Single'
+    MARRIED = 'Married'
+    DIVORCED = 'Divorced'
+    WIDOWED = 'Widowed'
+    CHOICES = [
+        (SINGLE, 'Single'),
+        (MARRIED, 'Married'),
+        (DIVORCED, 'Divorced'),
+        (WIDOWED, 'Widowed'),
+    ]
 
 class AccountManager(BaseUserManager):
-    def create_user(self, email, full_name, account_type, password=None):
+    def create_user(self, email, full_name, account_type, password=None, **extra_fields):
         if not email:
             raise ValueError("Users must have an email address")
         email = self.normalize_email(email)
-        user = self.model(email=email, full_name=full_name, account_type=account_type)
+        user = self.model(
+            email=email, 
+            full_name=full_name, 
+            account_type=account_type,
+            **extra_fields
+        )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
     def create_superuser(self, email, full_name, password=None):
-        user = self.create_user(email=email, full_name=full_name, account_type=UserType.ADMINISTRATOR, password=password)
+        user = self.create_user(
+            email=email,
+            full_name=full_name,
+            account_type=UserType.ADMINISTRATOR,
+            password=password
+        )
         user.is_superuser = True
         user.is_staff = True
         user.save(using=self._db)
         return user
 
 class Account(AbstractBaseUser):
-    email = models.EmailField(unique=True)
+    # Basic Fields
+    email = models.EmailField(
+        unique=True,
+        error_messages={
+            'unique': 'A user with that email already exists.',
+        }
+    )
     full_name = models.CharField(max_length=255)
-    account_type = models.PositiveSmallIntegerField(choices=UserType.CHOICES, default=UserType.STUDENT)
+    account_type = models.PositiveSmallIntegerField(
+        choices=UserType.CHOICES, 
+        default=UserType.STUDENT
+    )
+
+    # Additional Student Fields
+    student_reg_no = models.CharField(
+        max_length=50, 
+        unique=True, 
+        null=True, 
+        blank=True
+    )
+    course = models.CharField(
+        max_length=100, 
+        null=True, 
+        blank=True
+    )
+    
+    # Phone number validation
+    phone_regex = RegexValidator(
+        regex=r'^\+?254?\d{9,15}$',
+        message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."
+    )
+    mobile_number = models.CharField(
+        validators=[phone_regex], 
+        max_length=17, 
+        null=True, 
+        blank=True
+    )
+    
+    year_of_study = models.PositiveSmallIntegerField(
+        choices=[(i, str(i)) for i in range(1, 7)],  # 1 to 6 years
+        null=True,
+        blank=True
+    )
+    
+    marital_status = models.CharField(
+        max_length=20,
+        choices=MaritalStatus.CHOICES,
+        default=MaritalStatus.SINGLE,
+        null=True,
+        blank=True
+    )
+    
+    date_of_birth = models.DateField(
+        null=True,
+        blank=True
+    )
+
+    # Status Fields
     is_active = models.BooleanField(default=True)
     is_counsellor = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+    
+    # Relationships
     groups = models.ManyToManyField(Group, blank=True)
     user_permissions = models.ManyToManyField(Permission, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True,null=True)
+    
+    # Timestamps
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     objects = AccountManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['full_name']
     
+    class Meta:
+        verbose_name = 'account'
+        verbose_name_plural = 'accounts'
+
     def has_module_perms(self, app_label):
-        """
-        Return True if the user has any permissions in the given app label.
-        """
         return True
     
     @property
@@ -55,11 +141,13 @@ class Account(AbstractBaseUser):
         return UserType.CHOICES[self.account_type - 1][1]
 
     def has_perm(self, perm, obj=None):
-        """
-        Return True if the user has the specified permission.
-        """
         return True
 
     def __str__(self):
-        return self.email
+        return f"{self.email} - {self.full_name}"
+    
+    def save(self, *args, **kwargs):
+        # Make email lowercase before saving
+        self.email = self.email.lower()
+        super().save(*args, **kwargs)
 
