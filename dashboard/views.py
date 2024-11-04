@@ -1,14 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
-
-from django.db.models import Count
-
-
+from django.db.models import Count, Q
 from accounts.models import Account
 from chats.models import Chat, Message
 from django.shortcuts import redirect
 from django.contrib import messages
+
+
 
 def dashboard(request):
     if request.user.is_counsellor:
@@ -24,8 +23,53 @@ def alerts(request):
     return render(request,  'admin/alerts.html')
 
 def reports(request):
-    return render(request, 'admin/reports.html')
+    # Get start_date and end_date from the query parameters
+    start_date = request.GET.get('start_date', None)
+    end_date = request.GET.get('end_date', None)
 
+    # Initialize the date range filter
+    date_filter = Q()
+
+    # If start_date is provided, add it to the filter
+    if start_date:
+        try:
+            date_filter &= Q(chats__messages__timestamp__gte=start_date)
+        except ValueError:
+            # If date parsing fails, do not apply any filter
+            pass
+
+    # If end_date is provided, add it to the filter
+    if end_date:
+        try:
+            date_filter &= Q(chats__messages__timestamp__lte=end_date)
+        except ValueError:
+            # If date parsing fails, do not apply any filter
+            pass
+
+    # Filter messages within the date range if specified and group by user, counting the messages
+    user_message_counts = (
+        Account.objects.annotate(
+            queries=Count(
+                'chats__messages',
+                filter=date_filter & Q(chats__messages__type='request')
+            )
+        ).annotate(
+            responses=Count(
+                'chats__messages',
+                filter=date_filter & Q(chats__messages__type='response')
+            )
+        )
+    )
+
+    # Additional context data
+    context = {
+        'total_users': Account.objects.count(),
+        'total_chat_sessions': Chat.objects.count(),
+        'total_bot_messages': Message.objects.filter(type='response').count(),
+        'user_message_counts': user_message_counts,  # Pass the user message counts
+    }
+
+    return render(request, 'admin/reports.html', context)
 
 def uchats(request):
     total_chat_sessions = Chat.objects.count()
