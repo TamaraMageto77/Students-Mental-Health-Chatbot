@@ -88,6 +88,7 @@ def profile(request):
             except Exception as e:
                 messages.error(request, f'Error updating profile: {str(e)}')
         else:
+            print(form.errors)
             messages.error(request, 'Please correct the errors below.')
     else:
         form = UpdateProfileForm(instance=request.user)

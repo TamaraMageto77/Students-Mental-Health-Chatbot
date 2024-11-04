@@ -244,6 +244,7 @@
             <form class="profile-form" method="POST">
                 {% csrf_token %}
                 <div class="form-row">
+                   
                     <div class="form-col">
                         <label for="email">Email address</label>
                         <div class="form-group">
@@ -251,6 +252,16 @@
                             <input type="email" class="form-control" name="email" value="{{ user.email }}" placeholder="Email" readonly style="background-color:#212121;">
                             {% if form.email.errors %}
                                 <div class="error-message">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <label for="email">Full Name</label>
+                        <div class="form-group">
+                            <i class="fas fa-user field-icon"></i>
+                            {{ form.full_name }}
+                            {% if form.full_name.errors %}
+                                <div class="error-message">{{ form.full_name.errors }}</div>
                             {% endif %}
                         </div>
                     </div>
