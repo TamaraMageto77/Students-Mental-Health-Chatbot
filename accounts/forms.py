@@ -83,7 +83,7 @@ class UpdateProfileForm(forms.ModelForm):
         required=False,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Mobile Number',
+            'placeholder': '0712345678',
             'type': 'tel'
         })
     )
@@ -148,21 +148,35 @@ class UpdateProfileForm(forms.ModelForm):
         if self.instance and self.instance.pk:
             self.fields['email'].widget.attrs['readonly'] = True
 
-        # Add any custom validation messages
-        self.fields['mobile_number'].error_messages = {
-            'invalid': 'Please enter a valid mobile number.'
-        }
-
     def clean_mobile_number(self):
-        """Custom validation for mobile number"""
+        """Custom validation and formatting for mobile number."""
         mobile_number = self.cleaned_data.get('mobile_number')
+    
         if mobile_number:
-            # Remove any spaces or special characters except '+'
+            # Remove any spaces or non-numeric characters except '+'
             mobile_number = ''.join(c for c in mobile_number if c.isdigit() or c == '+')
-            # Validate number format
-            if not mobile_number.startswith('+'):
-                mobile_number = '+' + mobile_number
+            
+            # Validate formats: +2547, 07, or 01
+            if mobile_number.startswith('+2547') and len(mobile_number) == 13:
+                # Valid format +2547xxxxxxxx
+                pass
+            elif mobile_number.startswith('07') and len(mobile_number) == 10:
+                # Convert to +2547xxxxxxxx
+                mobile_number = '+254' + mobile_number[1:]
+            elif mobile_number.startswith('01') and len(mobile_number) == 10:
+                # Convert to +2541xxxxxxxx
+                mobile_number = '+254' + mobile_number[1:]
+            else:
+                # Raise error for invalid formats
+                raise forms.ValidationError(
+                    "Please enter a valid mobile number in the format: '+254712345678', '0712345678', or '0112345678'."
+                )
+        
         return mobile_number
+
+
+
+
 
     def clean_email(self):
         """Prevent email changes for existing users"""

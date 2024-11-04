@@ -81,15 +81,10 @@ class Account(AbstractBaseUser):
     
     # Phone number validation
     phone_regex = RegexValidator(
-        regex=r'^\+?254?\d{9,15}$',
-        message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."
+    regex=r'^\+2547\d{8}$|^07\d{8}$|^01\d{8}$',
+    message="Phone number must be in the format '+254712345678', '0712345678', or '0112345678'." # noqa
     )
-    mobile_number = models.CharField(
-        validators=[phone_regex], 
-        max_length=17, 
-        null=True, 
-        blank=True
-    )
+    mobile_number = models.CharField(validators=[phone_regex], max_length=17, blank=True, null=True)
     
     year_of_study = models.PositiveSmallIntegerField(
         choices=[(i, str(i)) for i in range(1, 7)],  # 1 to 6 years
