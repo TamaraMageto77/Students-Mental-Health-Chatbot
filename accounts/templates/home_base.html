@@ -159,7 +159,7 @@
             <li>
               <a href="{% url 'contact' %}" class="{% if request.path == '/contact/' %}active{% endif %}">Contact</a>
             </li>
-            {% if user.is_authenticated %}
+            {% if user.is_authenticated and not user.is_staff and not user.is_counsellor %}
               <li>
                 <a href="{% url 'chats' %}" class="{% if request.path == '/chats/' %}active{% endif %}">Chats</a>
               </li>
