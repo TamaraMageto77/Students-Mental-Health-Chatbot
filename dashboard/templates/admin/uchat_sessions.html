@@ -27,21 +27,18 @@
           <tr>
             <th>Student Name</th>
             <th>Session Date</th>
-            <th>Session Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {% for session in chat_sessions %}
-          {% if session.user.role == 'student' %}
           <tr>
-            <td>{{ session.user.username }}</td>
-            <td>{{ session.date|date:"F j, Y, g:i a" }}</td>
-            <td>{{ session.status }}</td>
+            <td>{{ session.user.full_name }}</td>
+            <td>{{ session.timestamp|date:"F j, Y, g:i a" }}</td>
             <td>
-              <a href="{% url 'uchat_detail' uchat.id %}" class="view-btn">View</a>
+             <a href="{% url 'uchat_detail' session.user.id %}" class="view-btn">View</a> 
+              {% comment %} <a href="{% url 'uchat_detail'%}" class="view-btn">View</a> {% endcomment %}
           </tr>
-          {% endif %}
           {% empty %}
           <tr>
             <td colspan="4">No student chat sessions found.</td>

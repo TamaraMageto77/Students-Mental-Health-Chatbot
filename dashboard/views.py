@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q
-from accounts.models import Account
+from accounts.models import Account, UserType
 from chats.models import Chat, Message
 from django.shortcuts import redirect
 from django.contrib import messages
@@ -72,13 +72,48 @@ def reports(request):
     return render(request, 'admin/reports.html', context)
 
 def uchats(request):
-    total_chat_sessions = Chat.objects.count()
-    # student
-    return render(request,   'admin/uchat_sessions.html')
+    # Fetch all chats for students ordered by latest to oldest
+    student_chats = Chat.objects.filter(user__account_type=UserType.STUDENT).order_by('-timestamp')
+    return render(request,   'admin/uchat_sessions.html', {'chat_sessions': student_chats})
 
-def uchat_detail(request):
+def uchat_detail(request, id):
+    """
+    Retrieves messages for a specific user's chats and organizes them into a list of 
+    dictionaries, each containing chat ID, user details, and messages.
+    """
+    if request.method != 'GET':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    username = Account.objects.get(id=id).full_name
+    print(f'Username: {username}')
+
+    # Fetch chat IDs for the specified user
+    chat_ids = Chat.objects.filter(user_id=id).values_list('id', flat=True)
+
+    # Check if there are no chats for this user
+    if not chat_ids:
+        return JsonResponse({'message': 'No chats found for this user.'}, status=404)
+
+    # Create chat threads using list comprehension
+    chat_threads = [
+        {
+            'chat_id': str(chat.id),
+            'user': 'Student',
+            'messages': [
+                {
+                    'chat_id': str(message.id),
+                    'type': message.type,
+                    'text': message.content,
+                    'timestamp': message.timestamp,
+                }
+                for message in Message.objects.filter(chat=chat)
+            ]
+        }
+        for chat in Chat.objects.filter(id__in=chat_ids)
+    ]
     
-    return render(request,   'admin/uchat.html')
+    print(chat_threads)
+
+    return render(request, 'admin/uchat.html', {'chat_threads': chat_threads, 'name': username})
 
 
 

@@ -2,7 +2,7 @@ import os
 from ai21 import AI21Client
 from ai21.models.chat import ChatMessage
 
-os.environ["AI21_API_KEY"] = "UDkAKH55JEDTqUUhT4huRGNgjDMasWhv"
+os.environ["AI21_API_KEY"] = "NLO8wYhIMVW6uHUJeCWSI8kT4m7ZBn4O"
 
 client = AI21Client()
 
