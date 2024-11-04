@@ -24,7 +24,7 @@ def alerts(request):
     return render(request,  'admin/alerts.html')
 
 def reports(request):
-    return HttpResponse("Welcome to the Reports Dashboard!")
+    return render(request, 'admin/reports.html')
 
 
 def uchats(request):
