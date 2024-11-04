@@ -5,7 +5,7 @@ from django import forms
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import SetPasswordForm
 from django.utils.translation import gettext_lazy as _
-from .models import Account
+from .models import Account, MaritalStatus
 
 
 class LoginForm(forms.Form):
@@ -78,11 +78,101 @@ class UpdateProfileForm(forms.ModelForm):
     """
     A form for updating user profiles.
     """
+    # Custom validation for mobile number
+    mobile_number = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Mobile Number',
+            'type': 'tel'
+        })
+    )
+
+    # Custom date input
+    date_of_birth = forms.DateField(
+        required=False,
+        widget=forms.DateInput(attrs={
+            'class': 'form-control',
+            'type': 'date'
+        })
+    )
+
+    # Year of study as select field
+    year_of_study = forms.ChoiceField(
+        choices=[(i, str(i)) for i in range(1, 7)],
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    # Marital status as select field
+    marital_status = forms.ChoiceField(
+        choices=MaritalStatus.CHOICES,
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
     class Meta:
         model = Account
-        fields = ['email', 'full_name', 'account_type']
+        fields = [
+            'email',
+            'full_name',
+            'student_reg_no',
+            'course',
+            'mobile_number',
+            'year_of_study',
+            'marital_status',
+            'date_of_birth'
+        ]
+        widgets = {
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Email'
+            }),
+            'full_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Full Name'
+            }),
+            'student_reg_no': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Student ID'
+            }),
+            'course': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Course'
+            }),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs.update({'class': 'form-control'})
+        # Make email read-only if it's an existing user
+        if self.instance and self.instance.pk:
+            self.fields['email'].widget.attrs['readonly'] = True
+
+        # Add any custom validation messages
+        self.fields['mobile_number'].error_messages = {
+            'invalid': 'Please enter a valid mobile number.'
+        }
+
+    def clean_mobile_number(self):
+        """Custom validation for mobile number"""
+        mobile_number = self.cleaned_data.get('mobile_number')
+        if mobile_number:
+            # Remove any spaces or special characters except '+'
+            mobile_number = ''.join(c for c in mobile_number if c.isdigit() or c == '+')
+            # Validate number format
+            if not mobile_number.startswith('+'):
+                mobile_number = '+' + mobile_number
+        return mobile_number
+
+    def clean_email(self):
+        """Prevent email changes for existing users"""
+        email = self.cleaned_data.get('email')
+        if self.instance and self.instance.pk:
+            return self.instance.email
+        return email
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        if commit:
+            user.save()
+        return user

@@ -135,7 +135,7 @@
         }
 
         .form-control {
-            background: #212121;
+            background: #212121 ;
             border: 1px solid #4d5158;
             color: #E0E0E0;
             padding: 0.9rem 1rem;
@@ -242,56 +242,81 @@
 
             <!-- Profile Form -->
             <form class="profile-form" method="POST">
+                {% csrf_token %}
                 <div class="form-row">
                     <div class="form-col">
+                        <label for="email">Email address</label>
                         <div class="form-group">
                             <i class="fas fa-envelope field-icon"></i>
-                            <input type="email" class="form-control" name="email" value="{{ user.email }}" placeholder="Email">
+                            <input type="email" class="form-control" name="email" value="{{ user.email }}" placeholder="Email" readonly style="background-color:#212121;">
+                            {% if form.email.errors %}
+                                <div class="error-message">{{ form.email.errors }}</div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="form-col">
+                        <label for="email">Student Reg No</label>
                         <div class="form-group">
                             <i class="fas fa-id-card field-icon"></i>
-                            <input type="text" class="form-control" name="student_id" value="{{ user.student_id }}" placeholder="Student ID">
+                            {{ form.student_reg_no }}
+                            {% if form.student_reg_no.errors %}
+                                <div class="error-message">{{ form.student_reg_no.errors }}</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-col">
+                        <label for="email">Year of study</label>
                         <div class="form-group">
                             <i class="fas fa-graduation-cap field-icon"></i>
-                            <input type="text" class="form-control" name="year_of_study" value="{{ user.year_of_study }}" placeholder="Year of Study">
+                            {{ form.year_of_study }}
+                            {% if form.year_of_study.errors %}
+                                <div class="error-message">{{ form.year_of_study.errors }}</div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="form-col">
+                        <label for="email">Course</label>
                         <div class="form-group">
                             <i class="fas fa-book field-icon"></i>
-                            <input type="text" class="form-control" name="course" value="{{ user.course }}" placeholder="Course">
+                            {{ form.course }}
+                            {% if form.course.errors %}
+                                <div class="error-message">{{ form.course.errors }}</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-                <div class="form-row">
+                <div class="form-row">  
                     <div class="form-col">
+                        <label for="email">Mobile Number</label>
                         <div class="form-group">
                             <i class="fas fa-phone field-icon"></i>
-                            <input type="tel" class="form-control" name="mobile_number" value="{{ user.mobile_number }}" placeholder="Mobile Number">
+                            {{ form.mobile_number }}
+                            {% if form.mobile_number.errors %}
+                                <div class="error-message">{{ form.mobile_number.errors }}</div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="form-col">
+                        <label for="email">Dtae of birth</label>
                         <div class="form-group">
                             <i class="fas fa-calendar field-icon"></i>
-                            <input type="date" class="form-control" name="date_of_birth" value="{{ user.date_of_birth }}" placeholder="Date of Birth">
+                            {{ form.date_of_birth }}
+                            {% if form.date_of_birth.errors %}
+                                <div class="error-message">{{ form.date_of_birth.errors }}</div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="form-col">
+                        <label for="email">Marital Status</label>
                         <div class="form-group">
                             <i class="fas fa-heart field-icon"></i>
-                            <select class="form-control" name="marital_status">
-                                <option value="Single" {% if user.marital_status == 'Single' %}selected{% endif %}>Single</option>
-                                <option value="Married" {% if user.marital_status == 'Married' %}selected{% endif %}>Married</option>
-                                <option value="Other" {% if user.marital_status == 'Other' %}selected{% endif %}>Other</option>
-                            </select>
-                        </div>                        
+                            {{ form.marital_status }}
+                            {% if form.marital_status.errors %}
+                                <div class="error-message">{{ form.marital_status.errors }}</div>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-save submit-btn">
