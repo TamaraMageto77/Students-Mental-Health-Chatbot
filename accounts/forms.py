@@ -148,6 +148,15 @@ class UpdateProfileForm(forms.ModelForm):
             'marital_status',
             'date_of_birth'
         ]
+    def __init__(self, *args, **kwargs):
+            user = kwargs.pop('user', None)  # Pass user
+            print(user)
+            super().__init__(*args, **kwargs)
+            
+            # If the user is a student, remove all fields except 'full_name' and 'email'
+            if user and user.role == 3:
+                allowed_fields = {'full_name'}
+                self.fields = {key: value for key, value in self.fields.items() if key in allowed_fields}
 
     def clean_mobile_number(self):
         """

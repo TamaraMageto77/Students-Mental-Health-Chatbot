@@ -78,7 +78,8 @@ def profile(request):
     if request.method == 'POST':
         form = UpdateProfileForm(
             request.POST, 
-            instance=request.user
+            instance=request.user,
+            user=request.user
         )
         if form.is_valid():
             try:
