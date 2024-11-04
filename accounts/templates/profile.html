@@ -243,8 +243,32 @@
             <!-- Profile Form -->
             <form class="profile-form" method="POST">
                 {% csrf_token %}
-                <div class="form-row">
-                   
+              
+                <div class="form-col">
+                    <div class="form-col">
+                        <label for="email">Email address</label>
+                        <div class="form-group">
+                            <i class="fas fa-envelope field-icon"></i>
+                            <input type="email" class="form-control" name="email" value="{{ user.email }}" placeholder="Email" readonly style="background-color:#212121;">
+                            {% if form.email.errors %}
+                                <div class="error-message">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <label for="email">Full Name</label>
+                        <div class="form-group">
+                            <i class="fas fa-user field-icon"></i>
+                            {{ form.full_name }}
+                            {% if form.full_name.errors %}
+                                <div class="error-message">{{ form.full_name.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                    
+                    {% if  user.is_student %}
+                    <div class="form-row">
                     <div class="form-col">
                         <label for="email">Email address</label>
                         <div class="form-group">
@@ -276,6 +300,10 @@
                         </div>
                     </div>
                 </div>
+                    {% endif %}
+                    
+                
+                {% if  user.is_student %}
                 <div class="form-row">
                     <div class="form-col">
                         <label for="email">Year of study</label>
@@ -297,38 +325,42 @@
                             {% endif %}
                         </div>
                     </div>
+
+                    <div class="form-row">  
+                        <div class="form-col">
+                            <label for="email">Mobile Number</label>
+                            <div class="form-group">
+                                <i class="fas fa-phone field-icon"></i>
+                                {{ form.mobile_number }}
+                                {% if form.mobile_number.errors %}
+                                    <div class="error-message">{{ form.mobile_number.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <label for="email">Date of birth</label>
+                            <div class="form-group">
+                                <i class="fas fa-calendar field-icon"></i>
+                                {{ form.date_of_birth }}
+                                {% if form.date_of_birth.errors %}
+                                    <div class="error-message">{{ form.date_of_birth.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <label for="email">Marital Status</label>
+                            <div class="form-group">
+                                <i class="fas fa-heart field-icon"></i>
+                                {{ form.marital_status }}
+                                {% if form.marital_status.errors %}
+                                    <div class="error-message">{{ form.marital_status.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
                 </div>
-                <div class="form-row">  
-                    <div class="form-col">
-                        <label for="email">Mobile Number</label>
-                        <div class="form-group">
-                            <i class="fas fa-phone field-icon"></i>
-                            {{ form.mobile_number }}
-                            {% if form.mobile_number.errors %}
-                                <div class="error-message">{{ form.mobile_number.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="form-col">
-                        <label for="email">Date of birth</label>
-                        <div class="form-group">
-                            <i class="fas fa-calendar field-icon"></i>
-                            {{ form.date_of_birth }}
-                            {% if form.date_of_birth.errors %}
-                                <div class="error-message">{{ form.date_of_birth.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="form-col">
-                        <label for="email">Marital Status</label>
-                        <div class="form-group">
-                            <i class="fas fa-heart field-icon"></i>
-                            {{ form.marital_status }}
-                            {% if form.marital_status.errors %}
-                                <div class="error-message">{{ form.marital_status.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
+                {% endif %}
+                
+               
                 </div>
                 <button type="submit" class="btn btn-save submit-btn">
                     Save Changes
