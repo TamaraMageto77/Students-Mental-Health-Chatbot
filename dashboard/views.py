@@ -1,14 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Max
 from accounts.models import Account, UserType
 from chats.models import Chat, Message
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
+import json
 
 
-
+@login_required
 def dashboard(request):
     if request.user.is_counsellor:
         total_students = Account.objects.filter(account_type=3).count()
@@ -19,9 +20,13 @@ def dashboard(request):
     else:
         return render(request, 'admin/admin_dashboard.html')
 
+
+@login_required
 def alerts(request):
     return render(request,  'admin/alerts.html')
 
+
+@login_required
 def reports(request):
     # Get start_date and end_date from the query parameters
     start_date = request.GET.get('start_date', None)
@@ -71,52 +76,91 @@ def reports(request):
 
     return render(request, 'admin/reports.html', context)
 
+@login_required
 def uchats(request):
-    # Fetch all chats for students ordered by latest to oldest
-    student_chats = Chat.objects.filter(user__account_type=UserType.STUDENT).order_by('-timestamp')
-    return render(request,   'admin/uchat_sessions.html', {'chat_sessions': student_chats})
+    # Get each student's latest chat timestamp
+    latest_timestamps = Chat.objects.filter(user__account_type=UserType.STUDENT).values('user').annotate(latest_timestamp=Max('timestamp'))
 
+    # Retrieve the latest chat entries for each student based on the annotated timestamps
+    student_chats = Chat.objects.filter(
+        user__account_type=UserType.STUDENT,
+        timestamp__in=[entry['latest_timestamp'] for entry in latest_timestamps]
+    ).order_by('-timestamp')
+
+    return render(request, 'admin/uchat_sessions.html', {'chat_sessions': student_chats})
+
+@login_required
 def uchat_detail(request, id):
     """
-    Retrieves messages for a specific user's chats and organizes them into a list of 
-    dictionaries, each containing chat ID, user details, and messages.
+    Retrieves all messages from all chats for a user and combines them into a single list,
+    along with calculating the time range of conversations.
     """
     if request.method != 'GET':
         return JsonResponse({'error': 'Method not allowed'}, status=405)
+    
     username = Account.objects.get(id=id).full_name
-    print(f'Username: {username}')
-
-    # Fetch chat IDs for the specified user
-    chat_ids = Chat.objects.filter(user_id=id).values_list('id', flat=True)
-
-    # Check if there are no chats for this user
-    if not chat_ids:
+    
+    # Get all chats for the user
+    chats = Chat.objects.filter(user_id=id)
+    
+    # Get last chatId
+    last_chat_id = Chat.objects.filter(user_id=id).last().id
+    
+    if not chats.exists():
         return JsonResponse({'message': 'No chats found for this user.'}, status=404)
-
-    # Create chat threads using list comprehension
-    chat_threads = [
-        {
-            'chat_id': str(chat.id),
-            'user': 'Student',
-            'messages': [
-                {
-                    'chat_id': str(message.id),
-                    'type': message.type,
-                    'text': message.content,
-                    'timestamp': message.timestamp,
-                }
-                for message in Message.objects.filter(chat=chat)
-            ]
+    
+    # Get all messages from all chats, ordered by timestamp
+    all_messages = Message.objects.filter(
+        chat__in=chats
+    ).order_by('timestamp')
+    
+    # Get first and last message timestamps
+    first_message = all_messages.first()
+    last_message = all_messages.last()
+    
+    time_range = None
+    if first_message and last_message:
+        time_range = {
+            'start': first_message.timestamp,
+            'end': last_message.timestamp
         }
-        for chat in Chat.objects.filter(id__in=chat_ids)
+    
+    # Format messages
+    messages = [
+        {
+            'type': message.type,
+            'text': message.content,
+            'timestamp': message.timestamp,
+        }
+        for message in all_messages
     ]
     
-    print(chat_threads)
+    context = {
+        'chat_id': last_chat_id,
+        'name': username,
+        'messages': messages,
+        'time_range': time_range
+    }
+    
+    return render(request, 'admin/uchat.html', context)
 
-    return render(request, 'admin/uchat.html', {'chat_threads': chat_threads, 'name': username})
-
-
-
+@login_required
+def send_feedback_view(request, chat_id):
+    """
+    Sends feedback to the user based on the chat session.
+    """
+    chat = get_object_or_404(Chat, id=chat_id)
+    
+    if request.method == 'POST':
+        data = json.loads(request.body)  # Read JSON data from the request
+        feedback_content = data.get('feeback')
+        
+        # Save the message to the database
+        # Ensure you save the message with a timestamp
+        Message.objects.create(
+            chat=chat, content=feedback_content, type='counselor')
+        
+       
 
 @login_required
 def users(request):
