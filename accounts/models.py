@@ -134,6 +134,10 @@ class Account(AbstractBaseUser):
     @property
     def role(self):
         return UserType.CHOICES[self.account_type - 1][1]
+    
+    @property
+    def is_student(self):
+        return self.account_type == UserType.STUDENT
 
     def has_perm(self, perm, obj=None):
         return True
