@@ -1,12 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, Q, Max
+from django.db.models import Count, Q, Max, Count, Case, When, IntegerField, Q,  Avg, F, ExpressionWrapper, DurationField
+from django.db.models.functions import TruncDate
 from accounts.models import Account, UserType
 from chats.models import Chat, Message
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 import json
+from collections import Counter
+import csv
+from datetime import timedelta
+from django.utils import timezone
 
 
 @login_required
@@ -28,53 +33,110 @@ def alerts(request):
 
 @login_required
 def reports(request):
-    # Get start_date and end_date from the query parameters
-    start_date = request.GET.get('start_date', None)
-    end_date = request.GET.get('end_date', None)
-
-    # Initialize the date range filter
-    date_filter = Q()
-
-    # If start_date is provided, add it to the filter
-    if start_date:
-        try:
-            date_filter &= Q(chats__messages__timestamp__gte=start_date)
-        except ValueError:
-            # If date parsing fails, do not apply any filter
-            pass
-
-    # If end_date is provided, add it to the filter
-    if end_date:
-        try:
-            date_filter &= Q(chats__messages__timestamp__lte=end_date)
-        except ValueError:
-            # If date parsing fails, do not apply any filter
-            pass
-
-    # Filter messages within the date range if specified and group by user, counting the messages
-    user_message_counts = (
-        Account.objects.annotate(
-            queries=Count(
-                'chats__messages',
-                filter=date_filter & Q(chats__messages__type='request')
-            )
-        ).annotate(
-            responses=Count(
-                'chats__messages',
-                filter=date_filter & Q(chats__messages__type='response')
-            )
-        )
-    )
-
-    # Additional context data
-    context = {
-        'total_users': Account.objects.count(),
-        'total_chat_sessions': Chat.objects.count(),
-        'total_bot_messages': Message.objects.filter(type='response').count(),
-        'user_message_counts': user_message_counts,  # Pass the user message counts
+    message_types = Message.objects.values('type').annotate(count=Count('id'))
+    type_labels = {
+        'counselor': 'Counselor',
+        'request': 'Student',
+        'response': 'Bot'
+    }
+    types_data = {
+        'labels': [type_labels.get(msg['type'], 'Unknown') for msg in message_types],
+        'counts': [msg['count'] for msg in message_types]
     }
 
+    # Word frequency analysis
+    all_messages = Message.objects.filter(type='request').values_list('content', flat=True)
+    words = ' '.join(all_messages).lower().split()
+    word_freq = Counter(words).most_common(10)
+    word_data = {
+        'words': [word[0] for word in word_freq],
+        'frequencies': [word[1] for word in word_freq]
+    }
+
+    # User retention metrics
+    thirty_days_ago = timezone.now() - timedelta(days=30)
+    
+    user_stats = Chat.objects.values('user').annotate(
+        chat_count=Count('id'),
+        is_returning=Case(
+            When(chat_count__gt=1, then=1),
+            default=0,
+            output_field=IntegerField(),
+        )
+    ).aggregate(
+        total_users=Count('user', distinct=True),
+        returning_users=Count('user', filter=Q(is_returning=1)),
+        new_users=Count('user', filter=Q(chat_count=1))
+    )
+    
+     # Average response time analysis
+    response_times = Message.objects.filter(
+        type='response'
+    ).select_related('chat').annotate(
+        response_time=ExpressionWrapper(
+            F('timestamp') - F('chat__timestamp'),
+            output_field=DurationField()
+        )
+    ).aggregate(
+        avg_response_time=Avg('response_time')
+    )
+
+    # Session duration analysis
+    session_durations = Chat.objects.annotate(
+        last_message_time=Max('messages__timestamp'),
+        duration=ExpressionWrapper(
+            F('last_message_time') - F('timestamp'),
+            output_field=DurationField()
+        )
+    ).aggregate(
+        avg_duration=Avg('duration'),
+        total_sessions=Count('id')
+    )
+
+    # Daily messages count
+    daily_messages = Message.objects.filter(timestamp__gte=thirty_days_ago).annotate(date=TruncDate('timestamp')).values('date').annotate(count=Count('id')).order_by('date')
+
+    retention_rate = (user_stats['returning_users'] / user_stats['total_users']) * 100 if user_stats['total_users'] > 0 else 0
+    churn_rate = 100 - retention_rate
+
+    # Export to CSV if requested
+    if request.GET.get('export'):
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="chat_report.csv"'
+        writer = csv.writer(response)
+        writer.writerow(['Metric', 'Value'])
+        writer.writerow(['Total Users', user_stats['total_users']])
+        writer.writerow(['Returning Users', user_stats['returning_users']])
+        writer.writerow(['New Users', user_stats['new_users']])
+        writer.writerow(['Retention Rate', f"{retention_rate:.2f}%"])
+        writer.writerow(['Most Common Words', ', '.join(word_data['words'][:5])])
+        return response
+
+    context = {
+        'message_types': json.dumps(types_data),
+        'word_frequencies': json.dumps(word_data),
+        'user_stats': {
+            'total_users': user_stats['total_users'],
+            'returning_users': user_stats['returning_users'],
+            'new_users': user_stats['new_users'],
+            'retention_rate': round(retention_rate, 2),
+            'churn_rate': round(churn_rate, 2)
+        },
+        'daily_messages': json.dumps({
+            'dates': [msg['date'].strftime('%Y-%m-%d') for msg in daily_messages],
+            'counts': [msg['count'] for msg in daily_messages]
+        }),
+         'response_metrics': json.dumps({
+            'avg_response_time': str(response_times['avg_response_time'].total_seconds() if response_times['avg_response_time'] else 0),
+        }),
+        'session_metrics': json.dumps({
+            'avg_duration': str(session_durations['avg_duration'].total_seconds() if session_durations['avg_duration'] else 0),
+            'total_sessions': session_durations['total_sessions']
+        })
+    }
+    
     return render(request, 'admin/reports.html', context)
+
 
 @login_required
 def uchats(request):
