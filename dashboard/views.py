@@ -146,21 +146,21 @@ def uchat_detail(request, id):
 
 @login_required
 def send_feedback_view(request, chat_id):
-    """
-    Sends feedback to the user based on the chat session.
-    """
     chat = get_object_or_404(Chat, id=chat_id)
     
     if request.method == 'POST':
-        data = json.loads(request.body)  # Read JSON data from the request
-        feedback_content = data.get('feeback')
-        
-        # Save the message to the database
-        # Ensure you save the message with a timestamp
+        data = json.loads(request.body)
+        feedback_content = data.get('feedback')
+
+        if not feedback_content:
+            return JsonResponse({'error': 'Feedback content required'}, status=400)
+
         Message.objects.create(
-            chat=chat, content=feedback_content, type='counselor')
-        
-       
+            chat=chat, 
+            content=feedback_content.strip(), 
+            type='counselor'
+        )
+        return JsonResponse({'status': 'success'})
 
 @login_required
 def users(request):

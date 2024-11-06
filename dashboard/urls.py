@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (account_create, account_delete, account_detail, account_edit, account_upgrade, uchats, uchat_detail,
-    accounts_list, alerts, dashboard, reports)
+    accounts_list, alerts, dashboard, reports, send_feedback_view)
 
 urlpatterns = [
     path('', dashboard, name='dashboard'),
@@ -14,4 +14,5 @@ urlpatterns = [
     path('accounts/<int:id>/upgrade', account_upgrade, name='upgrade_to_counsellor'),
     path('uchats/', uchats, name='uchats'),
     path('uchats/<int:id>/', uchat_detail, name='uchat_detail'),
+    path('<str:chat_id>/send-feedback/', send_feedback_view, name='send_feedback'),
 ]

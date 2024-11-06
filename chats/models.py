@@ -31,6 +31,7 @@ class Message(models.Model):
     MESSAGE_TYPE_CHOICES = [
         ('request', 'Request'),
         ('response', 'Response'),
+        ('counselor', 'Counselor')
     ]
     chat = models.ForeignKey(Chat, related_name='messages', on_delete=models.CASCADE)
     content = models.TextField()
