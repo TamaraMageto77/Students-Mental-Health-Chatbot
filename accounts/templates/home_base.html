@@ -140,11 +140,134 @@
       .navmenu.active ul {
         display: flex;
       }
+      .background{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    background: rgb(17, 16, 17);
+    overflow: hidden;
+    z-index: -1;
+  }
+  .background ul {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  .background li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: #6366f1;
+    animation: animate 39s linear infinite;
+  }
+  .background li:nth-child(0){
+    left: 53%;
+    width: 7px;
+    height: 7px;
+    bottom: -7px;
+    animation-delay: 1s;
+    background: #9acd32;
+  }
+  
+  .background li:nth-child(1) {
+    left: 9%;
+    width: 100px;
+    height: 100px;
+    bottom: -100px;
+    animation-delay: 5s;
+  }
+  
+  .background li:nth-child(2) {
+    left: 68%;
+    width: 119px;
+    height: 119px;
+    bottom: -119px;
+    animation-delay: 1s;
+    background: #9acd32;
+
+  }
+  .background li:nth-child(3) {
+    left: 87%;
+    width: 150px;
+    height: 150px;
+    bottom: -150px;
+    animation-delay: 1s;
+  }
+  
+  .background li:nth-child(4) {
+    left: 19%;
+    width: 173px;
+    height: 173px;
+    bottom: -173px;
+    animation-delay: 14s;
+    background: #9acd32;
+  }
+  .background li:nth-child(5) {
+    left: 82%;
+    width: 152px;
+    height: 152px;
+    bottom: -152px;
+    animation-delay: 6s;
+  }
+  
+  .background li:nth-child(6) {
+    left: 54%;
+    width: 85px;
+    height: 85px;
+    bottom: -85px;
+    animation-delay: 20s;
+    background: #9acd32;
+  }
+  
+  .background li:nth-child(7) {
+    left: 65%;
+    width: 27px;
+    height: 27px;
+    bottom: -27px;
+    animation-delay: 28s;
+  }
+  .background li:nth-child(8) {
+    left: 20%;
+    width: 80px;
+    height: 80px;
+    bottom: -80px;
+    animation-delay: 24s;
+    background: #9acd32;
+  }
+  
+  .background li:nth-child(9) {
+    left: 31%;
+    width: 196px;
+    height: 196px;
+    bottom: -196px;
+    animation-delay: 1s;
+  }
+  @keyframes animate {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+      border-radius: 0;
+    }
+    100% {
+      transform: translateY(-1000px) rotate(720deg);
+      opacity: 0;
+      border-radius: 50%;
+    }
+  }
     </style>
   </head>
   <body>
     <header id="header" class="header sticky-top">
-      <div class="container">
+      <div class="container" >
+        
         <!-- Logo aligned to the top-left -->
         <a href="/" class="logo"><img src="{% static 'assets/img/synergy.svg' %}" alt="Logo" /></a>
         <!-- Navigation menu -->
@@ -184,10 +307,26 @@
       </div>
     </header>
 
+    <div class="background">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+
     <!-- Content block for child templates -->
     <div class="main-content">
-      {% block content %}
 
+      {% block content %}
+        
       {% endblock %}
     </div>
 
