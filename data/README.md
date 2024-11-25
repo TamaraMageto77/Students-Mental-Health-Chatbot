@@ -2,7 +2,7 @@
 
 ### Context
 
-This dataset is a curated collection of questions and answers sourced from two prominent online counseling and therapy platforms. The questions span a wide range of mental health topics, including anxiety, depression, relationship issues, stress management, and more. The answers are provided by qualified and experienced psychologists, ensuring the responses are accurate and reliable. The primary purpose of this dataset is to facilitate the fine-tuning of language models, enhancing their capability to generate appropriate and helpful advice in response to mental health-related queries.
+This dataset is a curated collection of questions and answers sourced from two prominent online counseling and therapy platforms, including [CounselChat](https://counselchat.com). The questions span a wide range of mental health topics, including anxiety, depression, relationship issues, stress management, and more. The answers are provided by qualified and experienced psychologists, ensuring the responses are accurate and reliable. The primary purpose of this dataset is to facilitate the fine-tuning of language models, enhancing their capability to generate appropriate and helpful advice in response to mental health-related queries.
 
 This dataset is a valuable resource for anyone looking to advance the field of AI-driven mental health support. By leveraging the real-world data it provides, developers and researchers can create more empathetic, accurate, and effective tools to assist individuals dealing with mental health challenges.
 
@@ -24,8 +24,8 @@ The entire dataset is composed of text data in the English language, making it s
 
 Each data instance in the dataset consists of the following fields:
 
-- **Context (string):** This field contains the question asked by a user. It represents the mental health-related query that requires a response. (The user's question, covering various mental health topics.)
-- **Response (string):** This field contains the corresponding answer provided by a psychologist. The response is a professional and well-considered piece of advice or guidance. (The psychologist's answer, providing advice, guidance, or information related to the user's query.)
+- **Context (questionTitle):** This field contains the question asked by a user. It represents the mental health-related query that requires a response. (The user's question, covering various mental health topics.)
+- **Response (answerText):** This field contains the corresponding answer provided by a psychologist. The response is a professional and well-considered piece of advice or guidance. (The psychologist's answer, providing advice, guidance, or information related to the user's query.)
 
 ### Curation Rationale
 
@@ -33,7 +33,7 @@ The dataset was curated with the specific goal of aiding in the development of A
 
 ### Source Data
 
-- **Raw Data Access:** The original, raw data can be accessed [here](https://github.com/TamaraMageto77/Students-Mental-Health-Chatbot/data).
+- **Raw Data Access:** The original, raw data can be accessed [here](https://github.com/TamaraMageto77/Students-Mental-Health-Chatbot/blob/main/data/20200325_counsel_chat.csv).
 
 ### Personal and Sensitive Information
 
@@ -57,5 +57,5 @@ This dataset is highly versatile and can be used in various applications:
 
 ### Data Maintenance
 
-- **Last Updated:** 2020
+- **Last Updated:** 2024
 - **Quality Control:** Regular checks will be performed to ensure the dataset maintains its high quality. Any new data added will go through the same rigorous cleaning and anonymization process.
