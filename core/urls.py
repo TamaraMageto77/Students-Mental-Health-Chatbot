@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('accounts.urls')),
     path('chats/', include('chats.urls')),
     path('dashboard/', include('dashboard.urls')),
+    path('studyplanner/', include('studyplanner.urls')),
 ]
 
 if settings.DEBUG:

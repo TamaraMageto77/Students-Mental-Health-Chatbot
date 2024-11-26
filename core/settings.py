@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'chats',
     'dashboard',
     'django_extensions',
+    'studyplanner'
 ]
 
 MIDDLEWARE = [
@@ -138,7 +139,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'accounts'),
     os.path.join(BASE_DIR, "chats"),
-    os.path.join(BASE_DIR, "dashboard"),
+    os.path.join(BASE_DIR, "dashboard")
 ]
 
 

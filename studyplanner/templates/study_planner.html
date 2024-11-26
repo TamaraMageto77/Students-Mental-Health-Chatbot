@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Study Planner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+      :root {
+        font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+        line-height: 1.5;
+        font-weight: 400;
+        color-scheme: light dark;
+        color: rgba(255, 255, 255, 0.87);
+        background-color: #242424;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        min-height: 100vh;
+      }
+
+      #app {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      .color-preview {
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 12px;
+        white-space: nowrap;
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 4px 8px;
+        border-radius: 4px;
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+
+      .color-option:hover .color-preview {
+        opacity: 1;
+      }
+
+      .event-actions {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: none;
+        gap: 4px;
+        padding: 4px;
+        background-color: rgba(0, 0, 0, 0.8);
+        border-radius: 4px;
+      }
+
+      .event-container:hover .event-actions {
+        display: flex;
+      }
+
+      .action-button {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 2px;
+        border-radius: 3px;
+      }
+
+      .action-button:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+      }
+
+      .tooltip {
+        position: relative;
+        display: inline-block;
+      }
+
+      .tooltip .tooltiptext {
+        visibility: hidden;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        text-align: center;
+        border-radius: 4px;
+        padding: 5px 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+
+      .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      const CSS_VARS = {
+        sidebarWidth: '200px',
+        primaryColor: '#6366f1',
+        darkBg: '#1a1b1e',
+        darkerBg: '#141517',
+        lightText: '#e5e7eb',
+        grayText: '#9ca3af',
+        borderColor: '#2d2d35',
+        eventColors: [
+          { color: '#FF6B6B', name: 'Coral Red' },
+          { color: '#4ECDC4', name: 'Mint' },
+          { color: '#45B7D1', name: 'Sky Blue' },
+          { color: '#FDCB6E', name: 'Marigold' },
+          { color: '#6C5CE7', name: 'Purple' },
+          { color: '#A8E6CF', name: 'Sage' },
+          { color: '#FF8ED4', name: 'Pink' }
+        ]
+      };
+
+      const DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+
+      class EventService {
+        constructor() {
+          this.loadFromLocalStorage();
+        }
+
+        loadFromLocalStorage() {
+          try {
+            this.events = JSON.parse(localStorage.getItem('studyEvents') || '[]');
+          } catch (error) {
+            console.error('Error loading events:', error);
+            this.events = [];
+          }
+        }
+
+        async createEvent(eventData) {
+          if (!eventData.title || !eventData.day || !eventData.startTime || !eventData.endTime) {
+            throw new Error('Missing required event data');
+          }
+
+          const newEvent = {
+            id: Date.now().toString(),
+            ...eventData
+          };
+
+          this.events.push(newEvent);
+          this.saveToLocalStorage();
+          return newEvent;
+        }
+
+        async updateEvent(eventId, eventData) {
+          const index = this.events.findIndex(e => e.id === eventId);
+          if (index === -1) throw new Error('Event not found');
+
+          this.events[index] = { ...this.events[index], ...eventData };
+          this.saveToLocalStorage();
+          return this.events[index];
+        }
+
+        async deleteEvent(eventId) {
+          const index = this.events.findIndex(e => e.id === eventId);
+          if (index === -1) throw new Error('Event not found');
+
+          this.events.splice(index, 1);
+          this.saveToLocalStorage();
+        }
+
+        async fetchEvents() {
+          return this.events;
+        }
+
+        saveToLocalStorage() {
+          try {
+            localStorage.setItem('studyEvents', JSON.stringify(this.events));
+          } catch (error) {
+            console.error('Error saving events:', error);
+          }
+        }
+      }
+
+      function getCurrentDay() {
+        return DAYS[new Date().getDay()];
+      }
+
+      function createEventModal(event = null) {
+        const isEdit = !!event;
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        
+        const modalContent = document.createElement('div');
+        modalContent.style.cssText = `
+          background-color: ${CSS_VARS.darkerBg};
+          color: ${CSS_VARS.lightText};
+          width: 450px;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        `;
+
+        modalContent.innerHTML = `
+          <h2 style="color: ${CSS_VARS.lightText}; margin-bottom: 15px;">
+            ${isEdit ? 'Edit Study Event' : 'Create Study Event'}
+          </h2>
+          
+          <input type="text" id="eventTitle" placeholder="Event Title" value="${event?.title || ''}" style="
+            width: 100%;
+            background-color: ${CSS_VARS.darkBg};
+            color: ${CSS_VARS.lightText};
+            border: 1px solid ${CSS_VARS.borderColor};
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+          ">
+          
+          <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+            <div style="flex: 1;">
+              <label style="display: block; margin-bottom: 5px;">Day</label>
+              <select id="eventDay" style="
+                width: 100%;
+                background-color: ${CSS_VARS.darkBg};
+                color: ${CSS_VARS.lightText};
+                border: 1px solid ${CSS_VARS.borderColor};
+                padding: 10px;
+                border-radius: 4px;
+              ">
+                ${DAYS.map(day => `
+                  <option value="${day}" ${(event?.day || getCurrentDay()) === day ? 'selected' : ''}>
+                    ${day}
+                  </option>
+                `).join('')}
+              </select>
+            </div>
+            <div style="flex: 1;">
+              <label style="display: block; margin-bottom: 5px;">Start Time</label>
+              <input type="time" id="startTime" value="${event?.startTime || ''}" style="
+                width: 100%;
+                background-color: ${CSS_VARS.darkBg};
+                color: ${CSS_VARS.lightText};
+                border: 1px solid ${CSS_VARS.borderColor};
+                padding: 10px;
+                border-radius: 4px;
+              ">
+            </div>
+            <div style="flex: 1;">
+              <label style="display: block; margin-bottom: 5px;">End Time</label>
+              <input type="time" id="endTime" value="${event?.endTime || ''}" style="
+                width: 100%;
+                background-color: ${CSS_VARS.darkBg};
+                color: ${CSS_VARS.lightText};
+                border: 1px solid ${CSS_VARS.borderColor};
+                padding: 10px;
+                border-radius: 4px;
+              ">
+            </div>
+          </div>
+          
+          <label style="display: block; margin-bottom: 10px;">Event Color</label>
+          <div id="colorPicker" style="display: flex; justify-content: space-between; margin-bottom: 25px; position: relative;">
+            ${CSS_VARS.eventColors.map(({ color, name }) => `
+              <div 
+                class="color-option tooltip"
+                style="
+                  position: relative;
+                  width: 30px;
+                  height: 30px;
+                  background-color: ${color};
+                  border-radius: 50%;
+                  cursor: pointer;
+                  border: 2px solid ${event?.color === color ? CSS_VARS.lightText : 'transparent'};
+                "
+                data-color="${color}"
+              >
+                <span class="tooltiptext">Background: ${name}</span>
+              </div>
+            `).join('')}
+          </div>
+          
+          <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+            <button id="saveEvent" style="
+              background-color: ${CSS_VARS.primaryColor};
+              color: ${CSS_VARS.lightText};
+              border: none;
+              padding: 10px 20px;
+              border-radius: 4px;
+              cursor: pointer;
+            ">${isEdit ? 'Update Event' : 'Save Event'}</button>
+            <button id="cancelModal" style="
+              background-color: ${CSS_VARS.borderColor};
+              color: ${CSS_VARS.lightText};
+              border: none;
+              padding: 10px 20px;
+              border-radius: 4px;
+              cursor: pointer;
+            ">Cancel</button>
+          </div>
+        `;
+
+        modal.appendChild(modalContent);
+
+        const colorOptions = modal.querySelectorAll('.color-option');
+        colorOptions.forEach(option => {
+          option.addEventListener('click', () => {
+            colorOptions.forEach(opt => {
+              opt.style.border = '2px solid transparent';
+              opt.classList.remove('color-selected');
+            });
+            option.style.border = `2px solid ${CSS_VARS.lightText}`;
+            option.classList.add('color-selected');
+          });
+        });
+
+        // Select the current color or default to first color
+        const initialColor = event?.color || CSS_VARS.eventColors[0].color;
+        modal.querySelector(`[data-color="${initialColor}"]`)?.click();
+
+        return modal;
+      }
+
+      function createDeleteConfirmModal(event) {
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        
+        const modalContent = document.createElement('div');
+        modalContent.style.cssText = `
+          background-color: ${CSS_VARS.darkerBg};
+          color: ${CSS_VARS.lightText};
+          width: 400px;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        `;
+
+        modalContent.innerHTML = `
+          <h2 style="color: ${CSS_VARS.lightText}; margin-bottom: 15px;">Delete Event</h2>
+          <p style="margin-bottom: 20px;">Are you sure you want to delete "${event.title}"?</p>
+          
+          <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <button id="cancelDelete" style="
+              background-color: ${CSS_VARS.borderColor};
+              color: ${CSS_VARS.lightText};
+              border: none;
+              padding: 10px 20px;
+              border-radius: 4px;
+              cursor: pointer;
+            ">Cancel</button>
+            <button id="confirmDelete" style="
+              background-color: #dc2626;
+              color: ${CSS_VARS.lightText};
+              border: none;
+              padding: 10px 20px;
+              border-radius: 4px;
+              cursor: pointer;
+            ">Delete</button>
+          </div>
+        `;
+
+        modal.appendChild(modalContent);
+        return modal;
+      }
+
+      function renderTimeGrid(events) {
+        const grid = document.createElement('div');
+        grid.className = 'time-grid';
+        grid.style.cssText = `
+          display: grid;
+          grid-template-columns: ${CSS_VARS.sidebarWidth} repeat(7, 1fr);
+          height: calc(100vh - 60px);
+          background-color: ${CSS_VARS.darkBg};
+          overflow-y: auto;
+        `;
+
+        const timeColumn = createTimeColumn();
+        grid.appendChild(timeColumn);
+
+        DAYS.forEach((day, index) => {
+          const dayEvents = events.filter(event => event.day === day);
+          const dayColumn = createDayColumn(day, dayEvents);
+          grid.appendChild(dayColumn);
+        });
+
+        return grid;
+      }
+
+      function createTimeColumn() {
+        const column = document.createElement('div');
+        column.style.cssText = `
+          background-color: ${CSS_VARS.darkerBg};
+          border-right: 1px solid ${CSS_VARS.borderColor};
+          padding: 10px;
+          position: sticky;
+          left: 0;
+          z-index: 10;
+        `;
+
+        const header = document.createElement('div');
+        header.style.cssText = `
+          height: 40px;
+          color: ${CSS_VARS.lightText};
+          font-weight: 600;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-bottom: 1px solid ${CSS_VARS.borderColor};
+          margin-bottom: 10px;
+        `;
+        header.textContent = 'TIME';
+        column.appendChild(header);
+
+        for (let hour = 0; hour < 24; hour++) {
+          const timeSlot = document.createElement('div');
+          timeSlot.style.cssText = `
+            color: ${CSS_VARS.grayText};
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+          `;
+          timeSlot.textContent = `${hour.toString().padStart(2, '0')}:00`;
+          column.appendChild(timeSlot);
+        }
+
+        return column;
+      }
+
+      function createDayColumn(day, events) {
+        const column = document.createElement('div');
+        column.style.cssText = `
+          position: relative;
+          background-color: ${CSS_VARS.darkBg};
+          border-right: 1px solid ${CSS_VARS.borderColor};
+        `;
+
+        const header = document.createElement('div');
+        header.style.cssText = `
+          height: 40px;
+          color: ${CSS_VARS.lightText};
+          font-weight: 600;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-bottom: 1px solid ${CSS_VARS.borderColor};
+          margin-bottom: 10px;
+          background-color: ${day === getCurrentDay() ? CSS_VARS.darkerBg : 'transparent'};
+        `;
+        header.textContent = day;
+        column.appendChild(header);
+
+        for (let hour = 0; hour < 24; hour++) {
+          const timeSlot = document.createElement('div');
+          timeSlot.style.cssText = `
+            height: 60px;
+            border-bottom: 1px solid ${CSS_VARS.borderColor};
+          `;
+          column.appendChild(timeSlot);
+        }
+
+        events.forEach(event => {
+          const eventElement = createEventElement(event);
+          column.appendChild(eventElement);
+        });
+
+        return column;
+      }
+
+      function createEventElement(event) {
+        const startHour = parseInt(event.startTime.split(':')[0]);
+        const startMinute = parseInt(event.startTime.split(':')[1]);
+        const endHour = parseInt(event.endTime.split(':')[0]);
+        const endMinute = parseInt(event.endTime.split(':')[1]);
+      
+        // Calculate position and height
+        const top = startHour * 60 + startMinute + 50; // 50px offset for header
+        const height = Math.max(
+          (endHour * 60 + endMinute) - (startHour * 60 + startMinute),
+          40 // Minimum height of 40px
+        );
+      
+        // Calculate text color based on background brightness
+        const getBrightness = (hexColor) => {
+          const rgb = parseInt(hexColor.slice(1), 16);
+          const r = (rgb >> 16) & 0xff;
+          const g = (rgb >> 8) & 0xff;
+          const b = (rgb >> 0) & 0xff;
+          return (r * 299 + g * 587 + b * 114) / 1000;
+        };
+      
+        const textColor = getBrightness(event.color) > 128 ? '#1a1b1e' : '#ffffff';
+      
+        const container = document.createElement('div');
+        container.className = 'event-container';
+        container.style.cssText = `
+          position: absolute;
+          top: ${top}px;
+          left: 4px;
+          right: 4px;
+          height: ${height}px;
+          background-color: ${event.color};
+          border-radius: 6px;
+          padding: 6px 8px;
+          color: ${textColor};
+          font-weight: 500;
+          overflow: hidden;
+          cursor: pointer;
+          font-size: 12px;
+          transition: all 0.2s ease;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          z-index: 1;
+        `;
+      
+        // Create content wrapper for better organization
+        const content = document.createElement('div');
+        content.style.cssText = `
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          position: relative;
+          z-index: 2;
+        `;
+      
+        // Add title with ellipsis
+        const title = document.createElement('div');
+        title.style.cssText = `
+          font-weight: 600;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin-bottom: 2px;
+        `;
+        title.textContent = event.title;
+      
+        // Add time with better visibility
+        const time = document.createElement('div');
+        time.style.cssText = `
+          font-size: 11px;
+          opacity: 0.9;
+          white-space: nowrap;
+        `;
+        time.textContent = `${event.startTime} - ${event.endTime}`;
+      
+        // Add action buttons
+        const actions = document.createElement('div');
+        actions.className = 'event-actions';
+        actions.style.cssText = `
+          position: absolute;
+          top: 4px;
+          right: 4px;
+          display: none;
+          gap: 4px;
+          padding: 4px;
+          background-color: rgba(0, 0, 0, 0.2);
+          backdrop-filter: blur(4px);
+          border-radius: 4px;
+          z-index: 3;
+        `;
+      
+        actions.innerHTML = `
+          <button class="action-button edit-event" title="Edit">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="action-button delete-event" title="Delete">
+            <i class="fas fa-trash"></i>
+          </button>
+        `;
+      
+        // Add gradient overlay for better text visibility
+        const gradient = document.createElement('div');
+        gradient.style.cssText = `
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            to bottom,
+            transparent 60%,
+            ${event.color}40
+          );
+          pointer-events: none;
+          z-index: 1;
+        `;
+      
+        // Assemble the components
+        content.appendChild(title);
+        content.appendChild(time);
+        container.appendChild(content);
+        container.appendChild(actions);
+        container.appendChild(gradient);
+      
+        // Add hover effects
+        container.addEventListener('mouseenter', () => {
+          container.style.transform = 'scale(1.02)';
+          container.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+          container.style.zIndex = '10';
+          actions.style.display = 'flex';
+        });
+      
+        container.addEventListener('mouseleave', () => {
+          container.style.transform = 'scale(1)';
+          container.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
+          container.style.zIndex = '1';
+          actions.style.display = 'none';
+        });
+      
+        return container;
+      }
+
+      class StudyPlanner {
+        constructor(container) {
+          if (!container) {
+            throw new Error('Container element is required');
+          }
+          this.container = container;
+          this.eventService = new EventService();
+          this.events = [];
+          this.init = this.init.bind(this);
+          this.handleEventSave = this.handleEventSave.bind(this);
+          this.handleEventUpdate = this.handleEventUpdate.bind(this);
+          this.handleEventDelete = this.handleEventDelete.bind(this);
+        }
+
+        init() {
+          this.container.innerHTML = '';
+          const header = this.createHeader();
+          this.container.appendChild(header);
+          this.container.appendChild(renderTimeGrid(this.events));
+          this.createAddEventButton();
+          this.loadEvents();
+          this.setupEventListeners();
+        }
+
+        setupEventListeners() {
+          this.container.addEventListener('click', (e) => {
+            const editButton = e.target.closest('.edit-event');
+            const deleteButton = e.target.closest('.delete-event');
+            
+            if (editButton || deleteButton) {
+              const eventElement = e.target.closest('.event-container');
+              const eventId = this.findEventFromElement(eventElement);
+              
+              if (editButton) {
+                this.showEditModal(eventId);
+              } else if (deleteButton) {
+                this.showDeleteModal(eventId);
+              }
+            }
+          });
+        }
+        
+
+        findEventFromElement(element) {
+          const title = element.querySelector('div').textContent;
+          const [startTime, endTime] = element.querySelectorAll('div')[1].textContent.split(' - ');
+          return this.events.find(e => 
+            e.title === title && 
+            e.startTime === startTime && 
+            e.endTime === endTime
+          )?.id;
+        }
+
+        showEditModal(eventId) {
+          const event = this.events.find(e => e.id === eventId);
+          if (!event) return;
+        
+          const modal = createEventModal(event);
+          document.body.appendChild(modal);
+        
+          const saveButton = modal.querySelector('#saveEvent');
+          const cancelButton = modal.querySelector('#cancelModal');
+        
+          if (saveButton) {
+            saveButton.addEventListener('click', () => this.handleEventUpdate(modal, eventId));
+          }
+        
+          if (cancelButton) {
+            cancelButton.addEventListener('click', () => {
+              document.body.removeChild(modal);
+            });
+          }
+        }
+        
+        showDeleteModal(eventId) {
+          const event = this.events.find(e => e.id === eventId);
+          if (!event) return;
+        
+          const modal = createDeleteConfirmModal(event);
+          document.body.appendChild(modal);
+        
+          const confirmButton = modal.querySelector('#confirmDelete');
+          const cancelButton = modal.querySelector('#cancelDelete');
+        
+          if (confirmButton) {
+            confirmButton.addEventListener('click', () => this.handleEventDelete(eventId, modal));
+          }
+        
+          if (cancelButton) {
+            cancelButton.addEventListener('click', () => {
+              document.body.removeChild(modal);
+            });
+          }
+        }
+        
+
+        createHeader() {
+          const header = document.createElement('header');
+          header.style.cssText = `
+            background-color: ${CSS_VARS.darkerBg};
+            color: ${CSS_VARS.lightText};
+            padding: 1rem;
+            border-bottom: 1px solid ${CSS_VARS.borderColor};
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          `;
+
+          const homeLink = document.createElement('a');
+          homeLink.href = '/';
+          homeLink.style.cssText = `
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: ${CSS_VARS.lightText};
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+          `;
+          homeLink.innerHTML = '<i class="fas fa-home"></i><span>Home</span>';
+          homeLink.addEventListener('mouseover', () => {
+            homeLink.style.backgroundColor = CSS_VARS.borderColor;
+          });
+          homeLink.addEventListener('mouseout', () => {
+            homeLink.style.backgroundColor = 'transparent';
+          });
+
+          const title = document.createElement('h1');
+          title.textContent = 'Weekly Study Planner';
+          title.style.cssText = `
+            margin: 0;
+            flex-grow: 1;
+            text-align: center;
+          `;
+
+          const spacer = document.createElement('div');
+          spacer.style.width = homeLink.offsetWidth + 'px';
+
+          header.appendChild(homeLink);
+          header.appendChild(title);
+          header.appendChild(spacer);
+
+          return header;
+        }
+
+        createAddEventButton() {
+          const button = document.createElement('button');
+          button.textContent = '+ Add Event';
+          button.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: ${CSS_VARS.primaryColor};
+            color: ${CSS_VARS.lightText};
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+            transition: transform 0.2s, background-color 0.2s;
+          `;
+
+          button.addEventListener('mouseover', () => {
+            button.style.transform = 'scale(1.05)';
+            button.style.backgroundColor = '#4f46e5';
+          });
+
+          button.addEventListener('mouseout', () => {
+            button.style.transform = 'scale(1)';
+            button.style.backgroundColor = CSS_VARS.primaryColor;
+          });
+
+          button.addEventListener('click', () => {
+            const modal = createEventModal();
+            document.body.appendChild(modal);
+
+            const saveButton = modal.querySelector('#saveEvent');
+            const cancelButton = modal.querySelector('#cancelModal');
+
+            if (saveButton) {
+              saveButton.addEventListener('click', () => this.handleEventSave(modal));
+            }
+
+            if (cancelButton) {
+              cancelButton.addEventListener('click', () => {
+                document.body.removeChild(modal);
+              });
+            }
+          });
+
+          this.container.appendChild(button);
+        }
+
+        async handleEventSave(modal) {
+          const title = modal.querySelector('#eventTitle')?.value;
+          const day = modal.querySelector('#eventDay')?.value;
+          const startTime = modal.querySelector('#startTime')?.value;
+          const endTime = modal.querySelector('#endTime')?.value;
+          const selectedColor = modal.querySelector('.color-selected')?.dataset.color || CSS_VARS.eventColors[0].color;
+
+          if (!title || !day || !startTime || !endTime) {
+            alert('Please fill in all fields');
+            return;
+          }
+
+          try {
+            const newEvent = await this.eventService.createEvent({
+              title,
+              day,
+              startTime,
+              endTime,
+              color: selectedColor
+            });
+
+            this.events.push(newEvent);
+            this.updateGrid();
+            document.body.removeChild(modal);
+          } catch (error) {
+            console.error('Failed to create event:', error);
+            alert('Failed to create event. Please try again.');
+          }
+        }
+
+        async handleEventUpdate(modal, eventId) {
+          const title = modal.querySelector('#eventTitle')?.value;
+          const day = modal.querySelector('#eventDay')?.value;
+          const startTime = modal.querySelector('#startTime')?.value;
+          const endTime = modal.querySelector('#endTime')?.value;
+          const selectedColor = modal.querySelector('.color-selected')?.dataset.color;
+
+          if (!title || !day || !startTime || !endTime) {
+            alert('Please fill in all fields');
+            return;
+          }
+
+          try {
+            const updatedEvent = await this.eventService.updateEvent(eventId, {
+              title,
+              day,
+              startTime,
+              endTime,
+              color: selectedColor
+            });
+
+            const index = this.events.findIndex(e => e.id === eventId);
+            this.events[index] = updatedEvent;
+            this.updateGrid();
+            document.body.removeChild(modal);
+          } catch (error) {
+            console.error('Failed to update event:', error);
+            alert('Failed to update event. Please try again.');
+          }
+        }
+
+        async handleEventDelete(eventId, modal) {
+          try {
+            await this.eventService.deleteEvent(eventId);
+            this.events = this.events.filter(e => e.id !== eventId);
+            this.updateGrid();
+            document.body.removeChild(modal);
+          } catch (error) {
+            console.error('Failed to delete event:', error);
+            alert('Failed to delete event. Please try again.');
+          }
+        }
+
+        async loadEvents() {
+          try {
+            this.events = await this.eventService.fetchEvents();
+            this.updateGrid();
+          } catch (error) {
+            console.error('Failed to load events:', error);
+          }
+        }
+
+        updateGrid() {
+          const oldGrid = this.container.querySelector('.time-grid');
+          const newGrid = renderTimeGrid(this.events);
+          if (oldGrid) {
+            this.container.replaceChild(newGrid, oldGrid);
+          } else {
+            this.container.appendChild(newGrid);
+          }
+        }
+      }
+
+      // Initialize the application
+      const app = new StudyPlanner(document.getElementById('app'));
+      app.init();
+    </script>
+  </body>
+</html>
